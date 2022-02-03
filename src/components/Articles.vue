@@ -1,55 +1,12 @@
 <template>
   <div v-if="currentArticle" class="edit-form">
-    <h4>Article</h4>
-    <form>
-      <div class="form-group">
-        <label for="title">Title</label>
-        <input type="text" class="form-control" id="title"
-               v-model="currentArticle.title"
-        />
-      </div>
-      <div class="form-group">
-        <label for="description">Article</label>
-        <input type="text" class="form-control" id="description"
-               v-model="currentArticle.content"
-        />
-      </div>
-
-      <div class="form-group">
-        <label><strong>Status:</strong></label>
-        {{ currentArticle.published ? "Published" : "Pending" }}
-      </div>
-    </form>
-
-    <button class="badge badge-primary mr-2"
-            v-if="currentArticle.published"
-            @click="updatePublished(false)"
-    >
-      UnPublish
-    </button>
-    <button v-else class="badge badge-primary mr-2"
-            @click="updatePublished(true)"
-    >
-      Publish
-    </button>
-
-    <button class="badge badge-danger mr-2"
-            @click="deleteArticle"
-    >
-      Delete
-    </button>
-
-    <button type="submit" class="badge badge-success"
-            @click="updateArticle"
-    >
-      Update
-    </button>
-    <p>{{ message }}</p>
-  </div>
-
-  <div v-else>
-    <br />
-    <p>Please click on an article...</p>
+    <h4>{{currentArticle.title}}</h4>
+    <p>
+      {{currentArticle.createdAt}}
+    </p>
+    <div>
+      {{currentArticle.content}}
+    </div>
   </div>
 </template>
 
