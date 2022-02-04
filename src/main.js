@@ -3,9 +3,23 @@ import App from './App.vue'
 import router from './router'
 import vuetify from './plugins/vuetify'
 import store from "./store";
+import VuetifyConfirm from 'vuetify-confirm';
 import { Icon }  from 'leaflet'
 import 'leaflet/dist/leaflet.css'
 
+Vue.use(VuetifyConfirm, {
+  vuetify,
+  buttonTrueText: 'Valider',
+  buttonFalseText: 'Annuler',
+  buttonTrueColor: 'white',
+  buttonFalseColor: 'red',
+  buttonTrueFlat: false,
+  buttonFalseFlat: true,
+  color: 'red',
+  title: 'Attention',
+  width: 500,
+  property: '$confirm'
+})
 
 // this part resolve an issue where the markers would not appear
 delete Icon.Default.prototype._getIconUrl;

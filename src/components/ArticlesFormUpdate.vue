@@ -1,40 +1,42 @@
 <template>
-  <section>
-  <v-layout justify-center>
-    <v-flex class="formEdit">
-      <div v-if="currentArticle" class="edit-form">
-        <v-form ref="form">
-          <v-text-field
-              v-model="currentArticle.title"
-              label="Titre"
-              type="text"
-              class="form-control"
-              id="title"
-          >
-          </v-text-field>
-          <quill-editor
-              v-model="currentArticle.content"
-              :options="editorOption"
-          ></quill-editor>
-        </v-form>
-        <v-card-actions>
-          <v-btn  @click="deleteArticle">
-            <v-icon color="red">mdi-delete</v-icon>
-          </v-btn>
-          <v-spacer></v-spacer>
-          <v-btn
-              type="submit"
-              class="mr-4"
-              @click="updateArticle"
-          >
-            Valider
-          </v-btn>
-        </v-card-actions>
-        <p>{{ message }}</p>
-      </div>
+  <v-container>
+    <v-layout row wrap align-center>
+      <v-flex class="text-xs-center">
+        <v-card>
+        <div v-if="currentArticle" class="edit-form">
+          <v-form ref="form">
+            <v-text-field
+                v-model="currentArticle.title"
+                label="Titre"
+                type="text"
+                class="form-control"
+                id="title"
+            >
+            </v-text-field>
+            <quill-editor
+                v-model="currentArticle.content"
+                :options="editorOption"
+            ></quill-editor>
+          </v-form>
+          <v-card-actions>
+            <v-btn  @click="deleteArticle">
+              <v-icon color="red">mdi-delete</v-icon>
+            </v-btn>
+            <v-spacer></v-spacer>
+            <v-btn
+                type="submit"
+                class="mr-4"
+                @click="updateArticle"
+            >
+              Valider
+            </v-btn>
+          </v-card-actions>
+          <p>{{ message }}</p>
+        </div>
+      </v-card>
     </v-flex>
   </v-layout>
-  </section>
+  </v-container>
 </template>
 
 
@@ -86,7 +88,6 @@ export default {
             ['bold', 'italic', 'underline'],
             ['blockquote', 'code-block'],
             [{ 'header': 1 }, { 'header': 2 }],
-            [{ 'script': 'sub' }, { 'script': 'super' }],
             [{ 'size': ['small', false, 'large', 'huge'] }],
             [{ 'list': 'ordered' }, { 'list': 'bullet' }],
             [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
@@ -141,15 +142,19 @@ export default {
           });
     },
 
-    deleteArticle() {
-      DataService.delete(this.currentArticle.id)
-          .then(response => {
-            console.log(response.data);
-            this.$router.push({ name: "Articles" });
-          })
-          .catch(e => {
-            console.log(e);
-          });
+    async deleteArticle() {
+      let res = await this.$confirm('Êtes-vous sûr de vouloir valider ce paiement ? Aucune modification possible' )
+      if(this.$refs.form.validate())
+      if(res) {
+        DataService.delete(this.currentArticle.id)
+            .then(response => {
+              console.log(response.data);
+              this.$router.push({name: "Articles"});
+            })
+            .catch(e => {
+              console.log(e);
+            });
+      }
     }
   },
   mounted() {
@@ -160,7 +165,4 @@ export default {
 </script>
 
 <style>
-.edit-form {
-  max-width: 700px !important;
-}
 </style>

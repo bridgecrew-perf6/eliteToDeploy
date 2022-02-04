@@ -13,23 +13,34 @@
             <v-row>
               <v-card-title v-text="currentArticle.title"></v-card-title>
               <v-spacer></v-spacer>
-              <v-card-subtitle v-text="'Publié le ' + createdDate"></v-card-subtitle>
+              <v-card-subtitle v-text="'Publié le ' + createdDate" style="padding-right: 50px"></v-card-subtitle>
             </v-row>
           </v-img>
           <v-img
               v-else
             :src="require('../assets/articlesImages/' + currentArticle.image)"
+              class="white--text align-end"
             gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
             height="300px"
           >
-            <v-card-title v-text="currentArticle.title"></v-card-title>
+            <v-row>
+              <v-card-title v-text="currentArticle.title"></v-card-title>
+              <v-spacer></v-spacer>
+              <v-card-subtitle v-text="'Publié le ' + createdDate" style="padding-right: 50px"></v-card-subtitle>
+            </v-row>
           </v-img>
+          <router-link
+              class="linkBtn"
+              to="/articles"
+              style="text-decoration: none; color: inherit;"
+          >
+            <p style="text-align: right; padding-right: 10px">Retour aux articles</p>
+          </router-link>
+          <div v-html="currentArticle.content"
+               style="padding: 10px"
+          ></div>
+
         </v-card>
-      <h4>{{currentArticle.title}}</h4>
-      <p>
-        {{currentArticle.createdAt}}
-      </p>
-      <div v-html="currentArticle.content"></div>
         </v-flex>
       </v-layout>
     </v-container>
@@ -57,7 +68,6 @@ export default {
           .then(response => {
             this.currentArticle = response.data;
             this.createdDate = moment(this.currentArticle.createdAt).format('Do MMMM YYYY')
-            console.log(this.createdDate)
             console.log(response.data);
           })
           .catch(e => {

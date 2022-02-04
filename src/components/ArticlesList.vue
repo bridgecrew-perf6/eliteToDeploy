@@ -59,7 +59,9 @@
                 <v-divider></v-divider>
                 <v-card-text>
                   <div v-html="article.content.substring(0, 1000)"> ... </div>
-<!--                  {{ article.content.substring(0, 200) }} ...-->
+                  <v-btn text @click="openActiveArticle(article, index)">
+                    <span>Lire l'article en entier</span>
+                  </v-btn>
                 </v-card-text>
               </div>
             </v-expand-transition>
@@ -170,7 +172,7 @@ export default {
     openActiveArticle(article, index) {
       this.currentArticle = article;
       this.currentIndex = index;
-      window.open("http://localhost:8081/articles/" + article.id)
+      window.open("http://localhost:8081/articles/" + article.id, "_self")
     },
 
     removeAllArticles() {
