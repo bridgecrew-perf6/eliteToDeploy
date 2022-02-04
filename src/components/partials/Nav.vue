@@ -77,8 +77,13 @@
 
 <script>
 import AddArticle from "../AddArticle";
+import {mapGetters} from "vuex";
 export  default {
   components: {AddArticle},
+  computed: { ...mapGetters(['isMobile'])},
+  created() {
+    // if(screen.width <= 760) this.$store.commit('setIsMobile', true)
+  },
   data() {
     return {
       isAdmin: true,

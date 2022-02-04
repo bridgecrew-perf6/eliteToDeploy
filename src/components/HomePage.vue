@@ -1,5 +1,5 @@
 <template>
- <v-content>
+ <v-main>
    <section>
      <v-layout
        column
@@ -141,7 +141,7 @@
      </v-container>
    </section>
 
- </v-content>
+ </v-main>
 
 </template>
 

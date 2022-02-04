@@ -1,5 +1,7 @@
 <template>
   <section>
+    <v-layout row wrap align-center>
+      <v-flex class="text-xs-center">
     <v-img
         :src="require('../assets/images/pexels-pixabay-262508.jpg')"
         class="my-3"
@@ -9,11 +11,11 @@
 
     <v-container fluid>
       <h1>Articles en lien avec Elite Coaching 42</h1>
-      <v-row dense>
+      <v-layout row wrap>
         <v-col
             v-for="(article, index) in articlesWithShow"
             :key="index"
-            :cols="4"
+            class="col-sm-4 col-xs-12"
             >
           <v-card>
             <v-img v-if="article.image === '' || article.image === null || article.image === undefined"
@@ -32,7 +34,7 @@
                 gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
                 height="300px"
             >
-
+              <v-card-title v-text="article.title"></v-card-title>
 
             </v-img>
             <v-card-actions>
@@ -47,7 +49,7 @@
               <v-btn icon @click="openActiveArticle(article, index)">
                 <v-icon>mdi-magnify-plus</v-icon>
               </v-btn>
-              <v-btn icon>
+              <v-btn icon @click="updateLike(article, index)">
                 <v-icon>mdi-heart</v-icon>
               </v-btn>
               <span>{{ article.likeNumber }}</span>
@@ -56,16 +58,17 @@
               <div v-show="article.show">
                 <v-divider></v-divider>
                 <v-card-text>
-                  {{ article.content.substring(0, 200) }} ...
+                  <div v-html="article.content.substring(0, 1000)"> ... </div>
+<!--                  {{ article.content.substring(0, 200) }} ...-->
                 </v-card-text>
               </div>
             </v-expand-transition>
           </v-card>
         </v-col>
-      </v-row>
+      </v-layout>
     </v-container>
 
-  <div class="list row">
+<!--  <div class="list row">-->
 <!--    <div class="col-md-8">-->
 <!--      <div class="input-group mb-3">-->
 <!--        <input type="text" class="form-control" placeholder="Search by title"-->
@@ -79,8 +82,8 @@
 <!--        </div>-->
 <!--      </div>-->
 <!--    </div>-->
-    <div class="col-md-6">
-      <h4>Articles List</h4>
+<!--    <div class="col-md-6">-->
+<!--      <h4>Articles List</h4>-->
 <!--      <ul class="list-group">-->
 <!--        <li class="list-group-item"-->
 <!--            :class="{ active: index == currentIndex }"-->
@@ -92,54 +95,51 @@
 <!--        </li>-->
 <!--      </ul>-->
 
-      <button class="m-3 btn btn-sm btn-danger" @click="removeAllArticles">
-        Remove All
-      </button>
-    </div>
-    <div class="col-md-6">
-      <div v-if="currentArticle">
-        <h4>Article</h4>
-        <div>
-          <label><strong>Title:</strong></label> {{ currentArticle.title }}
-        </div>
-        <div>
-          <label><strong>Description:</strong></label> {{ currentArticle.description }}
-        </div>
-        <a class="badge badge-warning"
-           :href="'/articles/' + currentArticle.id"
-        >
-          Edit
-        </a>
-      </div>
-      <div v-else>
-        <br />
-        <p>Please click on an article...</p>
-      </div>
-    </div>
-  </div>
-    <Articles v-if="articleIsOpen"/>
+<!--      <button class="m-3 btn btn-sm btn-danger" @click="removeAllArticles">-->
+<!--        Remove All-->
+<!--      </button>-->
+<!--    </div>-->
+<!--    <div class="col-md-6">-->
+<!--      <div v-if="currentArticle">-->
+<!--        <h4>Article</h4>-->
+<!--        <div>-->
+<!--          <label><strong>Title:</strong></label> {{ currentArticle.title }}-->
+<!--        </div>-->
+<!--        <div>-->
+<!--          <label><strong>Description:</strong></label> {{ currentArticle.description }}-->
+<!--        </div>-->
+<!--        <a class="badge badge-warning"-->
+<!--           :href="'/articles/' + currentArticle.id"-->
+<!--        >-->
+<!--          Edit-->
+<!--        </a>-->
+<!--      </div>-->
+<!--      <div v-else>-->
+<!--        <br />-->
+<!--        <p>Please click on an article...</p>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+      </v-flex>
+    </v-layout>
   </section>
 </template>
 
 <script>
 import DataService from "./service/DataService";
-import Articles from "./ArticlesFormUpdate";
 
 export default {
   name: "articles-list",
-  components: {Articles},
   created() {
     console.log(this.articles)
   },
   data() {
     return {
-      show: false,
       articles: [],
       articlesWithShow: [],
       currentArticle: null,
       currentIndex: -1,
       title: "",
-      articleIsOpen: false
     };
   },
   methods: {
@@ -193,6 +193,26 @@ export default {
           .catch(e => {
             console.log(e);
           });
+    },
+
+    //TODO comment limiter à un seul clic
+    updateLike(article, index) {
+      this.currentArticle = article;
+      this.currentIndex = index;
+      var data = {
+        id: this.currentArticle.id,
+        title: this.currentArticle.title,
+        content: this.currentArticle.content,
+        likeNumber: this.currentArticle.likeNumber + 1,
+      };
+
+      DataService.update(this.currentArticle.id, data)
+      .then(() => {
+        this.retrieveArticles()
+      })
+      .catch(e => {
+        console.log(e)
+      })
     }
   },
   mounted() {
