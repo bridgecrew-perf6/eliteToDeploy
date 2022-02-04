@@ -1,44 +1,101 @@
 <template>
-  <div class="submit-form">
-    <div v-if="!submitted">
-      <div class="form-group">
-        <label for="title">Title</label>
-        <input
-            type="text"
-            class="form-control"
-            id="title"
-            required
-            v-model="article.title"
-            name="title"
-        />
-      </div>
+  <v-container>
+    <v-row justify="space-around">
+      <v-col cols="auto">
+        <v-dialog v-model="show" scrollable max-width="700px">
+          <v-card class="mt-2">
+          <v-toolbar color="blue-grey">Nouvel Article</v-toolbar>
+          <v-form fill-width ref="addArticleForm" lazy-validation>
+            <v-container>
+              <v-row>
+                <v-col cols="12">
+                  <v-text-field
+                    v-model="article.title"
+                    label="Titre"
+                    required
+                  />
+                </v-col>
+                <v-col>
+                  <quill-editor
+                      v-model="article.content"
+                      :options="editorOption"
+                      style="min-height:300px;"
+                  ></quill-editor>
+                </v-col>
+              </v-row>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn color="blue darken-1" text @click=toggleDialog()>Annuler</v-btn>
+                <v-btn
+                    @click.prevent="saveArticle"
+                    color="primary"
+                    value="submit"
+                    text type="submit"
+                >
+                  Valider
+                </v-btn>
+              </v-card-actions>
+            </v-container>
+          </v-form>
+          </v-card>
+        </v-dialog>
+      </v-col>
+    </v-row>
+  </v-container>
+<!--  <div class="submit-form">-->
+<!--    <div v-if="!submitted">-->
+<!--      <div class="form-group">-->
+<!--        <label for="title">Title</label>-->
+<!--        <input-->
+<!--            type="text"-->
+<!--            class="form-control"-->
+<!--            id="title"-->
+<!--            required-->
+<!--            v-model="article.title"-->
+<!--            name="title"-->
+<!--        />-->
+<!--      </div>-->
 
-      <div class="form-group">
-        <label for="description">Contenu</label>
-        <input
-            class="form-control"
-            id="description"
-            required
-            v-model="article.content"
-            name="description"
-        />
-      </div>
+<!--      <div class="form-group">-->
+<!--        <label for="description">Contenu</label>-->
+<!--        <input-->
+<!--            class="form-control"-->
+<!--            id="description"-->
+<!--            required-->
+<!--            v-model="article.content"-->
+<!--            name="description"-->
+<!--        />-->
+<!--      </div>-->
 
-      <button @click="saveArticle" class="btn btn-success">Submit</button>
-    </div>
+<!--      <button @click="saveArticle" class="btn btn-success">Submit</button>-->
+<!--    </div>-->
 
-    <div v-else>
-      <h4>You submitted successfully!</h4>
-      <button class="btn btn-success" @click="newArticle">Add</button>
-    </div>
-  </div>
+<!--    <div v-else>-->
+<!--      <h4>You submitted successfully!</h4>-->
+<!--      <button class="btn btn-success" @click="newArticle">Add</button>-->
+<!--    </div>-->
+<!--  </div>-->
 </template>
 
 <script>
 import DataService from "./service/DataService";
+import 'quill/dist/quill.core.css'
+import 'quill/dist/quill.snow.css'
+import 'quill/dist/quill.bubble.css'
+
+import { quillEditor } from 'vue-quill-editor'
 
 export default {
   name: "add-article",
+  props: ['value'],
+  created() {this.show = this.value
+  },
+  watch: {
+    value (v) {
+      this.show = v
+    }
+  },
+  components: {quillEditor},
   data() {
     return {
       article: {
@@ -46,10 +103,32 @@ export default {
         title: "",
         content: "",
       },
-      submitted: false
+      submitted: false,
+      show: false,
+      editorOption: {
+        placeholder: "Taper l'article ici ...",
+        modules: {
+          toolbar: [
+            ['bold', 'italic', 'underline'],
+            ['blockquote', 'code-block'],
+            [{'header': 1}, {'header': 2}],
+            [{'size': ['small', false, 'large', 'huge']}],
+            [{'list': 'ordered'}, {'list': 'bullet'}],
+            [{'header': [1, 2, 3, 4, 5, 6, false]}],
+            [{'font': []}],
+            [{'color': []}, {'background': []}],
+            [{'align': []}],
+            ['link']
+          ],
+        }
+      }
     };
   },
   methods: {
+    toggleDialog () {
+      this.show = !this.show
+      this.$emit('close', this.show)
+    },
     saveArticle() {
       var data = {
         title: this.article.title,
@@ -80,4 +159,5 @@ export default {
   max-width: 300px;
   margin: auto;
 }
+
 </style>

@@ -27,9 +27,7 @@
           </v-list-item>
         </router-link>
         <v-spacer></v-spacer>
-        <v-icon @click="openArticleForm" v-if="isAdmin">
-          mdi-pen
-        </v-icon>
+
         <v-icon>
           mdi-calendar
         </v-icon>
@@ -71,15 +69,12 @@
           </v-list-item-group>
         </v-list>
       </v-navigation-drawer>
-    <AddArticle v-if="showArticleForm" />
   </div>
 </template>
 
 <script>
-import AddArticle from "../AddArticle";
 import {mapGetters} from "vuex";
 export  default {
-  components: {AddArticle},
   computed: { ...mapGetters(['isMobile'])},
   created() {
     // if(screen.width <= 760) this.$store.commit('setIsMobile', true)
@@ -87,7 +82,6 @@ export  default {
   data() {
     return {
       isAdmin: true,
-      showArticleForm: false,
       drawer: false,
       tab: null,
       items: [
@@ -96,9 +90,7 @@ export  default {
     }
   },
   methods: {
-    openArticleForm() {
-      this.showArticleForm = true;
-    }
+
   }
 }
 </script>

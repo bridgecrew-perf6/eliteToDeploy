@@ -10,7 +10,25 @@
     />
 
     <v-container fluid style="margin: 20px">
-      <h1>Articles en lien avec Elite Coaching 42</h1>
+      <v-row>
+        <v-col cols="11">
+          <h1>Articles en lien avec Elite Coaching 42</h1>
+        </v-col>
+        <v-col cols="1">
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on, attrs }">
+              <v-icon
+                  @click="openArticleForm"
+                  v-bind="attrs"
+                  v-on="on"
+                  v-if="isAdmin"
+              >
+                mdi-pen-plus</v-icon>
+            </template>
+            <span>Créer un nouvel article</span>
+          </v-tooltip>
+        </v-col>
+      </v-row>
       <v-layout row wrap>
         <v-col
             v-for="(article, index) in articlesWithShow"
@@ -58,7 +76,7 @@
               <div v-show="article.show">
                 <v-divider></v-divider>
                 <v-card-text>
-                  <div v-html="article.content.substring(0, 1000)"> ... </div>
+                  <div v-html="article.content.substring(0, 500)"> ... </div>
                   <v-btn text @click="openActiveArticle(article, index)">
                     <span>Lire l'article en entier</span>
                   </v-btn>
@@ -124,14 +142,17 @@
 <!--  </div>-->
       </v-flex>
     </v-layout>
+    <AddArticle v-model="showArticleForm" @close="closeArticleForm"/>
   </section>
 </template>
 
 <script>
 import DataService from "./service/DataService";
+import AddArticle from "./AddArticle";
 
 export default {
   name: "articles-list",
+  components: {AddArticle},
   created() {
     console.log(this.articles)
   },
@@ -142,6 +163,9 @@ export default {
       currentArticle: null,
       currentIndex: -1,
       title: "",
+      showArticleForm: false,
+      isAdmin: true,
+
     };
   },
   methods: {
@@ -150,6 +174,12 @@ export default {
         ...article,
         show: false
       }))
+    },
+    openArticleForm() {
+      this.showArticleForm = true;
+    },
+    closeArticleForm() {
+      this.showArticleForm = false;
     },
     retrieveArticles() {
       DataService.getAll()
