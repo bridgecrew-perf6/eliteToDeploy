@@ -9,7 +9,7 @@
         height="300"
     />
 
-    <v-container fluid>
+    <v-container fluid style="margin: 20px">
       <h1>Articles en lien avec Elite Coaching 42</h1>
       <v-layout row wrap>
         <v-col
