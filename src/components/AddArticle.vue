@@ -5,15 +5,27 @@
         <v-dialog v-model="show" scrollable max-width="700px">
           <v-card class="mt-2">
           <v-toolbar color="blue-grey">Nouvel Article</v-toolbar>
-          <v-form fill-width ref="addArticleForm" lazy-validation>
+          <v-form @submit.prevent="saveArticle" fill-width ref="addArticleForm" lazy-validation >
             <v-container>
               <v-row>
-                <v-col cols="12">
+                <v-col cols="6">
                   <v-text-field
                     v-model="article.title"
                     label="Titre"
                     required
                   />
+                </v-col>
+                <v-col cols="6">
+                  <div class="large-12 medium-12 small-12 cell">
+                    <label>File
+                      <input type="file" id="file" ref="file" @change="selectFile()"/>
+                    </label>
+<!--                    <button class="button">Submit</button>-->
+                  </div>
+<!--                  <v-file-input-->
+<!--                      chips-->
+<!--                      label="Insérer une image"-->
+<!--                  ></v-file-input>-->
                 </v-col>
                 <v-col>
                   <quill-editor
@@ -37,6 +49,10 @@
               </v-card-actions>
             </v-container>
           </v-form>
+<!--            <v-form @submit.prevent="sendFile" enctype="multipart/form-data">-->
+<!--             -->
+
+<!--            </v-form>-->
           </v-card>
         </v-dialog>
       </v-col>
@@ -84,6 +100,7 @@ import 'quill/dist/quill.snow.css'
 import 'quill/dist/quill.bubble.css'
 
 import { quillEditor } from 'vue-quill-editor'
+import axios from "axios";
 
 export default {
   name: "add-article",
@@ -121,10 +138,29 @@ export default {
             ['link']
           ],
         }
-      }
+      },
+      file: '',
+      message: "",
+      error: false
     };
   },
   methods: {
+    selectFile() {
+      this.file = this.$refs.file.files[0]
+      this.error = false;
+    },
+    async sendFile() {
+      const formData = new FormData();
+      formData.append('file', this.file);
+      try {
+        await axios.post('/upload', formData )
+        this.file="";
+        this.error = false
+      } catch (err) {
+        this.error = true
+      }
+
+    },
     toggleDialog () {
       this.show = !this.show
       this.$emit('close', this.show)
@@ -132,7 +168,8 @@ export default {
     saveArticle() {
       var data = {
         title: this.article.title,
-        content: this.article.content
+        content: this.article.content,
+        image: this.file.name
       };
 
       DataService.create(data)
@@ -140,6 +177,7 @@ export default {
             this.article.id = response.data.id;
             console.log(response.data);
             this.submitted = true;
+            this.sendFile()
           })
           .catch(e => {
             console.log(e);
