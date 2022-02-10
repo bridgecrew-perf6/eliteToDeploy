@@ -1,11 +1,9 @@
 <template>
-  <v-container>
-    <v-row justify="space-around">
-      <v-col cols="auto">
         <v-dialog v-model="show" scrollable max-width="700px">
-          <v-card class="mt-2">
-          <v-toolbar color="blue-grey">Nouvel Article</v-toolbar>
-          <v-form @submit.prevent="saveArticle" fill-width ref="addArticleForm" lazy-validation >
+          <v-card>
+            <v-toolbar color="blue-grey">Nouvel Article</v-toolbar>
+            <v-card-text>
+              <v-form @submit.prevent="saveArticle" fill-width ref="addArticleForm" lazy-validation >
             <v-container>
               <v-row>
                 <v-col cols="6">
@@ -17,17 +15,19 @@
                 </v-col>
                 <v-col cols="6">
                   <div class="large-12 medium-12 small-12 cell">
-                    <label>File
+                    <label>Image
                       <input type="file" id="file" ref="file" @change="selectFile()"/>
                     </label>
                   </div>
                 </v-col>
                 <v-col>
-                  <quill-editor
-                      v-model="article.content"
-                      :options="editorOption"
-                      style="min-height:300px;"
-                  ></quill-editor>
+                  <v-card-text>
+                    <quill-editor
+                        v-model="article.content"
+                        :options="editorOption"
+                        style="min-height:300px;"
+                    ></quill-editor>
+                  </v-card-text>
                 </v-col>
               </v-row>
               <v-card-actions>
@@ -44,11 +44,9 @@
               </v-card-actions>
             </v-container>
           </v-form>
+            </v-card-text>
           </v-card>
         </v-dialog>
-      </v-col>
-    </v-row>
-  </v-container>
 <!--  <div class="submit-form">-->
 <!--    <div v-if="!submitted">-->
 <!--      <div class="form-group">-->
@@ -114,6 +112,7 @@ export default {
       submitted: false,
       show: false,
       editorOption: {
+        theme: 'snow',
         placeholder: "Taper l'article ici ...",
         modules: {
           toolbar: [
@@ -126,7 +125,7 @@ export default {
             [{'font': []}],
             [{'color': []}, {'background': []}],
             [{'align': []}],
-            ['link']
+            ['link'],
           ],
         }
       },
