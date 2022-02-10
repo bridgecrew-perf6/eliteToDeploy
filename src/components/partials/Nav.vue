@@ -27,10 +27,11 @@
           </v-list-item>
         </router-link>
         <v-spacer></v-spacer>
-
+<v-btn @click="openFullCalendar">
         <v-icon>
           mdi-calendar
         </v-icon>
+</v-btn>
       </v-app-bar>
       <!-- Add a navigation bar -->
       <v-navigation-drawer
@@ -69,18 +70,22 @@
           </v-list-item-group>
         </v-list>
       </v-navigation-drawer>
+    <FullCalendar v-if="showFullCalendar" :visible="showFullCalendar" @close="closeFullCalendar" />
   </div>
 </template>
 
 <script>
 import {mapGetters} from "vuex";
+import FullCalendar from "../FullCalendar";
 export  default {
+  components: {FullCalendar},
   computed: { ...mapGetters(['isMobile'])},
   created() {
     // if(screen.width <= 760) this.$store.commit('setIsMobile', true)
   },
   data() {
     return {
+      showFullCalendar: false,
       isAdmin: true,
       drawer: false,
       tab: null,
@@ -90,7 +95,12 @@ export  default {
     }
   },
   methods: {
-
+    openFullCalendar() {
+      this.showFullCalendar = true
+    },
+    closeFullCalendar() {
+      this.showFullCalendar = false
+    }
   }
 }
 </script>

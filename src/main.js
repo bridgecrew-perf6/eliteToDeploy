@@ -6,6 +6,7 @@ import store from "./store";
 import VuetifyConfirm from 'vuetify-confirm';
 import { Icon }  from 'leaflet'
 import 'leaflet/dist/leaflet.css'
+import {FullCalendar} from "vue-full-calendar";
 
 Vue.use(VuetifyConfirm, {
   vuetify,
@@ -19,7 +20,7 @@ Vue.use(VuetifyConfirm, {
   title: 'Attention',
   width: 500,
   property: '$confirm'
-})
+}, FullCalendar)
 
 // this part resolve an issue where the markers would not appear
 delete Icon.Default.prototype._getIconUrl;
