@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <v-container>
     <v-layout row wrap align-center>
       <v-flex class="text-xs-center">
     <v-img
@@ -8,7 +8,6 @@
         contain
         height="300"
     />
-
     <v-container fluid style="margin: 20px">
       <v-row>
         <v-col cols="11">
@@ -47,7 +46,7 @@
             </v-img>
             <v-img
                 v-else
-                :src="require('../assets/articlesImages/' + article.image)"
+                :src="myUrl + article.image"
                 class="white--text align-end"
                 gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
                 height="300px"
@@ -143,7 +142,7 @@
       </v-flex>
     </v-layout>
     <AddArticle v-model="showArticleForm" @close="closeArticleForm"/>
-  </section>
+  </v-container>
 </template>
 
 <script>
@@ -154,7 +153,6 @@ export default {
   name: "articles-list",
   components: {AddArticle},
   created() {
-    console.log(this.articles)
   },
   data() {
     return {
@@ -165,7 +163,7 @@ export default {
       title: "",
       showArticleForm: false,
       isAdmin: true,
-
+      myUrl: "http://localhost:8080/file/"
     };
   },
   methods: {

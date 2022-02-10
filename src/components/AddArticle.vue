@@ -20,12 +20,7 @@
                     <label>File
                       <input type="file" id="file" ref="file" @change="selectFile()"/>
                     </label>
-<!--                    <button class="button">Submit</button>-->
                   </div>
-<!--                  <v-file-input-->
-<!--                      chips-->
-<!--                      label="Insérer une image"-->
-<!--                  ></v-file-input>-->
                 </v-col>
                 <v-col>
                   <quill-editor
@@ -49,10 +44,6 @@
               </v-card-actions>
             </v-container>
           </v-form>
-<!--            <v-form @submit.prevent="sendFile" enctype="multipart/form-data">-->
-<!--             -->
-
-<!--            </v-form>-->
           </v-card>
         </v-dialog>
       </v-col>

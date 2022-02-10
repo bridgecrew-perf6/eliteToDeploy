@@ -18,7 +18,7 @@
           </v-img>
           <v-img
               v-else
-            :src="require('../assets/articlesImages/' + currentArticle.image)"
+            :src="myImage"
               class="white--text align-end"
             gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
             height="300px"
@@ -51,6 +51,7 @@
 import DataService from "./service/DataService";
 import moment from 'moment';
 import 'moment/locale/fr';
+// import axios from "axios";
 moment.locale('fr')
 
 export default {
@@ -60,6 +61,7 @@ export default {
       currentArticle: null,
       message: '',
       createdDate: '',
+      myImage: ''
     };
   },
   methods: {
@@ -68,12 +70,20 @@ export default {
           .then(response => {
             this.currentArticle = response.data;
             this.createdDate = moment(this.currentArticle.createdAt).format('Do MMMM YYYY')
-            console.log(response.data);
+            // console.log(response.data);
+            this.myImage = "http://localhost:8080/file/" + this.currentArticle.image
+            // this.getFile(this.currentArticle.image)
           })
           .catch(e => {
             console.log(e);
           });
     },
+
+    // async getFile(fileName) {
+    //   await axios.get(`/file/${fileName}`).then(response => {
+    //     this.myImage = response.data
+    //   })
+    // },
 
     updatePublished(status) {
       var data = {
