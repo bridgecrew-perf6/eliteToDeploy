@@ -155,6 +155,9 @@ export default {
     toggleDialog () {
       this.show = !this.show
       this.$emit('close', this.show)
+      this.article = {}
+      this.file=""
+      this.$refs.file.value = null
     },
     saveArticle() {
       var data = {
@@ -168,7 +171,11 @@ export default {
             this.article.id = response.data.id;
             console.log(response.data);
             this.submitted = true;
-            this.sendFile()
+            if (this.$refs.file.files[0]) {
+              this.sendFile()
+            }
+            this.$emit('close', this.show)
+            location.reload()
           })
           .catch(e => {
             console.log(e);

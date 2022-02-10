@@ -7,8 +7,7 @@
           <v-img v-if="currentArticle.image === '' || currentArticle.image === null || currentArticle.image === undefined"
                  :src="require('../assets/images/pexels-dhivakaran-s-783200.jpg')"
                  class="white--text align-end"
-                 gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
-                 height="300px"
+                 max-height="300"
           >
             <v-row>
               <v-card-title v-text="currentArticle.title"></v-card-title>
@@ -18,10 +17,10 @@
           </v-img>
           <v-img
               v-else
-            :src="myImage"
+              :src="myImage"
               class="white--text align-end"
-            gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
-            height="300px"
+              contain
+              max-height="300"
           >
             <v-row>
               <v-card-title v-text="currentArticle.title"></v-card-title>
