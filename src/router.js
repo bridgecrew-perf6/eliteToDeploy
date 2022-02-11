@@ -5,6 +5,7 @@ import HomePage from "./components/HomePage";
 import Partners from "./components/Partners"
 import Articles from "./components/Articles";
 import ArticlesForm from "./components/ArticlesFormUpdate";
+import { authGuard } from "./auth/authGuard";
 
 Vue.use(VueRouter);
 
@@ -32,13 +33,9 @@ Vue.use(VueRouter);
        {
            path: "/articles/:id/update",
            name: "articles-update",
-           component: ArticlesForm
-       }
-        // {
-        //     path: "/add",
-        //     name: "add",
-        //     component: () => import("./components/AddArticle")
-        // }
+           component: ArticlesForm,
+           beforeEnter: authGuard
+       },
     ]
 
 const router = new VueRouter( {

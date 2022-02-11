@@ -130,8 +130,10 @@ export default {
     //       });
     // },
 
-    updateArticle() {
-      DataService.update(this.currentArticle.id, this.currentArticle)
+    async updateArticle() {
+      const accessToken = await this.$auth.getTokenSilently()
+
+      DataService.update(this.currentArticle.id, this.currentArticle, accessToken)
           .then(response => {
             console.log(response.data);
             this.message = 'MIS A JOUR!';
@@ -146,7 +148,9 @@ export default {
       let res = await this.$confirm('Êtes-vous sûr de vouloir valider ce paiement ? Aucune modification possible' )
       if(this.$refs.form.validate())
       if(res) {
-        DataService.delete(this.currentArticle.id)
+        const accessToken = await this.$auth.getTokenSilently()
+
+        DataService.delete(this.currentArticle.id, accessToken)
             .then(response => {
               console.log(response.data);
               this.$router.push({name: "Articles"});

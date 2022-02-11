@@ -158,14 +158,15 @@ export default {
       this.file=""
       this.$refs.file.value = null
     },
-    saveArticle() {
+    async saveArticle() {
       var data = {
         title: this.article.title,
         content: this.article.content,
         image: this.file.name
       };
+      const accessToken = await this.$auth.getTokenSilently()
 
-      DataService.create(data)
+      DataService.create(data, accessToken)
           .then(response => {
             this.article.id = response.data.id;
             console.log(response.data);

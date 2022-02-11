@@ -203,8 +203,10 @@ export default {
       window.open("http://localhost:8081/articles/" + article.id, "_self")
     },
 
-    removeAllArticles() {
-      DataService.deleteAll()
+    async removeAllArticles() {
+      const accessToken = await this.$auth.getTokenSilently()
+
+      DataService.deleteAll(accessToken)
           .then(response => {
             console.log(response.data);
             this.refreshList();
@@ -226,7 +228,7 @@ export default {
     },
 
     //TODO comment limiter à un seul clic
-    updateLike(article, index) {
+    async updateLike(article, index) {
       this.currentArticle = article;
       this.currentIndex = index;
       var data = {
@@ -235,8 +237,9 @@ export default {
         content: this.currentArticle.content,
         likeNumber: this.currentArticle.likeNumber + 1,
       };
+      const accessToken = await this.$auth.getTokenSilently()
 
-      DataService.update(this.currentArticle.id, data)
+      DataService.update(this.currentArticle.id, data, accessToken)
       .then(() => {
         this.retrieveArticles()
       })

@@ -1,22 +1,38 @@
 import http from "../../http-common";
 class DataService {
-    getAll() {
-        return http.get("/articles");
+    async getAll() {
+        return await http.get("/articles");
     }
     get(id) {
         return http.get(`/articles/${id}`);
     }
-    create(data) {
-        return http.post("/articles", data);
+    async create(data, accessToken) {
+        return await http.post("/articles", data, {
+            headers: {
+                Authorization: `Bearer ${accessToken}`
+            }
+        });
     }
-    update(id, data) {
-        return http.put(`/articles/${id}`, data);
+    async update(id, data, accessToken) {
+        return await http.put(`/articles/${id}`, data, {
+            headers: {
+                Authorization: `Bearer ${accessToken}`
+            }
+        });
     }
-    delete(id) {
-        return http.delete(`/articles/${id}`);
+    async delete(id, accessToken) {
+        return await http.delete(`/articles/${id}`, {
+            headers: {
+                Authorization: `Bearer ${accessToken}`
+            }
+        });
     }
-    deleteAll() {
-        return http.delete(`/articles`);
+    async deleteAll(accessToken) {
+        return await http.delete(`/articles`, {
+            headers: {
+                Authorization: `Bearer ${accessToken}`
+            }
+        });
     }
     findByTitle(title) {
         return http.get(`/articles?title=${title}`);

@@ -84,15 +84,16 @@ export default {
     //   })
     // },
 
-    updatePublished(status) {
+    async updatePublished(status) {
       var data = {
         id: this.currentArticle.id,
         title: this.currentArticle.title,
         description: this.currentArticle.content,
         published: status
       };
+      const accessToken = await this.$auth.getTokenSilently()
 
-      DataService.update(this.currentArticle.id, data)
+      DataService.update(this.currentArticle.id, data, accessToken)
           .then(response => {
             this.currentArticle.published = status;
             console.log(response.data);
