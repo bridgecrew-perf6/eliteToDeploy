@@ -30,12 +30,24 @@
 
       <v-card-text class="py-2 white--text text-center">
         {{ new Date().getFullYear() }} — <strong>Name</strong>
+        <div v-if="!$auth.loading">
+          <!-- show login when not authenticated -->
+          <a v-if="!$auth.isAuthenticated" @click="login" class="button is-dark"
+          ><strong>Sign in</strong></a
+          >
+          <!-- show logout when authenticated -->
+          <a v-if="$auth.isAuthenticated" @click="logout" class="button is-dark"
+          ><strong>Log out</strong></a
+          >
+        </div>
       </v-card-text>
     </v-card>
   </v-footer>
 </template>
 
 <script>
+import {mapGetters} from "vuex";
+
 export default {
   data: () => ({
     icons: [
@@ -44,5 +56,18 @@ export default {
       {name: 'mdi-instagram', link: "https://www.instagram.com/elitecoaching42/?hl=fr"}
     ],
   }),
+  computed: {...mapGetters(['isAdmin'])},
+  methods: {
+    // Log the user in
+    login() {
+      this.$auth.loginWithRedirect();
+    },
+    // Log the user out
+    logout() {
+      this.$auth.logout({
+        returnTo: window.location.origin
+      });
+    }
+  }
 }
 </script>
