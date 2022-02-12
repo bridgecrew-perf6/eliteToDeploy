@@ -94,7 +94,8 @@ import axios from "axios";
 export default {
   name: "add-article",
   props: ['value'],
-  created() {this.show = this.value
+  created() {
+    this.show = this.value
   },
   watch: {
     value (v) {

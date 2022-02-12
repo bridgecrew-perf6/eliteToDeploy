@@ -77,16 +77,17 @@
 <script>
 import {mapGetters} from "vuex";
 import FullCalendar from "../FullCalendar";
+import {getInstance} from "../../auth";
 export  default {
   components: {FullCalendar},
-  computed: { ...mapGetters(['isMobile'])},
+  computed: { ...mapGetters(['isMobile', 'isAdmin'])},
   created() {
+    this.init(this.loadTokenInfoStore)
     // if(screen.width <= 760) this.$store.commit('setIsMobile', true)
   },
   data() {
     return {
       showFullCalendar: false,
-      isAdmin: true,
       drawer: false,
       tab: null,
       items: [
@@ -95,6 +96,22 @@ export  default {
     }
   },
   methods: {
+    init(fn) {
+      let instance = getInstance();
+      instance.$watch("loading", loading => {
+        if (loading === false) {
+          fn(instance)
+        }
+      })
+    },
+    async loadTokenInfoStore(instance) {
+      await instance.getTokenSilently().then(() => {
+       if (this.$auth.user.name === "celine@leroux.com") {
+         this.$store.commit('setIsAdmin', true)
+       }
+        else console.log(this.isAdmin)
+      })
+    },
     openFullCalendar() {
       this.showFullCalendar = true
     },

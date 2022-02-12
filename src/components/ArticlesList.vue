@@ -63,6 +63,13 @@
                 Explore
               </v-btn>
               <v-spacer></v-spacer>
+              <v-btn
+                  icon
+                  @click="openUpdateArticle(article, index)"
+                  v-if="isAdmin"
+              >
+                <v-icon>mdi-pen</v-icon>
+              </v-btn>
               <v-btn icon @click="openActiveArticle(article, index)">
                 <v-icon>mdi-magnify-plus</v-icon>
               </v-btn>
@@ -148,10 +155,12 @@
 <script>
 import DataService from "./service/DataService";
 import AddArticle from "./AddArticle";
+import {mapGetters} from "vuex";
 
 export default {
   name: "articles-list",
   components: {AddArticle},
+  computed: { ...mapGetters(['isAdmin'])},
   created() {
   },
   data() {
@@ -162,7 +171,6 @@ export default {
       currentIndex: -1,
       title: "",
       showArticleForm: false,
-      isAdmin: true,
       myUrl: "http://localhost:8080/file/"
     };
   },
@@ -184,7 +192,6 @@ export default {
           .then(response => {
             this.articles = response.data;
             this.addShow()
-            console.log(response.data);
           })
           .catch(e => {
             console.log(e);
@@ -201,6 +208,12 @@ export default {
       this.currentArticle = article;
       this.currentIndex = index;
       window.open("http://localhost:8081/articles/" + article.id, "_self")
+    },
+
+    openUpdateArticle(article, index) {
+      this.currentArticle = article;
+      this.currentIndex = index;
+      window.open("http://localhost:8081/articles/" + article.id + "/update", "_self")
     },
 
     async removeAllArticles() {

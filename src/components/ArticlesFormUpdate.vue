@@ -74,10 +74,15 @@ import 'quill/dist/quill.snow.css'
 import 'quill/dist/quill.bubble.css'
 
 import { quillEditor } from 'vue-quill-editor'
+import {mapGetters} from "vuex";
 
 export default {
-  name: "articles",
+  name: "articlesFormUpdate",
   components: {quillEditor},
+  computed: { ...mapGetters(['isAdmin'])},
+  created() {
+    console.log(this.isAdmin)
+  },
   data() {
     return {
       currentArticle: null,
@@ -133,10 +138,10 @@ export default {
     async updateArticle() {
       const accessToken = await this.$auth.getTokenSilently()
 
-      DataService.update(this.currentArticle.id, this.currentArticle, accessToken)
-          .then(response => {
+      DataService.update(this.currentArticle.id, this.currentArticle, accessToken).then(response => {
             console.log(response.data);
             this.message = 'MIS A JOUR!';
+            //TODO n'est plus redirigé...
             this.$router.push({ name: "Articles" });
           })
           .catch(e => {
