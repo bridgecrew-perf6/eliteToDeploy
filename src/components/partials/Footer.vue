@@ -61,6 +61,7 @@ export default {
     // Log the user in
     login() {
       this.$auth.loginWithRedirect();
+
     },
     // Log the user out
     logout() {

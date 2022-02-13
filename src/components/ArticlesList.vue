@@ -20,7 +20,7 @@
                   @click="openArticleForm"
                   v-bind="attrs"
                   v-on="on"
-                  v-if="isAdmin"
+                  v-show="isAdmin"
               >
                 mdi-pen-plus</v-icon>
             </template>
@@ -60,12 +60,12 @@
                 text
                 @click.native="article.show = !article.show"
               >
-                Explore
+                Aperçu
               </v-btn>
               <v-spacer></v-spacer>
               <v-btn
                   icon
-                  @click="openUpdateArticle(article, index)"
+                  @click="openUpdateForm(article)"
                   v-if="isAdmin"
               >
                 <v-icon>mdi-pen</v-icon>
@@ -149,6 +149,7 @@
       </v-flex>
     </v-layout>
     <AddArticle v-model="showArticleForm" @close="closeArticleForm"/>
+    <UpdateArticle v-model="showUpdateForm" @close="closeUpdateForm" :articleToUpdate="articleToUpdate" />
   </v-container>
 </template>
 
@@ -156,10 +157,11 @@
 import DataService from "./service/DataService";
 import AddArticle from "./AddArticle";
 import {mapGetters} from "vuex";
+import UpdateArticle from "./UpdateArticle"
 
 export default {
   name: "articles-list",
-  components: {AddArticle},
+  components: {UpdateArticle, AddArticle},
   computed: { ...mapGetters(['isAdmin'])},
   created() {
   },
@@ -171,6 +173,8 @@ export default {
       currentIndex: -1,
       title: "",
       showArticleForm: false,
+      showUpdateForm: false,
+      articleToUpdate : {},
       myUrl: "http://localhost:8080/file/"
     };
   },
@@ -184,8 +188,15 @@ export default {
     openArticleForm() {
       this.showArticleForm = true;
     },
+    openUpdateForm(article) {
+      this.articleToUpdate = article
+      this.showUpdateForm = true
+    },
     closeArticleForm() {
       this.showArticleForm = false;
+    },
+    closeUpdateForm() {
+      this.showUpdateForm = false
     },
     retrieveArticles() {
       DataService.getAll()
@@ -198,53 +209,48 @@ export default {
           });
     },
 
-    refreshList() {
-      this.retrieveArticles();
-      this.currentArticle = null;
-      this.currentIndex = -1;
-    },
+    // refreshList() {
+    //   this.retrieveArticles();
+    //   this.currentArticle = null;
+    //   this.currentIndex = -1;
+    // },
 
+    //TODO à la place de ça utiliser le composant
     openActiveArticle(article, index) {
       this.currentArticle = article;
       this.currentIndex = index;
       window.open("http://localhost:8081/articles/" + article.id, "_self")
     },
 
-    openUpdateArticle(article, index) {
-      this.currentArticle = article;
-      this.currentIndex = index;
-      window.open("http://localhost:8081/articles/" + article.id + "/update", "_self")
-    },
+    // async removeAllArticles() {
+    //   const accessToken = await this.$auth.getTokenSilently()
+    //
+    //   DataService.deleteAll(accessToken)
+    //       .then(response => {
+    //         console.log(response.data);
+    //         this.refreshList();
+    //       })
+    //       .catch(e => {
+    //         console.log(e);
+    //       });
+    // },
 
-    async removeAllArticles() {
-      const accessToken = await this.$auth.getTokenSilently()
+    // searchTitle() {
+    //   DataService.findByTitle(this.title)
+    //       .then(response => {
+    //         this.articles = response.data;
+    //         console.log(response.data);
+    //       })
+    //       .catch(e => {
+    //         console.log(e);
+    //       });
+    // },
 
-      DataService.deleteAll(accessToken)
-          .then(response => {
-            console.log(response.data);
-            this.refreshList();
-          })
-          .catch(e => {
-            console.log(e);
-          });
-    },
-
-    searchTitle() {
-      DataService.findByTitle(this.title)
-          .then(response => {
-            this.articles = response.data;
-            console.log(response.data);
-          })
-          .catch(e => {
-            console.log(e);
-          });
-    },
-
-    //TODO comment limiter à un seul clic
+    //TODO comment limiter à un seul clic sans auth
     async updateLike(article, index) {
       this.currentArticle = article;
       this.currentIndex = index;
-      var data = {
+      const data = {
         id: this.currentArticle.id,
         title: this.currentArticle.title,
         content: this.currentArticle.content,

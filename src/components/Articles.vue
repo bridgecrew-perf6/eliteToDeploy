@@ -50,11 +50,13 @@
 import DataService from "./service/DataService";
 import moment from 'moment';
 import 'moment/locale/fr';
+import {mapGetters} from "vuex";
 // import axios from "axios";
 moment.locale('fr')
 
 export default {
   name: "articles",
+  computed: {...mapGetters(['isAdmin'])},
   data() {
     return {
       currentArticle: null,
@@ -69,9 +71,7 @@ export default {
           .then(response => {
             this.currentArticle = response.data;
             this.createdDate = moment(this.currentArticle.createdAt).format('Do MMMM YYYY')
-            // console.log(response.data);
             this.myImage = "http://localhost:8080/file/" + this.currentArticle.image
-            // this.getFile(this.currentArticle.image)
           })
           .catch(e => {
             console.log(e);

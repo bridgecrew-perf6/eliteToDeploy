@@ -4,9 +4,8 @@ import ArticlesList from "./components/ArticlesList";
 import HomePage from "./components/HomePage";
 import Partners from "./components/Partners"
 import Articles from "./components/Articles";
-import ArticlesForm from "./components/ArticlesFormUpdate";
-import { authGuard } from "./auth/authGuard";
-
+// import { authGuard } from "./auth/authGuard";
+//
 Vue.use(VueRouter);
 
    const routes = [
@@ -30,12 +29,6 @@ Vue.use(VueRouter);
             name: "articles-details",
             component: Articles
         },
-       {
-           path: "/articles/:id/update",
-           name: "articles-update",
-           component: ArticlesForm,
-           beforeEnter: authGuard
-       },
     ]
 
 const router = new VueRouter( {

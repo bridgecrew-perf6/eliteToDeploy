@@ -1,52 +1,51 @@
 <template>
-        <v-dialog v-model="show" scrollable max-width="700px">
-          <v-card>
-            <v-toolbar color="blue-grey">Nouvel Article</v-toolbar>
+  <v-dialog v-model="show" scrollable max-width="700px">
+    <v-card>
+      <v-toolbar color="blue-grey">Nouvel Article</v-toolbar>
+      <v-card-text>
+        <v-form @submit.prevent="saveArticle" fill-width ref="addArticleForm" lazy-validation >
+      <v-container>
+        <v-row>
+          <v-col cols="6">
+            <v-text-field
+              v-model="article.title"
+              label="Titre"
+              required
+            />
+          </v-col>
+          <v-col cols="6">
+            <div class="large-12 medium-12 small-12 cell">
+              <label>Image
+                <input type="file" id="file" ref="file" @change="selectFile()"/>
+              </label>
+            </div>
+          </v-col>
+          <v-col>
             <v-card-text>
-              <v-form @submit.prevent="saveArticle" fill-width ref="addArticleForm" lazy-validation >
-            <v-container>
-              <v-row>
-                <v-col cols="6">
-                  <v-text-field
-                    v-model="article.title"
-                    label="Titre"
-                    required
-                  />
-                </v-col>
-                <v-col cols="6">
-                  <div class="large-12 medium-12 small-12 cell">
-                    <label>Image
-                      <input type="file" id="file" ref="file" @change="selectFile()"/>
-                    </label>
-                  </div>
-                </v-col>
-                <v-col>
-                  <v-card-text>
-                    <quill-editor
-                        v-model="article.content"
-                        :options="editorOption"
-                        style="min-height:300px;"
-                    ></quill-editor>
-                  </v-card-text>
-                </v-col>
-              </v-row>
-              <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn color="blue darken-1" text @click=toggleDialog()>Annuler</v-btn>
-                <v-btn
-                    @click.prevent="saveArticle"
-                    color="primary"
-                    value="submit"
-                    text type="submit"
-                >
-                  Valider
-                </v-btn>
-              </v-card-actions>
-            </v-container>
-          </v-form>
+              <quill-editor
+                  v-model="article.content"
+                  :options="editorOption"
+                  style="min-height:300px;"
+              ></quill-editor>
             </v-card-text>
-          </v-card>
-        </v-dialog>
+          </v-col>
+        </v-row>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="blue darken-1" text @click=toggleDialog()>Annuler</v-btn>
+          <v-btn
+              color="primary"
+              value="submit"
+              text type="submit"
+          >
+            Valider
+          </v-btn>
+        </v-card-actions>
+      </v-container>
+    </v-form>
+      </v-card-text>
+    </v-card>
+  </v-dialog>
 <!--  <div class="submit-form">-->
 <!--    <div v-if="!submitted">-->
 <!--      <div class="form-group">-->
@@ -131,7 +130,6 @@ export default {
         }
       },
       file: '',
-      message: "",
       error: false
     };
   },
