@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import createPersistedState from "vuex-persistedstate"
+// import createPersistedState from "vuex-persistedstate"
 
 Vue.use(Vuex)
 
@@ -9,10 +9,10 @@ export default new Vuex.Store({
         isMobile: false,
         isAdmin: false,
     },
-    plugins: [createPersistedState({
-        paths: ['isAdmin']
-    })
-    ],
+    // plugins: [createPersistedState({
+    //     paths: ['isAdmin']
+    // })
+    // ],
     mutations: {
         setIsMobile (state, isMobile) {
             state.isMobile = isMobile

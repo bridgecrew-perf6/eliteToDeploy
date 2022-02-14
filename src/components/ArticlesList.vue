@@ -70,7 +70,10 @@
               >
                 <v-icon>mdi-pen</v-icon>
               </v-btn>
-              <v-btn icon @click="openActiveArticle(article, index)">
+<!--              ouvre dans une nouvelle page-->
+<!--              <v-btn icon @click="openActiveArticle(article, index)">-->
+<!--              ouvre en dessous-->
+              <v-btn icon @click="openArticleView(article, index)">
                 <v-icon>mdi-magnify-plus</v-icon>
               </v-btn>
               <v-btn icon @click="updateLike(article, index)">
@@ -150,6 +153,7 @@
     </v-layout>
     <AddArticle v-model="showArticleForm" @close="closeArticleForm"/>
     <UpdateArticle v-model="showUpdateForm" @close="closeUpdateForm" :articleToUpdate="articleToUpdate" />
+    <ArticlesView v-model="showArticleView" @close="closeArticleView" :currentArticle="currentArticle" :isAdmin="isAdmin"/>
   </v-container>
 </template>
 
@@ -158,12 +162,14 @@ import DataService from "./service/DataService";
 import AddArticle from "./AddArticle";
 import {mapGetters} from "vuex";
 import UpdateArticle from "./UpdateArticle"
+import ArticlesView from "./ArticleView";
 
 export default {
   name: "articles-list",
-  components: {UpdateArticle, AddArticle},
+  components: {ArticlesView, UpdateArticle, AddArticle},
   computed: { ...mapGetters(['isAdmin'])},
   created() {
+    console.log(this.isAdmin)
   },
   data() {
     return {
@@ -175,7 +181,8 @@ export default {
       showArticleForm: false,
       showUpdateForm: false,
       articleToUpdate : {},
-      myUrl: "http://localhost:8080/file/"
+      myUrl: "http://localhost:8080/file/",
+      showArticleView: false
     };
   },
   methods: {
@@ -184,6 +191,13 @@ export default {
         ...article,
         show: false
       }))
+    },
+    openArticleView(currentArticle) {
+      this.currentArticle = currentArticle
+      this.showArticleView = true
+    },
+    closeArticleView() {
+      this.showArticleView = false
     },
     openArticleForm() {
       this.showArticleForm = true;
@@ -215,12 +229,11 @@ export default {
     //   this.currentIndex = -1;
     // },
 
-    //TODO à la place de ça utiliser le composant
-    openActiveArticle(article, index) {
-      this.currentArticle = article;
-      this.currentIndex = index;
-      window.open("http://localhost:8081/articles/" + article.id, "_self")
-    },
+    // openActiveArticle(article, index) {
+    //   this.currentArticle = article;
+    //   this.currentIndex = index;
+    //   window.open("http://localhost:8081/articles/" + article.id, "_self")
+    // },
 
     // async removeAllArticles() {
     //   const accessToken = await this.$auth.getTokenSilently()

@@ -3,6 +3,13 @@ class DataService {
     async getAll() {
         return await http.get("/articles");
     }
+    async getAllAdmin(accessToken) {
+        return await http.get("/admin", {
+            headers: {
+                Authorization: `Bearer ${accessToken}`
+            }
+        })
+    }
     get(id) {
         return http.get(`/articles/${id}`);
     }

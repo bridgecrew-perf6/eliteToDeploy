@@ -78,6 +78,7 @@
 import {mapGetters} from "vuex";
 import FullCalendar from "../FullCalendar";
 import {getInstance} from "../../auth";
+import DataService from "../service/DataService";
 export  default {
   components: {FullCalendar},
   computed: { ...mapGetters(['isMobile', 'isAdmin'])},
@@ -93,6 +94,7 @@ export  default {
       items: [
         'web', 'shopping', 'videos', 'images', 'news',
       ],
+      allAdmins: {}
     }
   },
   methods: {
@@ -105,11 +107,22 @@ export  default {
       })
     },
     async loadTokenInfoStore(instance) {
-      await instance.getTokenSilently().then(() => {
-       if (this.$auth.user.name === "celine@leroux.com") {
-         this.$store.commit('setIsAdmin', true)
-       }
-        else console.log(this.isAdmin)
+      await instance.getTokenSilently().then((accessToken) => {
+        DataService.getAllAdmin(accessToken)
+        .then(response => {
+          this.allAdmins = response.data
+          if (this.allAdmins.some(data => data.email === this.$auth.user.email)) {
+            this.$store.commit('setIsAdmin', true)
+            console.log(this.isAdmin)
+          } else {
+            console.log("this.isAdmin")
+            console.log(this.isAdmin)
+          }
+        })
+      //  if (this.$auth.user.name === "celine@leroux.com") {
+      //    this.$store.commit('setIsAdmin', true)
+      //  }
+      //   else console.log(this.isAdmin)
       })
     },
     openFullCalendar() {

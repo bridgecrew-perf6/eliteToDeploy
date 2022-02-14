@@ -18,7 +18,6 @@
           <v-img
               v-else
               :src="myImage"
-              class="white--text align-end"
               contain
               max-height="300"
           >

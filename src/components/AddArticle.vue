@@ -89,6 +89,7 @@ import 'quill/dist/quill.bubble.css'
 
 import { quillEditor } from 'vue-quill-editor'
 import axios from "axios";
+import moment from "moment";
 
 export default {
   name: "add-article",
@@ -161,7 +162,8 @@ export default {
       var data = {
         title: this.article.title,
         content: this.article.content,
-        image: this.file.name
+        image: this.file.name,
+        createdAt: moment.now()
       };
       const accessToken = await this.$auth.getTokenSilently()
 
