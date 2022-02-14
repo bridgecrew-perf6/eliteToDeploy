@@ -12,7 +12,7 @@
         >
           <v-icon>mdi-close</v-icon>
         </v-btn>
-        <v-toolbar-title>Mes Rendez-Vous</v-toolbar-title>
+        <v-toolbar-title>Rendez-Vous</v-toolbar-title>
         <v-spacer></v-spacer>
         <v-toolbar-items>
           <v-btn
@@ -78,7 +78,7 @@
                 <v-btn icon>
                   <v-icon>mdi-pencil</v-icon>
                 </v-btn>
-                <v-toolbar-title v-html="selectedEvent.name"></v-toolbar-title>
+                <v-toolbar-title>{{selectedEvent.name}}</v-toolbar-title>
                 <v-spacer></v-spacer>
                 <v-btn icon
                        @click="selectedOpen = false">
@@ -86,9 +86,20 @@
                 </v-btn>
               </v-toolbar>
               <v-card-text>
-                <span v-html="selectedEvent.start"></span>
-                <span v-html="selectedEvent.end"></span>
-                <span v-html="selectedEvent.comment"></span>
+                <span>{{ this.formattedDate(this.selectedEvent.start) }} - {{this.formattedDate(this.selectedEvent.end)}}</span>
+                <h4>Objet du rendez-vous :</h4>
+                <p>{{selectedEvent.comment}}</p>
+                <h4>Coordonnées</h4>
+                <span>Nom : {{this.selectedEvent.name}}</span><br>
+                <span>Tél : {{this.selectedEvent.phone}}</span><br>
+                <span>Email : {{this.selectedEvent.email}}</span><br>
+                <v-card-actions>
+                  <v-spacer></v-spacer>
+                  <v-btn @click="deleteEvent">
+                    <v-icon color="red">mdi-delete</v-icon>
+                  </v-btn>
+                </v-card-actions>
+
               </v-card-text>
             </v-card>
           </v-menu>
@@ -100,6 +111,10 @@
 
 
 <script>
+
+import CalendarService from "./service/CalendarService";
+import {mapGetters} from "vuex";
+import moment from "moment";
 
 export default {
   components: {
@@ -114,7 +129,8 @@ export default {
           this.$emit('close')
         }
       }
-    }
+    },
+    ...mapGetters(['isAdmin'])
   },
   props: ['visible'],
   data() {
@@ -130,35 +146,76 @@ export default {
       weekday: [1, 2, 3, 4, 5, 6],
       value: '',
       events: [],
+      eventsWithGoodDate: []
     }
   },
   methods: {
+    formattedDate(date) {
+      return moment(date).format('HH:mm')
+    },
+
     showEvent ({ nativeEvent, event }) {
-      const open = () => {
-        this.selectedEvent = event
-        this.selectedElement = nativeEvent.target
-        requestAnimationFrame(() => requestAnimationFrame(() => this.selectedOpen = true))
-      }
+      if(this.isAdmin) {
+        const open = () => {
+          this.selectedEvent = event
+          this.selectedElement = nativeEvent.target
+          requestAnimationFrame(() => requestAnimationFrame(() => this.selectedOpen = true))
+        }
 
-      if (this.selectedOpen) {
-        this.selectedOpen = false
-        requestAnimationFrame(() => requestAnimationFrame(() => open()))
+        if (this.selectedOpen) {
+          this.selectedOpen = false
+          requestAnimationFrame(() => requestAnimationFrame(() => open()))
+        } else {
+          open()
+        }
+        nativeEvent.stopPropagation()
+      }
+    },
+
+    getStatusColor(status) {
+      if(status === true) {
+        return "blue"
       } else {
-        open()
+        return "red"
       }
-
-      nativeEvent.stopPropagation()
     },
 
-    //events à récupérer depuis API - DB
     getEvents () {
-      this.events = [
-        {color: 'blue', name: 'User Name', start: '2022-02-04 12:40', end: '2022-01-04 13:00', comment: "maux de tête"},
-        {color: 'indigo', name: 'Céline Leroux', start: '2022-02-04 15:00', end: '2022-01-04 16:00'},
-        {color: 'red', name: 'Sasha Leroux', start: '2022-02-17 13:00', end: '2022-01-17 14:00'},
-        {color: 'red', name: 'Adeline', start: '2022-02-17 13:00', end: '2022-02-17 14:00'},
-      ]
+      CalendarService.getAllAppointments()
+      .then(response => {
+        if (this.isAdmin) {
+          this.events = response.data.map(appointments => ({
+            ...appointments,
+            color: this.getStatusColor(appointments.status),
+          }))
+
+        } else {
+          this.events = response.data.map(appointments => ({
+            ...appointments,
+            name: "occupé",
+            color: "grey"
+          }))
+        }
+        console.log(this.events)
+      })
+      // this.events = [
+      //   {color: 'blue', name: 'User Name', start: '2022-02-04', end: '2022-01-04', comment: "maux de tête"},
+      //   {color: 'indigo', name: 'Céline Leroux', start: '2022-02-04 15:00', end: '2022-01-04 16:00'},
+      //   {color: 'red', name: 'Sasha Leroux', start: '2022-02-17 13:00', end: '2022-01-17 14:00'},
+      //   {color: 'red', name: 'Adeline', start: '2022-02-17 13:00', end: '2022-02-17 14:00'},
+      // ]
     },
+
+    async deleteEvent() {
+      let res = await this.$confirm("Tu es sûre de vouloir supprimer ce rendez-vous ?");
+      if(res) {
+        CalendarService.delete(this.selectedEvent.id)
+            .then(response => {
+              console.log(response.data)
+              this.getEvents()
+            })
+      }
+    }
   },
 }
 </script>

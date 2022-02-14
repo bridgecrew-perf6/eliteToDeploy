@@ -113,7 +113,6 @@ export  default {
           this.allAdmins = response.data
           if (this.allAdmins.some(data => data.email === this.$auth.user.email)) {
             this.$store.commit('setIsAdmin', true)
-            console.log(this.isAdmin)
           } else {
             console.log("this.isAdmin")
             console.log(this.isAdmin)

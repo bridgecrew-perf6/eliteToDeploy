@@ -85,7 +85,9 @@
               <div v-show="article.show">
                 <v-divider></v-divider>
                 <v-card-text>
-                  <div v-html="article.content.substring(0, 500)"> ... </div>
+<!--                  <div v-html="article.content.substring(0, 500)"> ... </div>-->
+<!--                  TODO limiter l'article-->
+                  <div v-html="article.content"> ... </div>
                   <v-btn text @click="openActiveArticle(article, index)">
                     <span>Lire l'article en entier</span>
                   </v-btn>
@@ -169,7 +171,6 @@ export default {
   components: {ArticlesView, UpdateArticle, AddArticle},
   computed: { ...mapGetters(['isAdmin'])},
   created() {
-    console.log(this.isAdmin)
   },
   data() {
     return {
@@ -229,6 +230,7 @@ export default {
     //   this.currentIndex = -1;
     // },
 
+    //TODO à la place de ça utiliser le composant
     // openActiveArticle(article, index) {
     //   this.currentArticle = article;
     //   this.currentIndex = index;

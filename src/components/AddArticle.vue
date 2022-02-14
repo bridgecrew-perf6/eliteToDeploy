@@ -177,10 +177,10 @@ export default {
             }
             this.$emit('close', this.show)
             location.reload()
-          })
-          .catch(e => {
-            console.log(e);
-          });
+          }).catch(e => {
+        console.log(e);
+      });
+
     },
 
     newArticle() {
