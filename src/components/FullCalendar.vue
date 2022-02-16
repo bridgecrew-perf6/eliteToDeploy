@@ -22,6 +22,7 @@
           >
             Enregistrer
           </v-btn>
+          <v-btn @click="openAddForm">add</v-btn>
         </v-toolbar-items>
       </v-toolbar>
       <div>
@@ -58,6 +59,7 @@
               @change="getEvents"
               locale="fr"
               @click:event="showEvent"
+              @click:date="addEvent"
           ></v-calendar>
           <v-menu
               v-model="selectedOpen"
@@ -75,10 +77,12 @@
                   :color="selectedEvent.color"
                   dark
               >
-                <v-btn icon>
+                <v-btn icon
+                       @click="openUpdateForm(selectedEvent)"
+                >
                   <v-icon>mdi-pencil</v-icon>
                 </v-btn>
-                <v-toolbar-title>{{selectedEvent.name}}</v-toolbar-title>
+                <v-toolbar-title>{{this.selectedEvent.name}}</v-toolbar-title>
                 <v-spacer></v-spacer>
                 <v-btn icon
                        @click="selectedOpen = false">
@@ -106,6 +110,8 @@
         </v-sheet>
       </div>
     </v-card>
+    <AddEvent :visible="showAddEventForm" v-model="showAddEventForm" @close="closeAddForm" :dateEvent="dateEvent"/>
+    <UpdateEvent v-model="showUpdateForm" @close="closeUpdateForm" :visible="showUpdateForm" :eventToUpdate="eventToUpdate"/>
   </v-container>
 </template>
 
@@ -115,9 +121,12 @@
 import CalendarService from "./service/CalendarService";
 import {mapGetters} from "vuex";
 import moment from "moment";
+import UpdateEvent from "./UpdateEvent";
+import AddEvent from "./AddEvent";
 
 export default {
   components: {
+    UpdateEvent, AddEvent
   },
   computed: {
     show: {
@@ -146,12 +155,34 @@ export default {
       weekday: [1, 2, 3, 4, 5, 6],
       value: '',
       events: [],
-      eventsWithGoodDate: []
+      eventsWithGoodDate: [],
+      showUpdateForm: false,
+      eventToUpdate: {},
+      showAddEventForm: false,
+      dateEvent: ''
     }
   },
   methods: {
     formattedDate(date) {
       return moment(date).format('HH:mm')
+    },
+
+    openAddForm() {
+      this.showAddEventForm = true
+    },
+
+    closeAddForm() {
+      this.showAddEventForm = false
+    },
+
+    openUpdateForm(event) {
+      this.eventToUpdate = event
+      this.showUpdateForm = true
+    },
+
+    closeUpdateForm() {
+      this.showUpdateForm = false
+      this.getEvents()
     },
 
     showEvent ({ nativeEvent, event }) {
@@ -178,6 +209,11 @@ export default {
       } else {
         return "red"
       }
+    },
+
+    addEvent() {
+      this.dateEvent = this.value
+      this.openAddForm()
     },
 
     getEvents () {

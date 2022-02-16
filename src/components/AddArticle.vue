@@ -166,7 +166,7 @@ export default {
         createdAt: moment.now()
       };
       const accessToken = await this.$auth.getTokenSilently()
-
+console.log(data)
       DataService.create(data, accessToken)
           .then(response => {
             this.article.id = response.data.id;
