@@ -73,6 +73,8 @@
                     required
                 />
               </v-col>
+            </v-row>
+            <v-row>
               <v-col cols="6">
                 <v-text-field
                     v-model="eventToUpdate.phone"
@@ -87,10 +89,27 @@
                     required
                 />
               </v-col>
-              <v-col>
+            </v-row>
+            <v-row>
+              <v-col cols="9">
                 <v-textarea
                     v-model="eventToUpdate.comment"
                     label="Objet du rendez-vous"/>
+              </v-col>
+              <v-col cols="3">
+                <template>
+                  <v-container
+                      class="px-0"
+                      fluid
+                  >
+                    <v-checkbox
+                        v-model="eventToUpdate.status"
+                        @change="changeCheckboxText"
+                    ></v-checkbox>
+                    <span v-if="eventToUpdate.status">Rendez-vous confirmé !</span>
+                    <span v-else>Rendez-vous à confirmer ?</span>
+                  </v-container>
+                </template>
               </v-col>
             </v-row>
             <v-card-actions>
@@ -102,7 +121,6 @@
               <v-btn
                   color="primary"
                   @click="updateEvent"
-
               >
                 Valider
               </v-btn>
@@ -133,7 +151,8 @@ export default {
       set: function (newValue) {
         this.timeStart = newValue
       }
-    }
+    },
+
   },
   created() {
     this.show = this.visible
@@ -159,7 +178,8 @@ export default {
       // eventDate: '',
       dateInput: '',
       timeStart: '',
-      timeInput: ''
+      timeInput: '',
+      checkboxText: '',
       // disabledDates: { weekdays: [1, 6]}
     }
   },
@@ -175,6 +195,12 @@ export default {
       console.log(date)
     },
 
+    changeCheckboxText(){
+      if(this.form.status === false) {
+        this.checkboxText = "À confirmer"
+      } else this.checkboxText = "Confirmé !"
+    },
+
     timeEventChange: function (time) {
       this.timeInput = moment(time).format('hh:mm')
       console.log("time")
@@ -186,11 +212,11 @@ export default {
     },
 
     getFormDate() {
+      //TODO ne renvoit pas la bonne heure
       this.form = this.eventToUpdate;
       this.form.start = moment(this.computedDateFormatted + ' ' + this.timeStart).add("1", "hour").format('YYYY-DD-MM HH:mm:ss')
-      //TODO : trouver un autre moyen d'ajouter une heure
       this.form.end = moment(this.form.start, 'YYYY-DD-MM HH:mm:ss').add("2", 'hour').format('YYYY-DD-MM HH:mm:ss')
-      console.log(this.form)
+      console.log(this.form.start)
       },
 
     updateEvent() {

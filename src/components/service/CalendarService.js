@@ -4,12 +4,8 @@ class CalendarService {
         return await http.get("/appointment")
     }
 
-    async create(data, accessToken) {
-        return await http.post("/appointment", data, {
-            headers: {
-                Authorization: `Bearer ${accessToken}`
-            }
-        });
+    async create(data) {
+        return await http.post("/appointment", data);
     }
 
     async delete(id) {

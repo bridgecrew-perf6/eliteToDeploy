@@ -5,13 +5,6 @@
           dark
           color="primary"
       >
-        <v-btn
-            icon
-            dark
-            @click="show = false"
-        >
-          <v-icon>mdi-close</v-icon>
-        </v-btn>
         <v-toolbar-title>Rendez-Vous</v-toolbar-title>
         <v-spacer></v-spacer>
         <v-toolbar-items>
@@ -20,9 +13,8 @@
               text
               @click="show = false"
           >
-            Enregistrer
+            <v-icon>mdi-close</v-icon>
           </v-btn>
-          <v-btn @click="openAddForm">add</v-btn>
         </v-toolbar-items>
       </v-toolbar>
       <div>
@@ -97,6 +89,9 @@
                 <span>Nom : {{this.selectedEvent.name}}</span><br>
                 <span>Tél : {{this.selectedEvent.phone}}</span><br>
                 <span>Email : {{this.selectedEvent.email}}</span><br>
+                <br>
+                <span class="font-italic" v-if="selectedEvent.status">Rendez-vous confirmé !</span>
+                <span class="font-italic" v-else>Rendez-vous non confirmé</span>
                 <v-card-actions>
                   <v-spacer></v-spacer>
                   <v-btn @click="deleteEvent">
@@ -110,7 +105,7 @@
         </v-sheet>
       </div>
     </v-card>
-    <AddEvent :visible="showAddEventForm" v-model="showAddEventForm" @close="closeAddForm" :dateEvent="dateEvent"/>
+    <AddEvent ref="addEventForm" :visible="showAddEventForm" v-model="showAddEventForm" @close="closeAddForm" :dateEvent="dateEvent"/>
     <UpdateEvent v-model="showUpdateForm" @close="closeUpdateForm" :visible="showUpdateForm" :eventToUpdate="eventToUpdate"/>
   </v-container>
 </template>
@@ -119,7 +114,7 @@
 <script>
 
 import CalendarService from "./service/CalendarService";
-import {mapGetters} from "vuex";
+import {mapActions, mapGetters} from "vuex";
 import moment from "moment";
 import UpdateEvent from "./UpdateEvent";
 import AddEvent from "./AddEvent";
@@ -139,7 +134,7 @@ export default {
         }
       }
     },
-    ...mapGetters(['isAdmin'])
+    ...mapGetters(['isAdmin', 'allEvents'])
   },
   props: ['visible'],
   data() {
@@ -163,6 +158,7 @@ export default {
     }
   },
   methods: {
+    ...mapActions(['getAllEvents']),
     formattedDate(date) {
       return moment(date).format('HH:mm')
     },
@@ -173,6 +169,8 @@ export default {
 
     closeAddForm() {
       this.showAddEventForm = false
+      this.getEvents()
+      this.$refs.addEventForm.resetAddForm()
     },
 
     openUpdateForm(event) {
@@ -219,6 +217,7 @@ export default {
     getEvents () {
       CalendarService.getAllAppointments()
       .then(response => {
+        this.$store.commit('setAllEvents', response.data)
         if (this.isAdmin) {
           this.events = response.data.map(appointments => ({
             ...appointments,
@@ -232,7 +231,10 @@ export default {
             color: "grey"
           }))
         }
-        console.log(this.events)
+        // console.log("this.events")
+        // console.log(this.events)
+        // console.log("this.allEvents")
+        // console.log(this.allEvents)
       })
       // this.events = [
       //   {color: 'blue', name: 'User Name', start: '2022-02-04', end: '2022-01-04', comment: "maux de tête"},
