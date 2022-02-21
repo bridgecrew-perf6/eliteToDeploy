@@ -63,6 +63,7 @@
                 color="grey lighten-4"
                 min-width="400px"
                 flat
+                persistant
             >
 
               <v-toolbar
@@ -77,7 +78,7 @@
                 <v-toolbar-title>{{this.selectedEvent.name}}</v-toolbar-title>
                 <v-spacer></v-spacer>
                 <v-btn icon
-                       @click="selectedOpen = false">
+                       @click="closeSelectedOpen">
                   <v-icon>mdi-close</v-icon>
                 </v-btn>
               </v-toolbar>
@@ -106,7 +107,7 @@
       </div>
     </v-card>
     <AddEvent ref="addEventForm" :visible="showAddEventForm" v-model="showAddEventForm" @close="closeAddForm" :dateEvent="dateEvent"/>
-    <UpdateEvent v-model="showUpdateForm" @close="closeUpdateForm" :visible="showUpdateForm" :eventToUpdate="eventToUpdate"/>
+    <UpdateEvent ref="updateEventForm" v-model="showUpdateForm" @close="closeUpdateForm" :visible="showUpdateForm"/>
   </v-container>
 </template>
 
@@ -166,7 +167,6 @@ export default {
     openAddForm() {
       this.showAddEventForm = true
     },
-
     closeAddForm() {
       this.showAddEventForm = false
       this.getEvents()
@@ -174,8 +174,9 @@ export default {
     },
 
     openUpdateForm(event) {
-      this.eventToUpdate = event
       this.showUpdateForm = true
+      this.$refs.updateEventForm.setForm(event)
+      this.selectedOpen = false
     },
 
     closeUpdateForm() {
@@ -199,6 +200,10 @@ export default {
         }
         nativeEvent.stopPropagation()
       }
+    },
+    closeSelectedOpen() {
+      this.selectedOpen = false
+      this.getEvents()
     },
 
     getStatusColor(status) {

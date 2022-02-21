@@ -39,12 +39,16 @@ export default new Vuex.Store({
         getIsAdmin: function ({commit}, isAdminBool) {
             commit('setIsAdmin', isAdminBool)
         },
-        async getAllEvents ({commit}) {
-            return await CalendarService.getAllAppointments().then(
+        getAllEvents ({commit}) {
+            return CalendarService.getAllAppointments()
+                .then(
                 response => {
                     commit('setAllEvents', response.data)
                 }
             )
+                .catch((error) => {
+                console.log(error)
+            })
         }
     },
 

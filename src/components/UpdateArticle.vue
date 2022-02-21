@@ -37,8 +37,6 @@
               <v-btn color="blue darken-1" text @click=toggleDialog()>Annuler</v-btn>
               <v-btn
                   color="primary"
-                  value="submit"
-                  text type="submit"
                   @click="updateArticle"
               >
                 Valider

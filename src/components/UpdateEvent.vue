@@ -1,7 +1,7 @@
 <template>
   <v-dialog v-model="show" scrollable max-width="700px">
     <v-card>
-      <v-toolbar color="blue-grey">Modification du rendez-vous de {{eventToUpdate.name}}</v-toolbar>
+      <v-toolbar color="blue-grey">Modification du rendez-vous de {{form.name}}</v-toolbar>
       <v-card-text>
         <v-form fill-width ref="updateEventForm" lazy-validation>
           <v-container>
@@ -12,7 +12,7 @@
                   :close-on-content-click="false"
                   v-model="dateMenu"
                   nudge-right="40"
-                  :return-value.sync="eventToUpdate.start"
+                  :return-value.sync="startDate"
                   transition="scale-transition"
                   offset-y
                   max-width="290px"
@@ -24,18 +24,19 @@
                       v-model="computedDateFormatted"
                       label="Date du rendez-vous"
                       required
+                      @input="onStartDateInput"
                     ></v-text-field>
                   </template>
                   <v-date-picker
-                    @change="dateEventChange"
-                    v-model="eventToUpdate.start"
+                    @change="startDateChange"
+                    v-model="startDate"
                     no-title
                     :open-date="new Date()"
                     locale="fr-fr"
                     first-day-of-week="1"
                     scrollable
                     color="primary"
-                    @input="saveAndCloseDate($refs.dateMenu, eventToUpdate.start, dateMenu)"
+                    @input="saveAndCloseDate($refs.dateMenu, startDate, dateMenu)"
                   ></v-date-picker>
                 </v-menu>
               </v-col>
@@ -43,32 +44,23 @@
                 <v-text-field
                     cols="6"
                     class="py-3"
-                    @change="timeEventChange"
-                    v-model="computedTimer"
+                    v-model="timeStart"
                     label="Heure du rendez-vous"
                     type="time"
                 ></v-text-field>
               </v-col>
             </v-row>
-
-
-<!--            <v-text-field-->
-<!--                v-model="eventToUpdate.start"-->
-<!--            />-->
-<!--            <v-text-field-->
-<!--                v-model="eventToUpdate.end"-->
-<!--            />-->
             <v-row>
               <v-col cols="6">
                 <v-text-field
-                  v-model="eventToUpdate.firstname"
+                  v-model="form.firstname"
                   label="Prénom"
                   required
                 />
               </v-col>
               <v-col cols="6">
                 <v-text-field
-                    v-model="eventToUpdate.lastname"
+                    v-model="form.lastname"
                     label="Nom"
                     required
                 />
@@ -77,14 +69,14 @@
             <v-row>
               <v-col cols="6">
                 <v-text-field
-                    v-model="eventToUpdate.phone"
+                    v-model="form.phone"
                     label="Numéro de téléphone"
                     required
                 />
               </v-col>
               <v-col cols="6">
                 <v-text-field
-                    v-model="eventToUpdate.email"
+                    v-model="form.email"
                     label="E-Mail"
                     required
                 />
@@ -93,7 +85,7 @@
             <v-row>
               <v-col cols="9">
                 <v-textarea
-                    v-model="eventToUpdate.comment"
+                    v-model="form.comment"
                     label="Objet du rendez-vous"/>
               </v-col>
               <v-col cols="3">
@@ -103,10 +95,10 @@
                       fluid
                   >
                     <v-checkbox
-                        v-model="eventToUpdate.status"
+                        v-model="form.status"
                         @change="changeCheckboxText"
                     ></v-checkbox>
-                    <span v-if="eventToUpdate.status">Rendez-vous confirmé !</span>
+                    <span v-if="form.status">Rendez-vous confirmé !</span>
                     <span v-else>Rendez-vous à confirmer ?</span>
                   </v-container>
                 </template>
@@ -141,18 +133,11 @@ export default {
   props: ['visible', 'eventToUpdate'],
   computed: {
     computedDateFormatted: {
-      get() { return moment(this.eventToUpdate.start).format('DD/MM/YYYY'); },
+      get() { return moment(this.startDate).format('DD/MM/YYYY'); },
       set: function (newValue) {
-        this.form.start = newValue
+        this.form.dateStart = newValue
       }
     },
-    computedTimer: {
-      get() {return moment(this.eventToUpdate.start).format('HH:mm')},
-      set: function (newValue) {
-        this.timeStart = newValue
-      }
-    },
-
   },
   created() {
     this.show = this.visible
@@ -171,16 +156,19 @@ export default {
         phone: '',
         email: '',
         comment: '',
+        startDate: '',
         start: '',
-        end: ''
+        status: false
       },
       dateMenu: '',
-      // eventDate: '',
-      dateInput: '',
+      dateInputStart: '',
       timeStart: '',
       timeInput: '',
       checkboxText: '',
-      // disabledDates: { weekdays: [1, 6]}
+      timerInput: '',
+      startDate: '',
+      startTime: '',
+
     }
   },
   methods: {
@@ -189,44 +177,63 @@ export default {
       this.$emit('close', this.show)
     },
 
-    dateEventChange: function (date) {
-      this.dateInput = moment(date).format('DD/MM/YYYY')
-      console.log("date")
-      console.log(date)
-    },
-
     changeCheckboxText(){
       if(this.form.status === false) {
         this.checkboxText = "À confirmer"
       } else this.checkboxText = "Confirmé !"
     },
 
-    timeEventChange: function (time) {
-      this.timeInput = moment(time).format('hh:mm')
-      console.log("time")
-      console.log(time)
-    },
-
     saveAndCloseDate(ref, date) {
       ref.save(date)
     },
 
-    getFormDate() {
-      //TODO ne renvoit pas la bonne heure
-      this.form = this.eventToUpdate;
-      this.form.start = moment(this.computedDateFormatted + ' ' + this.timeStart).add("1", "hour").format('YYYY-DD-MM HH:mm:ss')
-      this.form.end = moment(this.form.start, 'YYYY-DD-MM HH:mm:ss').add("2", 'hour').format('YYYY-DD-MM HH:mm:ss')
-      console.log(this.form.start)
-      },
+    onStartDateInput(val) {
+      const newDate = moment(val).format('DD/MM/YYYY')
+      if (newDate.isValid()) {
+        this.startDate = moment(newDate).format('YYYY-MM-DD')
+        this.$refs.dateMenu.save(this.startDate)
+      }
+    },
+    startDateChange: function (date) {
+      this.dateInputStart = moment(date).format('DD/MM/YYYY')
+    },
 
-    updateEvent() {
-      this.getFormDate()
-      CalendarService.update(this.eventToUpdate.id, this.form).then(response => {
-        console.log(this.form)
+    setForm(event) {
+      this.form.id = event.id
+      this.form.firstname = event.firstname
+      this.form.lastname = event.lastname
+      this.form.email = event.email
+      this.form.phone = event.phone
+      this.form.comment = event.comment
+      this.form.status = event.status
+      this.startDate = moment(event.start).format('YYYY-MM-DD')
+      this.timeStart = moment(event.start).format('HH:mm')
+    },
+
+    async updateEvent() {
+      // this.toggleDialog()
+      const accessToken = await this.$auth.getTokenSilently()
+      const dateToStart = moment(this.startDate + ' ' + this.timeStart).add('1', 'hour').format('YYYY-MM-DD HH:mm')
+      const dateToEnd = moment(this.startDate + ' ' + this.timeStart).add('2', 'hour').format('YYYY-MM-DD HH:mm')
+      const data = {
+        firstname: this.form.firstname,
+        lastname: this.form.lastname,
+        phone: this.form.lastname,
+        email: this.form.email,
+        comment: this.form.comment,
+        status: this.form.status,
+        start: dateToStart,
+        end: dateToEnd,
+      };
+
+      CalendarService.update(this.form.id, data, accessToken)
+          .then(response => {
         console.log(response.data)
-        this.$emit('close', this.show)
-//todo mettre events dans le store
-      })
+            this.$emit('close', this.show)
+          })
+          .catch(e => {
+            console.log(e);
+          });
     },
   }
 }
