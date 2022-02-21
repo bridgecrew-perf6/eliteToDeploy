@@ -56,6 +56,7 @@ import 'quill/dist/quill.snow.css'
 import 'quill/dist/quill.bubble.css'
 
 import { quillEditor } from 'vue-quill-editor'
+import axios from "axios";
 
 export default {
   name: "UpdateArticle.vue",
@@ -63,6 +64,7 @@ export default {
   props: ['value', 'articleToUpdate'],
   data() {
     return {
+      file: '',
       show: false,
       editorOption: {
         theme: 'snow',
@@ -102,12 +104,36 @@ export default {
       this.file=""
       this.$refs.file.value = null
     },
+
+    selectFile() {
+      this.file = this.$refs.file.files[0]
+      this.error = false;
+    },
+
+    async sendFile() {
+      const formData = new FormData();
+      formData.append('file', this.file);
+      try {
+        await axios.post('/upload', formData )
+        this.file="";
+        this.error = false
+      } catch (err) {
+        this.error = true
+      }
+    },
+
     async updateArticle() {
       const accessToken = await this.$auth.getTokenSilently()
-
+      if (this.$refs.file.files[0]) {
+        this.articleToUpdate.image = this.file.name
+      }
       DataService.update(this.articleToUpdate.id, this.articleToUpdate, accessToken).then(response => {
         console.log(response.data);
+        if (this.$refs.file.files[0]) {
+          this.sendFile()
+        }
         this.$emit('close', this.show)
+        location.reload()
       })
           .catch(e => {
             console.log(e);
