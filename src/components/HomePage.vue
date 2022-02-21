@@ -49,7 +49,7 @@
 
    <section class="aproposSection">
      <v-img
-       :src="require('../assets/images/pexels-dhivakaran-s-783200.jpg')"
+       :src="require('../assets/images/pexels-luca-nardone-3651820.jpg')"
      >
        <div style="color: white; padding-top: 50px"  class="text-center">
          <h1>À PROPOS</h1><br>

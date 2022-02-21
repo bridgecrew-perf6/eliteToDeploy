@@ -35,17 +35,7 @@
             class="col-sm-4 col-xs-12"
             >
           <v-card>
-            <v-img v-if="article.image === '' || article.image === null || article.image === undefined"
-                   :src="require('../assets/images/pexels-dhivakaran-s-783200.jpg')"
-                   class="white--text align-end"
-                   gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
-                   height="300px"
-            >
-
-              <v-card-title v-text="article.title"></v-card-title>
-            </v-img>
             <v-img
-                v-else
                 :src="myUrl + article.image"
                 class="white--text align-end"
                 gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"

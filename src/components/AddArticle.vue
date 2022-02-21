@@ -46,39 +46,6 @@
       </v-card-text>
     </v-card>
   </v-dialog>
-<!--  <div class="submit-form">-->
-<!--    <div v-if="!submitted">-->
-<!--      <div class="form-group">-->
-<!--        <label for="title">Title</label>-->
-<!--        <input-->
-<!--            type="text"-->
-<!--            class="form-control"-->
-<!--            id="title"-->
-<!--            required-->
-<!--            v-model="article.title"-->
-<!--            name="title"-->
-<!--        />-->
-<!--      </div>-->
-
-<!--      <div class="form-group">-->
-<!--        <label for="description">Contenu</label>-->
-<!--        <input-->
-<!--            class="form-control"-->
-<!--            id="description"-->
-<!--            required-->
-<!--            v-model="article.content"-->
-<!--            name="description"-->
-<!--        />-->
-<!--      </div>-->
-
-<!--      <button @click="saveArticle" class="btn btn-success">Submit</button>-->
-<!--    </div>-->
-
-<!--    <div v-else>-->
-<!--      <h4>You submitted successfully!</h4>-->
-<!--      <button class="btn btn-success" @click="newArticle">Add</button>-->
-<!--    </div>-->
-<!--  </div>-->
 </template>
 
 <script>
@@ -112,6 +79,7 @@ export default {
       },
       submitted: false,
       show: false,
+      imageName:"",
       editorOption: {
         theme: 'snow',
         placeholder: "Taper l'article ici ...",
@@ -159,14 +127,18 @@ export default {
       this.$refs.file.value = null
     },
     async saveArticle() {
+      if(this.file) {
+        this.imageName = this.file.name
+      } else {
+        this.imageName = "noimage.jpg"
+      }
       var data = {
         title: this.article.title,
         content: this.article.content,
-        image: this.file.name,
+        image: this.imageName,
         createdAt: moment.now()
       };
       const accessToken = await this.$auth.getTokenSilently()
-console.log(data)
       DataService.create(data, accessToken)
           .then(response => {
             this.article.id = response.data.id;

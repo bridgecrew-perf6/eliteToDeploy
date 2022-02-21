@@ -4,19 +4,7 @@
       <v-layout row wrap align-center>
         <v-flex class="text-xs-center">
         <v-card>
-          <v-img v-if="currentArticle.image === '' || currentArticle.image === null || currentArticle.image === undefined"
-                 :src="require('../assets/images/pexels-dhivakaran-s-783200.jpg')"
-                 class="white--text align-end"
-                 max-height="300"
-          >
-            <v-row>
-              <v-card-title v-text="currentArticle.title"></v-card-title>
-              <v-spacer></v-spacer>
-              <v-card-subtitle v-text="'Publié le ' + createdDate" style="padding-right: 50px"></v-card-subtitle>
-            </v-row>
-          </v-img>
           <v-img
-              v-else
               :src="myImage"
               contain
               max-height="300"
