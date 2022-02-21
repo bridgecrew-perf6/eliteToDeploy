@@ -56,6 +56,7 @@
           <v-menu
               v-model="selectedOpen"
               :close-on-content-click="false"
+              :open-on-click="false"
               :activator="selectedElement"
               offset-x
           >
@@ -187,13 +188,12 @@ export default {
     showEvent ({ nativeEvent, event }) {
       if(this.isAdmin) {
         const open = () => {
-          this.selectedEvent = event
           this.selectedElement = nativeEvent.target
+          this.selectedEvent = event
           requestAnimationFrame(() => requestAnimationFrame(() => this.selectedOpen = true))
         }
 
         if (this.selectedOpen) {
-          this.selectedOpen = false
           requestAnimationFrame(() => requestAnimationFrame(() => open()))
         } else {
           open()
@@ -236,17 +236,7 @@ export default {
             color: "grey"
           }))
         }
-        // console.log("this.events")
-        // console.log(this.events)
-        // console.log("this.allEvents")
-        // console.log(this.allEvents)
       })
-      // this.events = [
-      //   {color: 'blue', name: 'User Name', start: '2022-02-04', end: '2022-01-04', comment: "maux de tête"},
-      //   {color: 'indigo', name: 'Céline Leroux', start: '2022-02-04 15:00', end: '2022-01-04 16:00'},
-      //   {color: 'red', name: 'Sasha Leroux', start: '2022-02-17 13:00', end: '2022-01-17 14:00'},
-      //   {color: 'red', name: 'Adeline', start: '2022-02-17 13:00', end: '2022-02-17 14:00'},
-      // ]
     },
 
     async deleteEvent() {
@@ -260,7 +250,7 @@ export default {
               this.getEvents()
             })
       }
-    }
+    },
   },
 }
 </script>

@@ -1,7 +1,7 @@
 <template>
   <v-dialog v-model="show" scrollable max-width="700px">
     <v-card>
-      <v-toolbar color="blue-grey">Modification du rendez-vous de {{form.name}}</v-toolbar>
+      <v-toolbar color="blue-grey">Modification du rendez-vous de {{form.firstname}} {{form.lastname}}</v-toolbar>
       <v-card-text>
         <v-form fill-width ref="updateEventForm" lazy-validation>
           <v-container>
