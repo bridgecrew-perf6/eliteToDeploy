@@ -250,9 +250,11 @@ export default {
     },
 
     async deleteEvent() {
+      const accessToken = await this.$auth.getTokenSilently()
+
       let res = await this.$confirm("Tu es sûre de vouloir supprimer ce rendez-vous ?");
       if(res) {
-        CalendarService.delete(this.selectedEvent.id)
+        CalendarService.delete(this.selectedEvent.id, accessToken)
             .then(response => {
               console.log(response.data)
               this.getEvents()

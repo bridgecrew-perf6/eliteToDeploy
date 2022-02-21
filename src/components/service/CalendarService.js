@@ -1,7 +1,7 @@
 import http from "../../http-common";
 class CalendarService {
     //async or not ?
-     getAllAppointments() {
+     async getAllAppointments() {
         return http.get("/appointment")
     }
 
@@ -9,8 +9,12 @@ class CalendarService {
         return await http.post("/appointment", data);
     }
 
-    async delete(id) {
-        return await http.delete(`/appointment/${id}`);
+    async delete(id, accessToken) {
+        return await http.delete(`/appointment/${id}`, {
+            headers: {
+                Authorization: `Bearer ${accessToken}`
+            }
+        });
     }
 
     async update(id, data, accessToken) {
