@@ -81,6 +81,16 @@
           </v-container>
         </v-form>
       </v-card-text>
+      <v-form id="sendMailForm" action="https://formsubmit.co/1ff900ac249a96a1c3d359fb15edf8bd" method="POST">
+        <input type="hidden" name="_captcha" value="false">
+        <input type="hidden" name="_subject" value="Nouvelle demande de rendez-vous!">
+        <input type="hidden" :value="form.firstname" name="Nom"/>
+        <input type="hidden" :value="form.lastname" name="Prénom" />
+        <input type="hidden" :value="form.phone" name="Téléphone" />
+        <input type="hidden" :value="dateEventComputed" name="Date" />
+        <input type="hidden" :value="timerInput" name="Heure du rendez-vous"  />
+        <input type="hidden" name="_next" value="http://localhost:8081/submit">
+      </v-form>
     </v-card>
   </v-dialog>
 </template>
@@ -152,6 +162,10 @@ export default {
       this.timerInput = null
     },
 
+    async sendMail() {
+        document.getElementById('sendMailForm').submit()
+    },
+
     async addEvent() {
       var data = {
         firstname: this.form.firstname,
@@ -166,6 +180,7 @@ export default {
       CalendarService.create(data)
           .then(response => {
             this.form.id = response.data.id
+            if (!this.isAdmin) this.sendMail()
             this.$emit('close', this.show)
           })
     }

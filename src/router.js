@@ -3,6 +3,7 @@ import VueRouter from "vue-router";
 import ArticlesList from "./components/ArticlesList";
 import HomePage from "./components/HomePage";
 import Partners from "./components/Partners"
+import Submit from "./components/Submit";
 // import Articles from "./components/Articles";
 // import { authGuard } from "./auth/authGuard";
 //
@@ -24,11 +25,11 @@ Vue.use(VueRouter);
            name: "Partners",
            component: Partners
        },
-        // {
-        //     path: "/articles/:id",
-        //     name: "articles-details",
-        //     component: Articles
-        // },
+        {
+            path: "/submit",
+            name: "submit",
+            component: Submit
+        },
     ]
 
 const router = new VueRouter( {
