@@ -17,11 +17,11 @@
              class="text-center"
              cols="12"
          >
-           <div style="color: #003f5f; background-color: #d9d9d9; width: 40%; margin: auto; padding: 1%; margin-bottom: 1%; border-radius: 10% 40% / 50% 20%;">
+           <div style="color: #003f5f; background-color: #d9d9d9; width: 40%; margin: auto; padding: 1%; margin-bottom: 1%; border-radius: 10px;">
              <h1
                  style=" font-family: Copperplate,serif; font-size: 26px"
                  title="Développement personnel - coaching">
-               A PROPOS</h1>
+               À PROPOS</h1>
            </div>
            <div
                v-if="isMobile"
@@ -49,7 +49,8 @@
              color: #d9d9d9;
              background-color: #003f5f;
              width: 70%; margin: auto;
-             padding: 3%; border-radius: 50% 20% / 10% 40%;
+             padding: 3%;
+             border-radius: 30px;
              font-family: Copperplate,serif;"
            >
              <div  class="font-italic">

@@ -1,7 +1,7 @@
 <template>
   <v-dialog v-model="show" scrollable max-width="700px">
     <v-card>
-      <v-toolbar color="blue-grey">Nouvel Article</v-toolbar>
+      <v-toolbar style="background-color: #003f5f; color: #d9d9d9;  font-family: Copperplate,serif;">Nouvel Article</v-toolbar>
       <v-card-text>
         <v-form @submit.prevent="saveArticle" fill-width ref="addArticleForm" lazy-validation >
       <v-container>
@@ -11,10 +11,11 @@
               v-model="article.title"
               label="Titre"
               required
+              style="font-family: Copperplate,serif;"
             />
           </v-col>
           <v-col cols="6">
-            <div class="large-12 medium-12 small-12 cell">
+            <div class="large-12 medium-12 small-12 cell" style="font-family: Copperplate,serif;">
               <label>Image
                 <input type="file" id="file" ref="file" @change="selectFile()"/>
               </label>
@@ -30,11 +31,11 @@
             </v-card-text>
           </v-col>
         </v-row>
-        <v-card-actions>
+        <v-card-actions  style="font-family: Copperplate,serif;">
           <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" text @click=toggleDialog()>Annuler</v-btn>
+          <v-btn color="#003f5f" text @click=toggleDialog()>Annuler</v-btn>
           <v-btn
-              color="primary"
+              color="#003f5f"
               value="submit"
               text type="submit"
           >
