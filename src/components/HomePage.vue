@@ -1,80 +1,135 @@
 <template>
  <v-main>
    <section>
-     <v-layout
-       column
-       wrap
-       class="my-5"
-       align-center
+   <v-img
+       :src="require('../assets/images/logo_elite42.png')"
+       class="my-3"
+   /></section>
+   <section>
+     <v-parallax
+         :src="require('../assets/images/water_drops.jpg')"
+     >
+       <v-row
+         align="center"
+         justify="center"
        >
-       <v-flex>
-         <h1 style="font-family: Copperplate,serif; font-size: 30px" class="animate__animated animate__bounce">ELITE COACHING 42</h1>
-       </v-flex>
-     </v-layout>
-     <v-divider></v-divider>
+         <v-col
+             class="text-center"
+             cols="12"
+         >
+           <div style="color: #003f5f; background-color: #d9d9d9; width: 40%; margin: auto; padding: 1%; margin-bottom: 1%; border-radius: 10% 40% / 50% 20%;">
+             <h1
+                 style=" font-family: Copperplate,serif; font-size: 26px"
+                 title="Développement personnel - coaching">
+               A PROPOS</h1>
+           </div>
+           <div
+               v-if="isMobile"
+               style="
+             color: #d9d9d9;
+             background-color: #003f5f;
+             width: 70%;
+             margin: auto;
+             padding: 3%;
+             border-radius: 30px;
+             font-family: Copperplate,serif;"
+             >
+             <div class="font-italic" style="font-size: 10px">
+               <p>« Le destin n’est pas une question de chance mais une question de choix. »</p>
+               <p>Au cours de mes expériences personnelles et professionnelles, j’ai compris que ma mission de vie consistait <br>à accompagner en tant que coach ceux qui le souhaitent sur le chemin du bien-être et du bonheur.</p>
+               <p>Grâce à un travail personnel sur moi, j’ai décidé de vivre mon rêve et d’exercer ma passion.</p>
+               <p>Aujourd'hui, ma spécialité, ma passion : "l'humain".</p>
+               <p>Vous avez besoin d'être entendu, d'être vu, d'être au centre ?</p>
+               <p>Je suis celle qui sait écouter, regarder, voir, accompagner.</p>
+               <p>Je suis votre coach.</p>
+             </div>
+           </div>
+           <div v-else
+                style="
+             color: #d9d9d9;
+             background-color: #003f5f;
+             width: 70%; margin: auto;
+             padding: 3%; border-radius: 50% 20% / 10% 40%;
+             font-family: Copperplate,serif;"
+           >
+             <div  class="font-italic">
+               <p>« Le destin n’est pas une question de chance mais une question de choix. »</p>
+               <p>Au cours de mes expériences personnelles et professionnelles, j’ai compris que ma mission de vie consistait <br>à accompagner en tant que coach ceux qui le souhaitent sur le chemin du bien-être et du bonheur.</p>
+               <p>Grâce à un travail personnel sur moi, j’ai décidé de vivre mon rêve et d’exercer ma passion.</p>
+               <p>Aujourd'hui, ma spécialité, ma passion : "l'humain".</p>
+               <p>Vous avez besoin d'être entendu, d'être vu, d'être au centre ?</p>
+               <p>Je suis celle qui sait écouter, regarder, voir, accompagner.</p>
+               <p>Je suis votre coach.</p>
+             </div>
+           </div>
+         </v-col>
+       </v-row>
+     </v-parallax>
    </section>
-   <section class="presentationSection">
+
+   <section class="presentationSection" style="background-color: #d9d9d9">
      <v-container>
-       <v-row>
+       <v-row style="margin-top: 5%; margin-bottom: 5%">
          <v-col xs="12" md="6">
            <v-img
                :src="require('../assets/images/latifapix .jpg')"
                class="my-3"
                contain
-               height="300"
+               height="400"
            />
          </v-col>
          <v-col xs="12" md="6" class="presentation">
            <div>
-             <div class="text-center">
-               <h3>Image, Bien-être, Développement personnel</h3>
+             <div class="text-center" style="color: #003f5f">
+               <H2
+                   title="image - bien-être - développement personnel"
+                   style="font-family: Copperplate,serif;"
+               >
+                 Image, Bien-être, Développement personnel</H2>
                <br>
-               <p class="font-italic">Être soi, c'est être authentique et libre.</p>
+               <H3
+                   class="font-italic"
+                   style="font-family: Copperplate,serif;"
+                   title="être soi"
+               >
+                 Être soi, c'est être authentique et libre.
+               </H3>
              </div>
              <br>
-             <div>
-               <div class="text-decoration-underline">Mon rôle ?</div>
-               <div class="text-center" style="font-size: 18px">
-                 <p>Faire en sorte de susciter chez vous
-                   <span class="font-italic font-weight-bold">la réflexion , la créativité </span> , pour que vous puissiez évoluer ,
-                   <span class="font-italic">atteindre <span class="text-decoration-underline font-weight-bold">vos objectifs</span></span> personnels ou professionnels.
-                 </p>
-                </div>
+             <div class="text-center" style="font-size: 18px">
+               <H4  title="coach en développement personnel"
+                    style="font-family: Copperplate,serif; color: #003f5f"
+                    class="text-decoration-underline"
+               >
+                 Mon rôle ?
+               </H4>
+                 <br>
+                 <H3 title="réflexion créativité objectifs"
+                     style="font-family: Copperplate,serif; color: #003f5f"
+                 >
+                   Faire en sorte de susciter chez vous
+                 <span class="font-italic font-weight-bold">la réflexion , la créativité </span> , pour que vous puissiez évoluer ,
+                 <span class="font-italic">atteindre <span class="text-decoration-underline font-weight-bold">vos objectifs</span></span> personnels ou professionnels.
+               </H3>
              </div>
            </div>
          </v-col>
        </v-row>
      </v-container>
    </section>
-
-   <section class="aproposSection">
-     <v-img
-       :src="require('../assets/images/pexels-luca-nardone-3651820.jpg')"
-     >
-       <div style="color: white; padding-top: 50px"  class="text-center">
-         <h1>À PROPOS</h1><br>
-         <div class="font-italic">
-           <p>« Le destin n’est pas une question de chance mais une question de choix. »</p>
-           <p>Au cours de mes expériences personnelles et professionnelles, j’ai compris que ma mission de vie consistait <br>à accompagner en tant que coach ceux qui le souhaitent sur le chemin du bien-être et du bonheur.</p>
-           <p>Grâce à un travail personnel sur moi, j’ai décidé de vivre mon rêve et d’exercer ma passion.</p>
-           <p>Aujourd'hui, ma spécialité, ma passion : "l'humain".</p>
-           <p>Vous avez besoin d'être entendu, d'être vu, d'être au centre ?</p>
-           <p>Je suis celle qui sait écouter, regarder, voir, accompagner.</p>
-           <p>Je suis votre coach.</p>
-         </div>
-       </div>
-     </v-img>
-   </section>
-
    <section class="breackSection">
      <v-container>
-       <v-row>
+       <v-row style="margin-top: 5%; margin-bottom: 5%; color: #003f5f">
          <v-col xs="12" md="6" class="presentation">
-          <p>« La volonté, le courage et l'action sont 3 choses essentielles pour atteindre vos objectifs »</p>
+          <h1
+              class="text-center"
+              style="font-family: Copperplate,serif; font-size: 20px"
+          >
+            « La volonté, le courage et l'action sont 3 choses essentielles pour atteindre vos objectifs »</h1>
          </v-col>
          <v-col xs="12" md="6">
            <v-img
-               :src="require('../assets/images/pexels-min-an-1134190.jpg')"
+               :src="require('../assets/images/ponton.jpg')"
                class="my-3"
                contain
                height="300"
@@ -85,21 +140,22 @@
    </section>
 
    <v-divider></v-divider>
-   <section>
-     <v-img
-         :src="require('../assets/images/Chaussures de mode.jpeg')"
-         class="my-3"
-         contain
-         height="300"
-     />
+   <section style="background-color: #d9d9d9">
      <v-container>
-       <v-layout row wrap align-center>
-         <v-flex class="text-xs-center">
+       <v-img
+           :src="require('../assets/images/Chaussures de mode.jpeg')"
+           class="my-3"
+           contain
+           height="300"
+       />
+     </v-container>
+     <v-container>
+         <v-flex class="text-xs-center"  style="font-family: Copperplate,serif;">
            <h1>Formulaire de contact</h1>
 <!--           TODO remplacer 1ff900ac249a96a1c3d359fb15edf8bd par mail de latifa puis par le code envoyé sur son mail-->
            <form action="https://formsubmit.co/1ff900ac249a96a1c3d359fb15edf8bd" method="POST">
              <v-row>
-               <v-col>
+               <v-col cols="12" md="6">
                  <v-text-field outlined label="E-mail" type="email" name="email" required></v-text-field>
                </v-col>
                <v-col>
@@ -107,22 +163,38 @@
                </v-col>
              </v-row>
              <v-textarea outlined label="Entrez votre message" type="text" name="message" required></v-textarea>
-             <v-btn type="submit">Envoyer</v-btn>
+             <v-btn
+                 block
+                 type="submit"
+                 style="background-color: #003f5f; color: #d9d9d9"
+                 x-large
+             >Envoyer</v-btn>
            </form>
          </v-flex>
+     </v-container>
+   </section>
+   <section>
+     <v-container fill-height >
+       <v-layout column align-center style="font-family: Copperplate,serif;">
+         <v-row>
+           <v-col cols="12" md="8">
+             <h3 title="elite coaching 42 rue etienne dolet roanne">Adresse : </h3>
+             <p>Elite Coaching 42<br>28 rue Etienne Dolet <br> 42300 ROANNE</p>
+           </v-col>
+           <v-col cols="4">
+             <h3 title="elitecoaching42@gmail.com">E-mail : </h3>
+             <p style="font-size: 20px">elitecoaching42@gmail.com</p>
+           </v-col>
+         </v-row>
+         <v-row style="font-size: 20px">
+           <v-icon>mdi-phone</v-icon>
+           07 71 07 65 32
+         </v-row>
        </v-layout>
      </v-container>
-     <v-container fill-height>
-       <v-layout column align-center>
-           <h2>Adresse : </h2>
-           <p>Elite Coaching 42<br>28 rue Etienne Dolet 42300 ROANNE, France</p>
-           <h2>E-mail : </h2>
-           <p>elitecoaching42@gmail.com</p>
-           <h2>Téléphone : </h2>
-           <p>07 71 07 65 32</p>
-       </v-layout>
+     <v-container>
        <template>
-         <div id="mapContainer">
+         <div id="mapContainer" style="margin: auto">
            <l-map
                :center="center"
                :zoom="zoom"
@@ -148,12 +220,16 @@
 <script>
 import { LMap, LTileLayer, LMarker } from 'vue2-leaflet';
 import 'leaflet/dist/leaflet.css';
+import {mapGetters} from "vuex";
 export default {
   name: "homepage",
   components: {
     LMap,
     LTileLayer,
     LMarker
+  },
+  computed: {...mapGetters(['isMobile'])},
+  created() {
   },
   data() {
     return{
@@ -175,15 +251,6 @@ export default {
 .presentation {
   display: flex;
   align-items: center;
-}
-.presentationSection{
-  /*background-color: #B4FCFC;*/
-}
-.map {
-  position: absolute;
-  width: 80vw;
-  height: 50vh;
-  overflow :hidden
 }
 #mapContainer {
   width: 80vw;

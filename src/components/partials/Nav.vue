@@ -1,40 +1,47 @@
 <template>
   <div id="app">
-      <v-app-bar style="background-color: white">
+      <v-app-bar style="background-color: #003f5f">
         <v-app-bar-nav-icon @click="drawer = true"
                             class="d-flex d-sm-none"
+                            style="color: #d9d9d9"
         ></v-app-bar-nav-icon>
+        <v-row v-if="!isMobile">
         <v-spacer></v-spacer>
-        <router-link id="homePage" class="linkBtn" to="/">
-          <v-list-item>
-            <v-list-item-title>
-              <span>Accueil</span>
-            </v-list-item-title>
-          </v-list-item>
-        </router-link>
-        <router-link id="articles" class="linkBtn" to="/articles">
-          <v-list-item>
-            <v-list-item-title>
-              <span>Blog</span>
-            </v-list-item-title>
-          </v-list-item>
-        </router-link>
-        <router-link id="partners" class="linkBtn" to="/partners">
-          <v-list-item>
-            <v-list-item-title>
-              <span>Partenaires</span>
-            </v-list-item-title>
-          </v-list-item>
-        </router-link>
-        <v-spacer></v-spacer>
-<v-btn @click="openFullCalendar">
-        <v-icon>
-          mdi-calendar
-        </v-icon>
-</v-btn>
+          <router-link id="homePage" class="linkBtn" to="/" style="text-decoration: none; color: inherit;">
+            <v-list-item>
+              <v-list-item-title>
+                <span class="navTitle">Accueil</span>
+              </v-list-item-title>
+            </v-list-item>
+          </router-link>
+          <router-link id="articles" class="linkBtn" to="/articles" style="text-decoration: none; color: inherit;">
+            <v-list-item>
+              <v-list-item-title>
+                <span class="navTitle" style="color: #d9d9d9">Blog</span>
+              </v-list-item-title>
+            </v-list-item>
+          </router-link>
+          <router-link id="partners" class="linkBtn" to="/partners" style="text-decoration: none; color: inherit;">
+            <v-list-item>
+              <v-list-item-title>
+                <span class="navTitle" style="color: #d9d9d9">Partenaires</span>
+              </v-list-item-title>
+            </v-list-item>
+          </router-link>
+          <v-spacer></v-spacer>
+          <v-btn
+              @click="openFullCalendar"
+              outlined
+              style="background-color: #003f5f"
+          >
+            <span class="eventTitle">Prendre RDV</span>
+
+          </v-btn>
+        </v-row>
       </v-app-bar>
       <!-- Add a navigation bar -->
       <v-navigation-drawer
+          style="color: #003f5f; background-color: #d9d9d9;"
           v-model="drawer"
           absolute
           temporary
@@ -45,27 +52,35 @@
         >
           <v-list-item-group
           >
-              <router-link class="linkBtn" to="/">
+              <router-link class="linkBtn" to="/" style="text-decoration: none; color: inherit;">
                 <v-list-item>
                   <v-list-item-title>
-                    <span>Accueil</span>
+                    <span class="navTitleMobile">Accueil</span>
                   </v-list-item-title>
                 </v-list-item>
               </router-link>
-            <router-link class="linkBtn" to="/articles">
+            <router-link class="linkBtn" to="/articles" style="text-decoration: none; color: inherit;">
               <v-list-item>
                 <v-list-item-title>
-                  <span>Blog</span>
+                  <span class="navTitleMobile">Blog</span>
                 </v-list-item-title>
               </v-list-item>
             </router-link>
-            <router-link class="linkBtn" to="/partners">
+            <router-link class="linkBtn" to="/partners" style="text-decoration: none; color: inherit;">
               <v-list-item>
                 <v-list-item-title>
-                  <span>Partenaires</span>
+                  <span class="navTitleMobile">Partenaires</span>
                 </v-list-item-title>
               </v-list-item>
             </router-link>
+            <v-btn
+                @click="openFullCalendar"
+                outlined
+                style="background-color: #003f5f"
+            >
+              <span class="eventTitle">Prendre RDV</span>
+
+            </v-btn>
 
           </v-list-item-group>
         </v-list>
@@ -84,7 +99,7 @@ export  default {
   computed: { ...mapGetters(['isMobile', 'isAdmin'])},
   created() {
     this.init(this.loadTokenInfoStore)
-    // if(screen.width <= 760) this.$store.commit('setIsMobile', true)
+    if(screen.width <= 760) this.$store.commit('setIsMobile', true)
   },
   data() {
     return {
@@ -133,3 +148,20 @@ export  default {
   }
 }
 </script>
+<style>
+.navTitle {
+  color: #d9d9d9;
+  font-family: Copperplate,serif;
+  font-size: 20px;
+}
+.navTitleMobile{
+  color: #003f5f;
+  font-family: Copperplate,serif;
+  font-size: 20px;
+}
+.eventTitle {
+  color: #d9d9d9;
+  font-family: Copperplate,serif;
+  font-size: 15px;
+}
+</style>
