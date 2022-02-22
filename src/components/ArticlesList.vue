@@ -75,10 +75,8 @@
               <div v-show="article.show">
                 <v-divider></v-divider>
                 <v-card-text>
-<!--                  <div v-html="article.content.substring(0, 500)"> ... </div>-->
-<!--                  TODO limiter l'article-->
-                  <div v-html="article.content"> ... </div>
-                  <v-btn text @click="openActiveArticle(article, index)">
+                  <div v-html="article.content.substring(0, 400) + '...'"></div>
+                  <v-btn text @click="openArticleView(article, index)">
                     <span>Lire l'article en entier</span>
                   </v-btn>
                 </v-card-text>
@@ -89,58 +87,6 @@
       </v-layout>
     </v-container>
 
-<!--  <div class="list row">-->
-<!--    <div class="col-md-8">-->
-<!--      <div class="input-group mb-3">-->
-<!--        <input type="text" class="form-control" placeholder="Search by title"-->
-<!--               v-model="title"/>-->
-<!--        <div class="input-group-append">-->
-<!--          <button class="btn btn-outline-secondary" type="button"-->
-<!--                  @click="searchTitle"-->
-<!--          >-->
-<!--            Search-->
-<!--          </button>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--    <div class="col-md-6">-->
-<!--      <h4>Articles List</h4>-->
-<!--      <ul class="list-group">-->
-<!--        <li class="list-group-item"-->
-<!--            :class="{ active: index == currentIndex }"-->
-<!--            v-for="(article, index) in articles"-->
-<!--            :key="index"-->
-<!--            @click="setActiveArticle(article, index)"-->
-<!--        >-->
-<!--          {{ article.title }}-->
-<!--        </li>-->
-<!--      </ul>-->
-
-<!--      <button class="m-3 btn btn-sm btn-danger" @click="removeAllArticles">-->
-<!--        Remove All-->
-<!--      </button>-->
-<!--    </div>-->
-<!--    <div class="col-md-6">-->
-<!--      <div v-if="currentArticle">-->
-<!--        <h4>Article</h4>-->
-<!--        <div>-->
-<!--          <label><strong>Title:</strong></label> {{ currentArticle.title }}-->
-<!--        </div>-->
-<!--        <div>-->
-<!--          <label><strong>Description:</strong></label> {{ currentArticle.description }}-->
-<!--        </div>-->
-<!--        <a class="badge badge-warning"-->
-<!--           :href="'/articles/' + currentArticle.id"-->
-<!--        >-->
-<!--          Edit-->
-<!--        </a>-->
-<!--      </div>-->
-<!--      <div v-else>-->
-<!--        <br />-->
-<!--        <p>Please click on an article...</p>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--  </div>-->
       </v-flex>
     </v-layout>
     <AddArticle v-model="showArticleForm" @close="closeArticleForm"/>
@@ -214,44 +160,6 @@ export default {
           });
     },
 
-    // refreshList() {
-    //   this.retrieveArticles();
-    //   this.currentArticle = null;
-    //   this.currentIndex = -1;
-    // },
-
-    //TODO à la place de ça utiliser le composant
-    // openActiveArticle(article, index) {
-    //   this.currentArticle = article;
-    //   this.currentIndex = index;
-    //   window.open("http://localhost:8081/articles/" + article.id, "_self")
-    // },
-
-    // async removeAllArticles() {
-    //   const accessToken = await this.$auth.getTokenSilently()
-    //
-    //   DataService.deleteAll(accessToken)
-    //       .then(response => {
-    //         console.log(response.data);
-    //         this.refreshList();
-    //       })
-    //       .catch(e => {
-    //         console.log(e);
-    //       });
-    // },
-
-    // searchTitle() {
-    //   DataService.findByTitle(this.title)
-    //       .then(response => {
-    //         this.articles = response.data;
-    //         console.log(response.data);
-    //       })
-    //       .catch(e => {
-    //         console.log(e);
-    //       });
-    // },
-
-    //TODO comment limiter à un seul clic sans auth
     async updateLike(article, index) {
       this.currentArticle = article;
       this.currentIndex = index;
