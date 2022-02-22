@@ -1,7 +1,17 @@
 <template>
   <v-dialog v-model="show" scrollable max-width="700px">
     <v-card>
-      <v-toolbar color="blue-grey">Modification du rendez-vous de {{form.firstname}} {{form.lastname}}</v-toolbar>
+      <v-toolbar style="background-color: #003f5f; color: #d9d9d9; font-family: Copperplate,serif;">Modification du rendez-vous de {{form.firstname}} {{form.lastname}}
+        <v-spacer></v-spacer>
+        <v-btn
+            dark
+            text
+            @click="show = false"
+            color="#d9d9d9"
+        >
+          <v-icon>mdi-close</v-icon>
+        </v-btn>
+      </v-toolbar>
       <v-card-text>
         <v-form fill-width ref="updateEventForm" lazy-validation>
           <v-container>
@@ -105,14 +115,15 @@
                 </template>
               </v-col>
             </v-row>
-            <v-card-actions>
-              <v-btn>
-                <v-icon color="red">mdi-delete</v-icon>
-              </v-btn>
+            <v-card-actions style="font-family: Copperplate,serif;">
+<!--              <v-btn>-->
+<!--                <v-icon @click="deleteEvent" color="#003f5f">mdi-delete</v-icon>-->
+<!--              </v-btn>-->
               <v-spacer></v-spacer>
-              <v-btn color="blue darken-1" text @click=toggleDialog()>Annuler</v-btn>
+              <v-btn color="#003f5f" text @click=toggleDialog()>Annuler</v-btn>
               <v-btn
-                  color="primary"
+                  color="#003f5f"
+                  text
                   @click="updateEvent"
               >
                 Valider
@@ -212,7 +223,6 @@ export default {
     },
 
     async updateEvent() {
-      // this.toggleDialog()
       const accessToken = await this.$auth.getTokenSilently()
       const dateToStart = moment(this.startDate + ' ' + this.timeStart).format('YYYY-MM-DD HH:mm')
       const dateToEnd = moment(this.startDate + ' ' + this.timeStart).add('1', 'hour').format('YYYY-MM-DD HH:mm')
@@ -236,6 +246,18 @@ export default {
             console.log(e);
           });
     },
+    // async deleteEvent() {
+    //   const accessToken = await this.$auth.getTokenSilently()
+    //
+    //   let res = await this.$confirm("Tu es sûre de vouloir supprimer ce rendez-vous ?");
+    //   if(res) {
+    //     CalendarService.delete(this.selectedEvent.id, accessToken)
+    //         .then(response => {
+    //           console.log(response.data)
+    //           this.getEvents()
+    //         })
+    //   }
+    // },
   }
 }
 </script>

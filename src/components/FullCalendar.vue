@@ -2,16 +2,16 @@
   <v-container>
     <v-card>
       <v-toolbar
-          dark
-          color="primary"
-      >
-        <v-toolbar-title>Rendez-Vous</v-toolbar-title>
+          style="background-color: #003f5f; color: #d9d9d9; font-family: Copperplate,serif;">
+        <v-toolbar-title v-if="isAdmin">Mes rendez-vous</v-toolbar-title>
+        <v-toolbar-title v-else>Pour demander un rendez-vous, cliquez sur un jour</v-toolbar-title>
         <v-spacer></v-spacer>
         <v-toolbar-items>
           <v-btn
               dark
               text
               @click="show = false"
+              color="#d9d9d9"
           >
             <v-icon>mdi-close</v-icon>
           </v-btn>
@@ -22,16 +22,19 @@
             tile
             height="54"
             class="d-flex"
+            style="font-family: Copperplate,serif; color: #003f5f"
         >
           <v-btn
               icon
               @click="$refs.calendar.prev()"
+              color="#003F5F"
           >
             <v-icon>mdi-chevron-left</v-icon>
           </v-btn>
           <v-btn
               icon
               @click="$refs.calendar.next()"
+              color="#003F5F"
           >
             <v-icon>mdi-chevron-right</v-icon>
           </v-btn>
@@ -50,6 +53,7 @@
               :event-overlap-threshold="30"
               @change="getEvents"
               locale="fr"
+              style="font-family: Copperplate,serif; color: #003F5F;"
               @click:event="showEvent"
               @click:date="addEvent"
           ></v-calendar>
@@ -61,7 +65,7 @@
               offset-x
           >
             <v-card
-                color="grey lighten-4"
+                color="d9d9d9"
                 min-width="400px"
                 flat
                 persistant
@@ -69,21 +73,24 @@
 
               <v-toolbar
                   :color="selectedEvent.color"
-                  dark
+                  style="font-family: Copperplate,serif; color: #d9d9d9"
               >
                 <v-btn icon
                        @click="openUpdateForm(selectedEvent)"
+                       color="#d9d9d9"
                 >
                   <v-icon>mdi-pencil</v-icon>
                 </v-btn>
                 <v-toolbar-title>{{this.selectedEvent.name}}</v-toolbar-title>
                 <v-spacer></v-spacer>
                 <v-btn icon
-                       @click="closeSelectedOpen">
+                       @click="closeSelectedOpen"
+                       color="#d9d9d9"
+                >
                   <v-icon>mdi-close</v-icon>
                 </v-btn>
               </v-toolbar>
-              <v-card-text>
+              <v-card-text style="font-family: Copperplate,serif; color: #003f5f">
                 <span>{{ this.formattedDate(this.selectedEvent.start) }} - {{this.formattedDate(this.selectedEvent.end)}}</span>
                 <h4>Objet du rendez-vous :</h4>
                 <p>{{selectedEvent.comment}}</p>
@@ -97,7 +104,7 @@
                 <v-card-actions>
                   <v-spacer></v-spacer>
                   <v-btn @click="deleteEvent">
-                    <v-icon color="red">mdi-delete</v-icon>
+                    <v-icon color="#003f5f">mdi-delete</v-icon>
                   </v-btn>
                 </v-card-actions>
 
@@ -208,7 +215,7 @@ export default {
 
     getStatusColor(status) {
       if(status === true) {
-        return "blue"
+        return "#003f5f"
       } else {
         return "red"
       }
@@ -233,7 +240,7 @@ export default {
           this.events = response.data.map(appointments => ({
             ...appointments,
             name: "occupé",
-            color: "grey"
+            color: "#003f5f"
           }))
         }
       })

@@ -32,7 +32,7 @@
           <v-btn
               @click="openFullCalendar"
               outlined
-              style="background-color: #003f5f"
+              style="background-color: #003f5f; margin-right: 1%"
           >
             <span class="eventTitle">Prendre RDV</span>
 

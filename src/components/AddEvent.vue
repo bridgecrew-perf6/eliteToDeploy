@@ -1,9 +1,9 @@
 <template>
   <v-dialog v-model="show" scrollable max-width="700px" persistent>
     <v-card>
-      <v-toolbar color="blue-grey">Nouveau rendez-vous le : {{dateEventComputed}}
+      <v-toolbar style="background-color: #003f5f; color: #d9d9d9; font-family: Copperplate,serif;">Nouveau rendez-vous le : {{dateEventComputed}}
         <v-spacer></v-spacer>
-        <v-icon @click=toggleDialog()>mdi-close</v-icon>
+        <v-icon @click=toggleDialog() color="#d9d9d9">mdi-close</v-icon>
       </v-toolbar>
       <v-card-text>
         <v-form fill-width ref="addEventForm" lazy-validation>
@@ -71,11 +71,12 @@
                 </v-container>
               </template>
             </v-row>
-            <v-card-actions>
+            <v-card-actions style="font-family: Copperplate,serif;">
               <v-spacer></v-spacer>
-              <v-btn color="blue darken-1" text @click=toggleDialog()>Annuler</v-btn>
+              <v-btn color="#003f5f" text @click=toggleDialog()>Annuler</v-btn>
               <v-btn
-                  color="primary"
+                  color="#003f5f"
+                  text
                   @click="addEvent"
               >
                 Valider

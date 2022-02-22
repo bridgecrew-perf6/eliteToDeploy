@@ -1,7 +1,17 @@
 <template>
-  <v-dialog v-model="show" scrollable max-width="700px">
+  <v-dialog v-model="show" scrollable max-width="700px" persistent>
     <v-card>
-      <v-toolbar style="background-color: #003f5f; color: #d9d9d9;  font-family: Copperplate,serif;">Nouvel Article</v-toolbar>
+      <v-toolbar style="background-color: #003f5f; color: #d9d9d9; font-family: Copperplate,serif;">Nouvel Article
+        <v-spacer></v-spacer>
+        <v-btn
+            dark
+            text
+            @click="show = false"
+            color="#d9d9d9"
+        >
+          <v-icon>mdi-close</v-icon>
+        </v-btn>
+      </v-toolbar>
       <v-card-text>
         <v-form @submit.prevent="saveArticle" fill-width ref="addArticleForm" lazy-validation >
       <v-container>
@@ -30,7 +40,7 @@
             </v-card-text>
           </v-col>
         </v-row>
-        <v-card-actions  style="font-family: Copperplate,serif;">
+        <v-card-actions style="font-family: Copperplate,serif;">
           <v-spacer></v-spacer>
           <v-btn color="#003f5f" text @click=toggleDialog()>Annuler</v-btn>
           <v-btn

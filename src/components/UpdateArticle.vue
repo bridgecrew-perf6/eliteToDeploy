@@ -1,7 +1,17 @@
 <template>
-  <v-dialog v-model="show" scrollable max-width="700px">
+  <v-dialog v-model="show" scrollable max-width="700px" persistent>
     <v-card>
-      <v-toolbar color="blue-grey">Modification de l'article :  {{articleToUpdate.title}}</v-toolbar>
+      <v-toolbar  style="background-color: #003f5f; color: #d9d9d9; font-family: Copperplate,serif;">Modification de l'article :  {{articleToUpdate.title}}
+        <v-spacer></v-spacer>
+        <v-btn
+            dark
+            text
+            @click="show = false"
+            color="#d9d9d9"
+        >
+          <v-icon>mdi-close</v-icon>
+        </v-btn>
+      </v-toolbar>
       <v-card-text>
         <v-form fill-width ref="updateArticleForm" lazy-validation >
           <v-container>
@@ -29,14 +39,15 @@
                 </v-card-text>
               </v-col>
             </v-row>
-            <v-card-actions>
+            <v-card-actions style="font-family: Copperplate,serif;">
               <v-btn  @click="deleteArticle">
-                <v-icon color="red">mdi-delete</v-icon>
+                <v-icon color="#003f5f">mdi-delete</v-icon>
               </v-btn>
               <v-spacer></v-spacer>
-              <v-btn color="blue darken-1" text @click=toggleDialog()>Annuler</v-btn>
+              <v-btn color="#003f5f" text @click=toggleDialog()>Annuler</v-btn>
               <v-btn
-                  color="primary"
+                  color="#003f5f"
+                  text
                   @click="updateArticle"
               >
                 Valider

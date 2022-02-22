@@ -77,7 +77,7 @@
               <span>{{ article.likeNumber }}</span>
             </v-card-actions>
             <v-expand-transition>
-              <div v-show="article.show">
+              <div v-show="article.show" style="background-color: #d9d9d9">
                 <v-divider></v-divider>
                 <v-card-text>
                   <div v-html="article.content.substring(0, 400) + '...'"></div>

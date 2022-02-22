@@ -33,7 +33,7 @@ Vue.use(VuetifyConfirm, {
   buttonFalseColor: 'red',
   buttonTrueFlat: false,
   buttonFalseFlat: true,
-  color: 'red',
+  color: '#003f5f',
   title: 'Attention',
   width: 500,
   property: '$confirm'

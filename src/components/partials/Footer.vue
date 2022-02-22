@@ -7,7 +7,7 @@
         class="flex"
         flat
         tile
-        style="background-color: #003f5f"
+        style="background-color: #003f5f; color: #d9d9d9"
     >
       <v-card-title class="">
         <v-row>
