@@ -36,6 +36,7 @@
                     first-day-of-week="1"
                     scrollable
                     color="primary"
+                    :min="new Date().toISOString().substr(0, 10)"
                     @input="saveAndCloseDate($refs.dateMenu, startDate, dateMenu)"
                   ></v-date-picker>
                 </v-menu>
@@ -213,8 +214,8 @@ export default {
     async updateEvent() {
       // this.toggleDialog()
       const accessToken = await this.$auth.getTokenSilently()
-      const dateToStart = moment(this.startDate + ' ' + this.timeStart).add('1', 'hour').format('YYYY-MM-DD HH:mm')
-      const dateToEnd = moment(this.startDate + ' ' + this.timeStart).add('2', 'hour').format('YYYY-MM-DD HH:mm')
+      const dateToStart = moment(this.startDate + ' ' + this.timeStart).format('YYYY-MM-DD HH:mm')
+      const dateToEnd = moment(this.startDate + ' ' + this.timeStart).add('1', 'hour').format('YYYY-MM-DD HH:mm')
       const data = {
         firstname: this.form.firstname,
         lastname: this.form.lastname,

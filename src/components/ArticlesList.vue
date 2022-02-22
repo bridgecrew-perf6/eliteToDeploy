@@ -172,7 +172,7 @@ export default {
       showArticleForm: false,
       showUpdateForm: false,
       articleToUpdate : {},
-      myUrl: "http://localhost:8080/file/",
+      myUrl: "https://afternoon-castle-40052.herokuapp.com/file/",
       showArticleView: false
     };
   },

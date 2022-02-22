@@ -58,7 +58,7 @@ export default {
           .then(response => {
             this.currentArticle = response.data;
             this.createdDate = moment(this.currentArticle.createdAt).format('Do MMMM YYYY')
-            this.myImage = "http://localhost:8080/file/" + this.currentArticle.image
+            this.myImage = "https://afternoon-castle-40052.herokuapp.com/file/" + this.currentArticle.image
           })
           .catch(e => {
             console.log(e);

@@ -124,7 +124,7 @@ export default {
       show: false,
       message: '',
       createdDate: '',
-      myImage: "http://localhost:8080/file/",
+      myImage: "https://afternoon-castle-40052.herokuapp.com/file/",
       showUpdateForm: false,
       articleToUpdate: {}
     };

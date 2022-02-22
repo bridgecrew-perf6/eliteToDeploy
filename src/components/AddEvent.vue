@@ -1,7 +1,10 @@
 <template>
-  <v-dialog v-model="show" scrollable max-width="700px">
+  <v-dialog v-model="show" scrollable max-width="700px" persistent>
     <v-card>
-      <v-toolbar color="blue-grey">Nouveau rendez-vous le : {{dateEventComputed}}</v-toolbar>
+      <v-toolbar color="blue-grey">Nouveau rendez-vous le : {{dateEventComputed}}
+        <v-spacer></v-spacer>
+        <v-icon @click=toggleDialog()>mdi-close</v-icon>
+      </v-toolbar>
       <v-card-text>
         <v-form fill-width ref="addEventForm" lazy-validation>
           <v-container>

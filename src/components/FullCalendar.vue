@@ -149,7 +149,7 @@ export default {
       mode: 'stack',
       modes: ['stack', 'column'],
       daysOfWeek: ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven'],
-      weekday: [1, 2, 3, 4, 5, 6],
+      weekday: [1, 2, 3, 4, 5],
       value: '',
       events: [],
       eventsWithGoodDate: [],
