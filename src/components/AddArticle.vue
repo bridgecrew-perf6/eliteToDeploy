@@ -11,11 +11,10 @@
               v-model="article.title"
               label="Titre"
               required
-              style="font-family: Copperplate,serif;"
             />
           </v-col>
           <v-col cols="6">
-            <div class="large-12 medium-12 small-12 cell" style="font-family: Copperplate,serif;">
+            <div class="large-12 medium-12 small-12 cell">
               <label>Image
                 <input type="file" id="file" ref="file" @change="selectFile()"/>
               </label>
