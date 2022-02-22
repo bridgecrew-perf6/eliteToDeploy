@@ -1,17 +1,22 @@
 <template>
+  <div style="color: #003f5f; background-color: #d9d9d9">
   <v-container>
     <v-layout row wrap align-center>
       <v-flex class="text-xs-center">
-    <v-img
-        :src="require('../assets/images/pexels-pixabay-262508.jpg')"
-        class="my-3"
-        contain
-        height="300"
-    />
-    <v-container fluid style="margin: 20px">
-      <v-row>
+        <v-img
+            :src="require('../assets/images/pexels-pixabay-262508.jpg')"
+            class="my-3"
+            contain
+            height="300"
+        />
+      </v-flex>
+    </v-layout>
+  </v-container>
+    <section>
+
+    <v-row>
         <v-col cols="11">
-          <h1>Articles en lien avec Elite Coaching 42</h1>
+          <h1 title="coaching développement personnel articles" style="font-family: Copperplate,serif; padding-left: 1%">Articles en lien avec Elite Coaching 42</h1>
         </v-col>
         <v-col cols="1">
           <v-tooltip bottom>
@@ -28,7 +33,7 @@
           </v-tooltip>
         </v-col>
       </v-row>
-      <v-layout row wrap>
+      <v-layout row wrap style="margin: auto">
         <v-col
             v-for="(article, index) in articlesWithShow"
             :key="index"
@@ -41,14 +46,17 @@
                 gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
                 height="300px"
             >
-              <v-card-title v-text="article.title"></v-card-title>
+              <v-card-title
+                  style="font-family: Copperplate,serif;"
+                  v-text="article.title"></v-card-title>
 
             </v-img>
-            <v-card-actions>
+            <v-card-actions style="background-color: #d9d9d9;">
               <v-btn
-                color="orange lighten-2"
+                color="#003f5f"
                 text
                 @click.native="article.show = !article.show"
+                style="font-family: Copperplate,serif;"
               >
                 Aperçu
               </v-btn>
@@ -60,9 +68,6 @@
               >
                 <v-icon>mdi-pen</v-icon>
               </v-btn>
-<!--              ouvre dans une nouvelle page-->
-<!--              <v-btn icon @click="openActiveArticle(article, index)">-->
-<!--              ouvre en dessous-->
               <v-btn icon @click="openArticleView(article, index)">
                 <v-icon>mdi-magnify-plus</v-icon>
               </v-btn>
@@ -77,7 +82,7 @@
                 <v-card-text>
                   <div v-html="article.content.substring(0, 400) + '...'"></div>
                   <v-btn text @click="openArticleView(article, index)">
-                    <span>Lire l'article en entier</span>
+                    <span style="font-family: Copperplate,serif;">Lire l'article en entier</span>
                   </v-btn>
                 </v-card-text>
               </div>
@@ -85,14 +90,14 @@
           </v-card>
         </v-col>
       </v-layout>
-    </v-container>
+    </section>
 
-      </v-flex>
-    </v-layout>
+<!--      </v-flex>-->
+<!--    </v-layout>-->
     <AddArticle v-model="showArticleForm" @close="closeArticleForm"/>
     <UpdateArticle v-model="showUpdateForm" @close="closeUpdateForm" :articleToUpdate="articleToUpdate" />
     <ArticlesView v-model="showArticleView" @close="closeArticleView" :currentArticle="currentArticle" :isAdmin="isAdmin"/>
-  </v-container>
+  </div>
 </template>
 
 <script>

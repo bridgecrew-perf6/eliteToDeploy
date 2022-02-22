@@ -5,7 +5,12 @@
             hide-overlay
             transition="dialog-bottom-transition"
   >
-    <v-toolbar color="blue-grey">Article :  {{currentArticle.title}}
+    <v-toolbar style="
+    font-family: Copperplate,serif;
+    background-color: #003f5f;
+    color: #d9d9d9;
+    font-size: 30px"
+    >Article :  {{currentArticle.title}}
       <v-spacer></v-spacer>
       <v-btn
           icon
@@ -15,7 +20,7 @@
         <v-icon>mdi-close</v-icon>
       </v-btn>
     </v-toolbar>
-    <v-card>
+    <v-card style="background-color: #d9d9d9">
       <v-img
           :src="myImage + currentArticle.image"
           class="align-end"
@@ -24,7 +29,9 @@
       >
         <v-row>
           <v-spacer></v-spacer>
-          <v-card-subtitle v-text="'Publié le ' + formattedDate " style="padding-right: 50px"></v-card-subtitle>
+          <v-card-subtitle
+              v-text="'Publié le ' + formattedDate "
+              style="padding-right: 50px; font-family: Copperplate,serif;"></v-card-subtitle>
         </v-row>
       </v-img>
       <router-link
@@ -36,59 +43,14 @@
       <div v-html="currentArticle.content"
            style="padding: 10px"
       ></div>
-      <v-card-actions>
+      <v-card-actions style="font-family: Copperplate,serif;">
         <v-spacer></v-spacer>
-        <v-btn color="blue darken-1" text @click=toggleDialog()>Fermer</v-btn>
-        <v-btn v-if="isAdmin" color="blue darken-1" text @click="openUpdateForm">Modifier</v-btn>
+        <v-btn color="#003f5f" text @click=toggleDialog()>Fermer</v-btn>
+        <v-btn v-if="isAdmin" color="#003f5f" text @click="openUpdateForm">Modifier</v-btn>
       </v-card-actions>
     </v-card>
     <UpdateArticle v-model="showUpdateForm" @close="closeUpdateForm" :articleToUpdate="articleToUpdate" />
   </v-dialog>
-<!--  <div v-if="currentArticle">-->
-<!--    <v-container>-->
-<!--      <v-layout row wrap align-center>-->
-<!--        <v-flex class="text-xs-center">-->
-<!--          <v-card>-->
-<!--            <v-img v-if="currentArticle.image === '' || currentArticle.image === null || currentArticle.image === undefined"-->
-<!--                   :src="require('../assets/images/pexels-dhivakaran-s-783200.jpg')"-->
-<!--                   class="white&#45;&#45;text align-end"-->
-<!--                   max-height="300"-->
-<!--            >-->
-<!--              <v-row>-->
-<!--                <v-card-title v-text="currentArticle.title"></v-card-title>-->
-<!--                <v-spacer></v-spacer>-->
-<!--                <v-card-subtitle v-text="'Publié le ' + createdDate" style="padding-right: 50px"></v-card-subtitle>-->
-<!--              </v-row>-->
-<!--            </v-img>-->
-<!--            <v-img-->
-<!--                v-else-->
-<!--                :src="myImage"-->
-<!--                class="white&#45;&#45;text align-end"-->
-<!--                max-height="300"-->
-<!--            >-->
-<!--              <v-row>-->
-<!--                <v-card-title v-text="currentArticle.title"></v-card-title>-->
-<!--                <v-spacer></v-spacer>-->
-<!--                <v-card-subtitle v-text="'Publié le ' + createdDate" style="padding-right: 50px"></v-card-subtitle>-->
-<!--              </v-row>-->
-<!--            </v-img>-->
-<!--            <router-link-->
-<!--                class="linkBtn"-->
-<!--                to="/articles"-->
-<!--                style="text-decoration: none; color: inherit;"-->
-<!--            >-->
-<!--              <p style="text-align: right; padding-right: 10px">Retour aux articles</p>-->
-<!--            </router-link>-->
-<!--            <div v-html="currentArticle.content"-->
-<!--                 style="padding: 10px"-->
-<!--            ></div>-->
-
-<!--          </v-card>-->
-<!--        </v-flex>-->
-<!--      </v-layout>-->
-<!--    </v-container>-->
-<!--  </div>-->
-
 </template>
 
 <script>
