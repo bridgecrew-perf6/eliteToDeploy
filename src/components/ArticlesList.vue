@@ -1,8 +1,20 @@
 <template>
   <div style="color: #003f5f; background-color: #d9d9d9">
   <v-container>
+    <v-card-actions  v-show="isAdmin" v-if="isMobile">
+      <v-spacer></v-spacer>
+      <v-icon
+          @click="openArticleForm"
+          float right
+          style="padding-top: 1%"
+      >
+        mdi-pen-plus
+      </v-icon>
+    </v-card-actions>
     <v-layout row wrap align-center>
       <v-flex class="text-xs-center">
+
+
         <v-img
             :src="require('../assets/images/pexels-pixabay-262508.jpg')"
             class="my-3"
@@ -25,6 +37,7 @@
                   v-bind="attrs"
                   v-on="on"
                   v-show="isAdmin"
+                  v-if="!isMobile"
               >
                 mdi-pen-plus</v-icon>
             </template>
@@ -106,7 +119,7 @@ import ArticlesView from "./ArticleView";
 export default {
   name: "articles-list",
   components: {ArticlesView, UpdateArticle, AddArticle},
-  computed: { ...mapGetters(['isAdmin'])},
+  computed: { ...mapGetters(['isAdmin', 'isMobile'])},
   created() {
   },
   data() {

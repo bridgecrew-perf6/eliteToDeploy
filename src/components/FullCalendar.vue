@@ -66,7 +66,6 @@
           >
             <v-card
                 color="d9d9d9"
-                min-width="400px"
                 flat
                 persistant
             >
@@ -91,23 +90,23 @@
                 </v-btn>
               </v-toolbar>
               <v-card-text scrollable style="font-family: Copperplate,serif; color: #003f5f">
-                <span>{{ this.formattedDate(this.selectedEvent.start) }} - {{this.formattedDate(this.selectedEvent.end)}}</span>
-                <h4>Objet du rendez-vous :</h4>
-                <p>{{selectedEvent.comment}}</p>
-                <h4>Coordonnées</h4>
-                <span>Nom : {{this.selectedEvent.name}}</span><br>
-                <span>Tél : {{this.selectedEvent.phone}}</span><br>
-                <span>Email : {{this.selectedEvent.email}}</span><br>
-                <br>
-                <span class="font-italic" v-if="selectedEvent.status">Rendez-vous confirmé !</span>
-                <span class="font-italic" v-else>Rendez-vous non confirmé</span>
+                <v-row>
+                  {{ this.formattedDate(this.selectedEvent.start) }} - {{this.formattedDate(this.selectedEvent.end)}}
+                </v-row>
+                <v-row class="text-decoration-underline" style="font-size: 15px">Objet du rendez-vous :</v-row>
+                <v-row class="font-italic">" {{selectedEvent.comment}} "</v-row>
+                <v-row class="text-decoration-underline" style="font-size: 15px">Coordonnées</v-row>
+                <v-row class="font-italic"> Nom : {{this.selectedEvent.name}} </v-row>
+                <v-row class="font-italic">Tél : {{this.selectedEvent.phone}} </v-row>
+                <v-row class="font-italic">Mail : {{this.selectedEvent.email}} </v-row>
+                <v-row class="font-italic" v-if="selectedEvent.status">Rendez-vous confirmé !</v-row>
+                <v-row class="font-italic" v-else>Rendez-vous non confirmé</v-row>
                 <v-card-actions>
                   <v-spacer></v-spacer>
                   <v-btn @click="deleteEvent">
                     <v-icon color="#003f5f">mdi-delete</v-icon>
                   </v-btn>
                 </v-card-actions>
-
               </v-card-text>
             </v-card>
           </v-menu>

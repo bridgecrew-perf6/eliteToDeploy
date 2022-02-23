@@ -16,14 +16,14 @@
         <v-form fill-width ref="updateArticleForm" lazy-validation >
           <v-container>
             <v-row>
-              <v-col cols="6">
+              <v-col cols="12" md="6">
                 <v-text-field
                     v-model="form.title"
                     label="Titre"
                     :rules="[rules.required]"
                 />
               </v-col>
-              <v-col cols="6">
+              <v-col cols="12" md="6">
                 <div class="large-12 medium-12 small-12 cell">
                   <label>Image
                     <input type="file" id="file" ref="file" @change="selectFile()"/>
@@ -31,13 +31,13 @@
                 </div>
               </v-col>
               <v-col>
-                <v-card-text>
+                <div>
                   <quill-editor
                       v-model="form.content"
                       :options="editorOption"
                       :rules="[rules.required]"
                   ></quill-editor>
-                </v-card-text>
+                </div>
               </v-col>
             </v-row>
             <v-card-title v-if="this.formErrors.length > 0" style="">

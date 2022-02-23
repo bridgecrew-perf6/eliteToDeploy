@@ -16,7 +16,7 @@
         <v-form fill-width ref="updateEventForm" lazy-validation>
           <v-container>
             <v-row>
-              <v-col cols="6" class="py-0">
+              <v-col cols="12" md="6" class="py-0">
                 <v-menu
                   ref="dateMenu"
                   :close-on-content-click="false"
@@ -51,7 +51,7 @@
                   ></v-date-picker>
                 </v-menu>
               </v-col>
-              <v-col cols="6" class="py-0">
+              <v-col cols="12" md="6" class="py-0">
                 <v-text-field
                     cols="6"
                     class="py-3"
@@ -63,14 +63,14 @@
               </v-col>
             </v-row>
             <v-row>
-              <v-col cols="6">
+              <v-col cols="12" md="6">
                 <v-text-field
                   v-model="form.firstname"
                   label="Prénom"
                   :rules="[rules.required, rules.minTwoChar]"
                 />
               </v-col>
-              <v-col cols="6">
+              <v-col cols="12" md="6">
                 <v-text-field
                     v-model="form.lastname"
                     label="Nom"
@@ -79,14 +79,14 @@
               </v-col>
             </v-row>
             <v-row>
-              <v-col cols="6">
+              <v-col cols="12" md="6">
                 <v-text-field
                     v-model="form.phone"
                     label="Numéro de téléphone"
                     :rules="[rules.required, rules.phone]"
                 />
               </v-col>
-              <v-col cols="6">
+              <v-col cols="12" md="6">
                 <v-text-field
                     v-model="form.email"
                     label="E-Mail"
@@ -94,7 +94,7 @@
                 />
               </v-col>
             </v-row>
-            <v-row>
+            <v-row v-if="!isMobile">
               <v-col cols="9">
                 <v-textarea
                     :rules="[rules.required, rules.minTwoChar]"
@@ -116,6 +116,25 @@
                   </v-container>
                 </template>
               </v-col>
+            </v-row>
+            <v-row v-else>
+                <v-textarea
+                    :rules="[rules.required, rules.minTwoChar]"
+                    v-model="form.comment"
+                    label="Objet du rendez-vous"/>
+                <template>
+                  <v-container
+                      class="px-0"
+                      fluid
+                  >
+                    <v-checkbox
+                        v-model="form.status"
+                        @change="changeCheckboxText"
+                    ></v-checkbox>
+                    <span v-if="form.status">Rendez-vous confirmé !</span>
+                    <span v-else>Rendez-vous à confirmer ?</span>
+                  </v-container>
+                </template>
             </v-row>
             <v-card-title v-if="this.formErrors.length > 0" style="">
               <v-icon color="red" style='padding-right: 20px' class="material-icons">mdi-alert</v-icon>
@@ -148,7 +167,7 @@ export default {
   name: "UpdateEvent.vue",
   props: ['visible', 'eventToUpdate'],
   computed: {
-    ...mapGetters(['rules']),
+    ...mapGetters(['rules', 'isMobile']),
     computedDateFormatted: {
       get() { return moment(this.startDate).format('DD/MM/YYYY'); },
       set: function (newValue) {
