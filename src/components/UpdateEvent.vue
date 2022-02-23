@@ -33,7 +33,7 @@
                       v-on="on"
                       v-model="computedDateFormatted"
                       label="Date du rendez-vous"
-                      required
+                      :rules="[rules.required]"
                       @input="onStartDateInput"
                     ></v-text-field>
                   </template>
@@ -58,6 +58,7 @@
                     v-model="timeStart"
                     label="Heure du rendez-vous"
                     type="time"
+                    :rules="[rules.required]"
                 ></v-text-field>
               </v-col>
             </v-row>
@@ -66,14 +67,14 @@
                 <v-text-field
                   v-model="form.firstname"
                   label="Prénom"
-                  required
+                  :rules="[rules.required, rules.minTwoChar]"
                 />
               </v-col>
               <v-col cols="6">
                 <v-text-field
                     v-model="form.lastname"
                     label="Nom"
-                    required
+                    :rules="[rules.required, rules.minTwoChar]"
                 />
               </v-col>
             </v-row>
@@ -82,20 +83,21 @@
                 <v-text-field
                     v-model="form.phone"
                     label="Numéro de téléphone"
-                    required
+                    :rules="[rules.required, rules.phone]"
                 />
               </v-col>
               <v-col cols="6">
                 <v-text-field
                     v-model="form.email"
                     label="E-Mail"
-                    required
+                    :rules="[rules.required, rules.email]"
                 />
               </v-col>
             </v-row>
             <v-row>
               <v-col cols="9">
                 <v-textarea
+                    :rules="[rules.required, rules.minTwoChar]"
                     v-model="form.comment"
                     label="Objet du rendez-vous"/>
               </v-col>
@@ -115,16 +117,17 @@
                 </template>
               </v-col>
             </v-row>
+            <v-card-title v-if="this.formErrors.length > 0" style="">
+              <v-icon color="red" style='padding-right: 20px' class="material-icons">mdi-alert</v-icon>
+              <span  style="font-family: Copperplate,serif; color: #003f5f">Tous les champs sont requis !</span>
+            </v-card-title>
             <v-card-actions style="font-family: Copperplate,serif;">
-<!--              <v-btn>-->
-<!--                <v-icon @click="deleteEvent" color="#003f5f">mdi-delete</v-icon>-->
-<!--              </v-btn>-->
               <v-spacer></v-spacer>
               <v-btn color="#003f5f" text @click=toggleDialog()>Annuler</v-btn>
               <v-btn
                   color="#003f5f"
                   text
-                  @click="updateEvent"
+                  @click="checkUpdateForm"
               >
                 Valider
               </v-btn>
@@ -139,11 +142,13 @@
 <script>
 import CalendarService from "./service/CalendarService";
 import moment from "moment";
+import {mapGetters} from "vuex";
 
 export default {
   name: "UpdateEvent.vue",
   props: ['visible', 'eventToUpdate'],
   computed: {
+    ...mapGetters(['rules']),
     computedDateFormatted: {
       get() { return moment(this.startDate).format('DD/MM/YYYY'); },
       set: function (newValue) {
@@ -180,7 +185,7 @@ export default {
       timerInput: '',
       startDate: '',
       startTime: '',
-
+      formErrors: [],
     }
   },
   methods: {
@@ -222,6 +227,19 @@ export default {
       this.timeStart = moment(event.start).format('HH:mm')
     },
 
+    checkUpdateForm() {
+      if (this.form.id &&
+          this.form.firstname &&
+          this.form.lastname &&
+          this.form.email &&
+          this.form.phone &&
+          this.form.comment &&
+          this.startDate &&
+          this.timeStart
+      ) this.updateEvent()
+      else this.formErrors.push("error")
+    },
+
     async updateEvent() {
       const accessToken = await this.$auth.getTokenSilently()
       const dateToStart = moment(this.startDate + ' ' + this.timeStart).format('YYYY-MM-DD HH:mm')
@@ -229,7 +247,7 @@ export default {
       const data = {
         firstname: this.form.firstname,
         lastname: this.form.lastname,
-        phone: this.form.lastname,
+        phone: this.form.phone,
         email: this.form.email,
         comment: this.form.comment,
         status: this.form.status,
@@ -239,25 +257,14 @@ export default {
 
       CalendarService.update(this.form.id, data, accessToken)
           .then(response => {
-        console.log(response.data)
+            console.log(response.data)
+            this.formErrors = []
             this.$emit('close', this.show)
           })
           .catch(e => {
             console.log(e);
           });
     },
-    // async deleteEvent() {
-    //   const accessToken = await this.$auth.getTokenSilently()
-    //
-    //   let res = await this.$confirm("Tu es sûre de vouloir supprimer ce rendez-vous ?");
-    //   if(res) {
-    //     CalendarService.delete(this.selectedEvent.id, accessToken)
-    //         .then(response => {
-    //           console.log(response.data)
-    //           this.getEvents()
-    //         })
-    //   }
-    // },
   }
 }
 </script>

@@ -90,7 +90,7 @@
                   <v-icon>mdi-close</v-icon>
                 </v-btn>
               </v-toolbar>
-              <v-card-text style="font-family: Copperplate,serif; color: #003f5f">
+              <v-card-text scrollable style="font-family: Copperplate,serif; color: #003f5f">
                 <span>{{ this.formattedDate(this.selectedEvent.start) }} - {{this.formattedDate(this.selectedEvent.end)}}</span>
                 <h4>Objet du rendez-vous :</h4>
                 <p>{{selectedEvent.comment}}</p>
@@ -189,6 +189,7 @@ export default {
 
     closeUpdateForm() {
       this.showUpdateForm = false
+      this.$refs.updateEventForm.formErrors = []
       this.getEvents()
     },
 

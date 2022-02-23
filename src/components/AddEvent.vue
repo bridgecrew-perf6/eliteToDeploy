@@ -17,6 +17,7 @@
                     label="Heure du rendez-vous"
                     type="time"
                     :rules="[rules.required]"
+                    @input="timeEventChange"
                 ></v-text-field>
               </v-col>
             </v-row>
@@ -54,7 +55,7 @@
                 <v-textarea
                     v-model="form.comment"
                     label="Objet du rendez-vous"
-                    :rules="[rules.minTwoChar]"
+                    :rules="[rules.required, rules.minTwoChar]"
                 />
               </v-col>
               <template>
@@ -71,13 +72,17 @@
                 </v-container>
               </template>
             </v-row>
+            <v-card-title v-if="this.formErrors.length > 0" style="">
+              <v-icon color="red" style='padding-right: 20px' class="material-icons">mdi-alert</v-icon>
+              <span  style="font-family: Copperplate,serif; color: #003f5f">Tous les champs sont requis !</span>
+            </v-card-title>
             <v-card-actions style="font-family: Copperplate,serif;">
               <v-spacer></v-spacer>
               <v-btn color="#003f5f" text @click=toggleDialog()>Annuler</v-btn>
               <v-btn
                   color="#003f5f"
                   text
-                  @click="addEvent"
+                  @click="checkAddForm"
               >
                 Valider
               </v-btn>
@@ -139,9 +144,10 @@ export default {
         comment: '',
         start: '',
         end: '',
-        status: false
+        status: false,
       },
-      checkboxText: "À confirmer"
+      checkboxText: "À confirmer",
+      formErrors: [],
     }
   },
   methods: {
@@ -152,18 +158,39 @@ export default {
     saveAndCloseDate(ref, date) {
       ref.save(date)
     },
-    // timeEventChange: function (time) {
-    //   this.timeInput = moment(time).format('hh:mm')
-    // },
+    timeEventChange: function (time) {
+      this.timerInput = time
+    },
     changeCheckboxText(){
       if(this.form.status === false) {
         this.checkboxText = "À confirmer"
       } else this.checkboxText = "Confirmé !"
     },
 
+    checkAddForm() {
+      if(this.form.firstname &&
+          this.form.lastname &&
+          this.form.comment &&
+          this.form.email &&
+          this.form.phone &&
+          this.dateEvent &&
+          this.timerInput
+      ) this.addEvent()
+      else this.formErrors.push("errors")
+    },
+
     resetAddForm() {
-      this.form = {}
-      this.timerInput = null
+      this.form.id= null
+      this.form.firstname = ''
+      this.form.lastname = ''
+      this.form.phone = ''
+      this.form.email = ''
+      this.form.comment = ''
+      this.form.start = ''
+      this.form.end = ''
+      this.form.status = false
+      this.timerInput = ''
+      this.formErrors = []
     },
 
     async sendMail() {
@@ -185,6 +212,7 @@ export default {
           .then(response => {
             this.form.id = response.data.id
             if (!this.isAdmin) this.sendMail()
+            this.resetAddForm()
             this.$emit('close', this.show)
           })
     }
