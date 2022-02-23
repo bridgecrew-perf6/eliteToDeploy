@@ -22,6 +22,7 @@
     </v-toolbar>
     <v-card style="background-color: #d9d9d9">
       <v-img
+          alt="coaching developpement personnel roanne"
           :src="myImage + currentArticle.image"
           class="align-end"
           max-height="300"

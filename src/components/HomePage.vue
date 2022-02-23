@@ -2,6 +2,7 @@
  <v-main>
    <section>
    <v-img
+       alt="coaching developpement personnel roanne"
        :src="require('../assets/images/logo_elite42.png')"
        class="my-3"
    /></section>
@@ -20,7 +21,7 @@
            <div style="color: #003f5f; background-color: #d9d9d9; width: 40%; margin: auto; padding: 1%; margin-bottom: 1%; border-radius: 10px;">
              <h1
                  style=" font-family: Copperplate,serif; font-size: 26px"
-                 title="Développement personnel - coaching">
+                 title="coaching développement personnel partenaire roanne">
                À PROPOS</h1>
            </div>
            <div
@@ -73,6 +74,7 @@
        <v-row style="margin-top: 5%; margin-bottom: 5%">
          <v-col xs="12" md="6">
            <v-img
+               alt="coaching developpement personnel roanne"
                :src="require('../assets/images/latifapix .jpg')"
                class="my-3"
                contain
@@ -130,6 +132,7 @@
          </v-col>
          <v-col xs="12" md="6">
            <v-img
+               alt="coaching developpement personnel roanne"
                :src="require('../assets/images/ponton.jpg')"
                class="my-3"
                contain
@@ -144,6 +147,7 @@
    <section style="background-color: #d9d9d9">
      <v-container>
        <v-img
+           alt="coaching developpement personnel roanne"
            :src="require('../assets/images/Chaussures de mode.jpeg')"
            class="my-3"
            contain
@@ -152,7 +156,7 @@
      </v-container>
      <v-container>
          <v-flex class="text-xs-center"  style="font-family: Copperplate,serif;">
-           <h1>Formulaire de contact</h1>
+           <h1 title="coaching développement personnel partenaire roanne">Formulaire de contact</h1>
 <!--           TODO remplacer 1ff900ac249a96a1c3d359fb15edf8bd par mail de latifa puis par le code envoyé sur son mail-->
            <form action="https://formsubmit.co/1ff900ac249a96a1c3d359fb15edf8bd" method="POST">
              <v-row>

@@ -5,6 +5,7 @@
         <v-flex class="text-xs-center">
         <v-card>
           <v-img
+              alt="coaching developpement personnel roanne"
               :src="myImage"
               contain
               max-height="300"

@@ -16,6 +16,7 @@
 
 
         <v-img
+            alt="coaching developpement personnel roanne"
             :src="require('../assets/images/pexels-pixabay-262508.jpg')"
             class="my-3"
             contain
@@ -27,7 +28,7 @@
     <section>
     <v-row>
         <v-col cols="11">
-          <h1 title="coaching développement personnel articles" style="font-family: Copperplate,serif; padding-left: 1%">Articles en lien avec Elite Coaching 42</h1>
+          <h1 title="coaching développement personnel articles roanne" style="font-family: Copperplate,serif; padding-left: 1%">Articles en lien avec Elite Coaching 42</h1>
         </v-col>
         <v-col cols="1">
           <v-tooltip bottom>
@@ -53,6 +54,7 @@
             >
           <v-card>
             <v-img
+                alt="coaching developpement personnel roanne"
                 :src="myUrl + article.image"
                 class="white--text align-end"
                 gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
