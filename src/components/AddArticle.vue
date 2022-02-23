@@ -6,21 +6,21 @@
         <v-btn
             dark
             text
-            @click="show = false"
+            @click="toggleDialog()"
             color="#d9d9d9"
         >
           <v-icon>mdi-close</v-icon>
         </v-btn>
       </v-toolbar>
       <v-card-text>
-        <v-form @submit.prevent="saveArticle" fill-width ref="addArticleForm" lazy-validation >
+        <v-form fill-width ref="addArticleForm" lazy-validation >
       <v-container>
         <v-row>
           <v-col cols="6">
             <v-text-field
               v-model="article.title"
               label="Titre"
-              required
+              :rules="[rules.required]"
             />
           </v-col>
           <v-col cols="6">
@@ -36,17 +36,23 @@
                   v-model="article.content"
                   :options="editorOption"
                   style="min-height:300px;"
+                  :rules="[rules.required]"
               ></quill-editor>
             </v-card-text>
           </v-col>
         </v-row>
+        <v-card-title v-if="this.formErrors.length > 0" style="">
+          <v-icon color="red" style='padding-right: 20px' class="material-icons">mdi-alert</v-icon>
+          <span  style="font-family: Copperplate,serif; color: #003f5f">Tous les champs sont requis !</span>
+        </v-card-title>
         <v-card-actions style="font-family: Copperplate,serif;">
           <v-spacer></v-spacer>
           <v-btn color="#003f5f" text @click=toggleDialog()>Annuler</v-btn>
           <v-btn
               color="#003f5f"
-              value="submit"
-              text type="submit"
+              @click="checkForm"
+              text
+
           >
             Valider
           </v-btn>
@@ -67,6 +73,7 @@ import 'quill/dist/quill.bubble.css'
 import { quillEditor } from 'vue-quill-editor'
 import axios from "axios";
 import moment from "moment";
+import {mapGetters} from "vuex";
 
 export default {
   name: "add-article",
@@ -79,6 +86,9 @@ export default {
       this.show = v
     }
   },
+  computed: {
+    ...mapGetters(['rules'])
+  },
   components: {quillEditor},
   data() {
     return {
@@ -87,6 +97,7 @@ export default {
         title: "",
         content: "",
       },
+      formErrors: [],
       submitted: false,
       show: false,
       imageName:"",
@@ -116,6 +127,13 @@ export default {
     selectFile() {
       this.file = this.$refs.file.files[0]
       this.error = false;
+    },
+
+    checkForm() {
+      if(this.article.title &&
+          this.article.content
+      ) this.saveArticle()
+      else this.formErrors.push("error")
     },
     async sendFile() {
       const formData = new FormData();
@@ -157,6 +175,7 @@ export default {
             if (this.$refs.file.files[0]) {
               this.sendFile()
             }
+            this.formErrors = []
             this.$emit('close', this.show)
             location.reload()
           }).catch(e => {

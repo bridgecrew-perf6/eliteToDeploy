@@ -49,18 +49,15 @@
         <v-btn v-if="isAdmin" color="#003f5f" text @click="openUpdateForm">Modifier</v-btn>
       </v-card-actions>
     </v-card>
-    <UpdateArticle v-model="showUpdateForm" @close="closeUpdateForm" :articleToUpdate="articleToUpdate" />
+    <UpdateArticle ref="updateArticleForm" v-model="showUpdateForm" @close="closeUpdateForm"/>
   </v-dialog>
 </template>
 
 <script>
-// import DataService from "./service/DataService";
 import moment from 'moment';
 import 'moment/locale/fr';
 import {mapGetters} from "vuex";
 import UpdateArticle from "./UpdateArticle";
-// import {mapGetters} from "vuex";
-// import axios from "axios";
 moment.locale('fr')
 
 export default {
@@ -97,50 +94,15 @@ export default {
       this.$emit('close', this.show)
     },
     openUpdateForm() {
-      this.articleToUpdate = this.currentArticle
+      this.$refs.updateArticleForm.setForm(this.currentArticle)
       this.showUpdateForm = true
       this.toggleDialog()
     },
     closeUpdateForm() {
       this.showUpdateForm = false
+      this.$refs.updateArticleForm.formErrors = []
     },
-    // getArticle(id) {
-    //   DataService.get(id)
-    //       .then(response => {
-    //         this.currentArticle = response.data;
-    //         this.createdDate = moment(this.currentArticle.createdAt).format('Do MMMM YYYY')
-    //         this.myImage = "http://localhost:8080/file/" + this.currentArticle.image
-    //       })
-    //       .catch(e => {
-    //         console.log(e);
-    //       });
-    // },
-
-
-    // async updatePublished(status) {
-    //   var data = {
-    //     id: this.currentArticle.id,
-    //     title: this.currentArticle.title,
-    //     description: this.currentArticle.content,
-    //     published: status
-    //   };
-    //   const accessToken = await this.$auth.getTokenSilently()
-    //
-    //   DataService.update(this.currentArticle.id, data, accessToken)
-    //       .then(response => {
-    //         this.currentArticle.published = status;
-    //         console.log(response.data);
-    //       })
-    //       .catch(e => {
-    //         console.log(e);
-    //       });
-    // },
-
   },
-  // mounted() {
-  //   this.message = '';
-  //   this.getArticle(this.$route.params.id);
-  // }
 };
 </script>
 

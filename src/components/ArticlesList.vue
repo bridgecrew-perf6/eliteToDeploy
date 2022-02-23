@@ -13,7 +13,6 @@
     </v-layout>
   </v-container>
     <section>
-
     <v-row>
         <v-col cols="11">
           <h1 title="coaching développement personnel articles" style="font-family: Copperplate,serif; padding-left: 1%">Articles en lien avec Elite Coaching 42</h1>
@@ -91,11 +90,8 @@
         </v-col>
       </v-layout>
     </section>
-
-<!--      </v-flex>-->
-<!--    </v-layout>-->
-    <AddArticle v-model="showArticleForm" @close="closeArticleForm"/>
-    <UpdateArticle v-model="showUpdateForm" @close="closeUpdateForm" :articleToUpdate="articleToUpdate" />
+    <AddArticle ref="addArticleForm" v-model="showArticleForm" @close="closeArticleForm"/>
+    <UpdateArticle ref="updateArticleForm" v-model="showUpdateForm" @close="closeUpdateForm" />
     <ArticlesView v-model="showArticleView" @close="closeArticleView" :currentArticle="currentArticle" :isAdmin="isAdmin"/>
   </div>
 </template>
@@ -145,14 +141,17 @@ export default {
       this.showArticleForm = true;
     },
     openUpdateForm(article) {
-      this.articleToUpdate = article
+      // this.articleToUpdate = article
+      this.$refs.updateArticleForm.setForm(article)
       this.showUpdateForm = true
     },
     closeArticleForm() {
       this.showArticleForm = false;
+      this.$refs.addArticleForm.formErrors = []
     },
     closeUpdateForm() {
       this.showUpdateForm = false
+      this.$refs.updateArticleForm.formErrors = []
     },
     retrieveArticles() {
       DataService.getAll()

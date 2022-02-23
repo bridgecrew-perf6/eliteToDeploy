@@ -1,7 +1,7 @@
 <template>
   <v-dialog v-model="show" scrollable max-width="700px" persistent>
     <v-card>
-      <v-toolbar  style="background-color: #003f5f; color: #d9d9d9; font-family: Copperplate,serif;">Modification de l'article :  {{articleToUpdate.title}}
+      <v-toolbar  style="background-color: #003f5f; color: #d9d9d9; font-family: Copperplate,serif;">Modification de l'article :  {{form.title}}
         <v-spacer></v-spacer>
         <v-btn
             dark
@@ -18,9 +18,9 @@
             <v-row>
               <v-col cols="6">
                 <v-text-field
-                    v-model="articleToUpdate.title"
+                    v-model="form.title"
                     label="Titre"
-                    required
+                    :rules="[rules.required]"
                 />
               </v-col>
               <v-col cols="6">
@@ -33,12 +33,17 @@
               <v-col>
                 <v-card-text>
                   <quill-editor
-                      v-model="articleToUpdate.content"
+                      v-model="form.content"
                       :options="editorOption"
+                      :rules="[rules.required]"
                   ></quill-editor>
                 </v-card-text>
               </v-col>
             </v-row>
+            <v-card-title v-if="this.formErrors.length > 0" style="">
+              <v-icon color="red" style='padding-right: 20px' class="material-icons">mdi-alert</v-icon>
+              <span  style="font-family: Copperplate,serif; color: #003f5f">Tous les champs sont requis !</span>
+            </v-card-title>
             <v-card-actions style="font-family: Copperplate,serif;">
               <v-btn  @click="deleteArticle">
                 <v-icon color="#003f5f">mdi-delete</v-icon>
@@ -48,7 +53,7 @@
               <v-btn
                   color="#003f5f"
                   text
-                  @click="updateArticle"
+                  @click="checkUpdateForm"
               >
                 Valider
               </v-btn>
@@ -68,14 +73,20 @@ import 'quill/dist/quill.bubble.css'
 
 import { quillEditor } from 'vue-quill-editor'
 import axios from "axios";
+import {mapGetters} from "vuex";
 
 export default {
   name: "UpdateArticle.vue",
   components: {quillEditor},
-  props: ['value', 'articleToUpdate'],
+  props: ['value'],
+  computed: {
+    ...mapGetters(['rules'])
+  },
   data() {
     return {
+      formErrors: [],
       file: '',
+      form: {},
       show: false,
       editorOption: {
         theme: 'snow',
@@ -133,17 +144,32 @@ export default {
       }
     },
 
+    setForm(event) {
+      this.form.id = event.id
+      this.form.title = event.title
+      this.form.content = event.content
+      this.form.image = event.image
+    },
+
+    checkUpdateForm() {
+      if (this.form.title &&
+          this.form.content
+      ) this.updateArticle()
+      else this.formErrors.push("error")
+    },
+
     async updateArticle() {
       const accessToken = await this.$auth.getTokenSilently()
       if (this.$refs.file.files[0]) {
-        this.articleToUpdate.image = this.file.name
+        this.form.image = this.file.name
       }
-      DataService.update(this.articleToUpdate.id, this.articleToUpdate, accessToken).then(response => {
+      DataService.update(this.form.id, this.form, accessToken).then(response => {
         console.log(response.data);
         if (this.$refs.file.files[0]) {
           this.sendFile()
         }
         this.$emit('close', this.show)
+        this.formErrors = []
         location.reload()
       })
           .catch(e => {
@@ -156,7 +182,7 @@ export default {
         if(res) {
           const accessToken = await this.$auth.getTokenSilently()
 
-          DataService.delete(this.articleToUpdate.id, accessToken)
+          DataService.delete(this.form.id, accessToken)
               .then(response => {
                 console.log(response.data);
                 this.$emit('close', this.show)
