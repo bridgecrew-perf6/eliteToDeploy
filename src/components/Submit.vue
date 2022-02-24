@@ -12,7 +12,7 @@
         </v-flex>
         <v-container>
           <v-row>
-            <v-col xs="12" md="6">
+            <v-col xs="12" md="12">
               <v-img
                   alt="coaching developpement personnel roanne"
                   :src="require('../assets/images/agenda.jpg')"
