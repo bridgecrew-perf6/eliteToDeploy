@@ -98,7 +98,7 @@
         <input type="hidden" :value="form.phone" name="Téléphone" />
         <input type="hidden" :value="dateEventComputed" name="Date" />
         <input type="hidden" :value="timerInput" name="Heure du rendez-vous"  />
-        <input type="hidden" name="_next" value="http://localhost:8081/submit">
+        <input type="hidden" name="_next" value="https://afternoon-castle-40052.herokuapp.com/submit">
       </v-form>
     </v-card>
   </v-dialog>

@@ -46,7 +46,6 @@
                     first-day-of-week="1"
                     scrollable
                     color="primary"
-                    :min="new Date().toISOString().substr(0, 10)"
                     @input="saveAndCloseDate($refs.dateMenu, startDate, dateMenu)"
                   ></v-date-picker>
                 </v-menu>
