@@ -128,7 +128,9 @@ export default {
     selectFile() {
       this.file = this.$refs.file.files[0]
       this.error = false;
-      console.log(this.file)
+      const formData = new FormData();
+      formData.append('file', this.file);
+      console.log(formData)
     },
 
     checkForm() {
