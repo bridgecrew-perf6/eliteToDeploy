@@ -168,7 +168,7 @@ export default {
       if(this.file) {
         this.imageName = this.imageUrl
       } else {
-        this.imageName = "https://res.cloudinary.com/doodbvrla/image/upload/v1645777753/noimage_kb7n4m.jpg"
+        this.imageName = "https://res.cloudinary.com/hghzq1rcq/image/upload/v1645784132/noimage_rxm5ck.jpg"
       }
 
       var data = {
