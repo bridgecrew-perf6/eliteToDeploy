@@ -144,6 +144,7 @@ export default {
       formData.append('file', this.file);
       try {
         await axios.post('/upload', formData ).then(res => {
+          console.log(res.data)
           this.imageUrl = res.data.message
         })
       } catch (err) {
