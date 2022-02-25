@@ -178,7 +178,7 @@ export default {
         createdAt: moment.now()
       };
       const accessToken = await this.$auth.getTokenSilently()
-      DataService.create(data, accessToken)
+     await DataService.create(data, accessToken)
           .then(response => {
             this.article.id = response.data.id;
             this.submitted = true;
