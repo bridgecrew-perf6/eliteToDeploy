@@ -65,14 +65,14 @@
 </template>
 
 <script>
-import DataService from "./service/DataService";
+// import DataService from "./service/DataService";
 import 'quill/dist/quill.core.css'
 import 'quill/dist/quill.snow.css'
 import 'quill/dist/quill.bubble.css'
 
 import { quillEditor } from 'vue-quill-editor'
 import axios from "axios";
-import moment from "moment";
+// import moment from "moment";
 import {mapGetters} from "vuex";
 
 export default {
@@ -141,6 +141,10 @@ export default {
       formData.append('file', this.file);
       try {
         await axios.post('/upload', formData ).then(res => {
+          console.log("formData")
+          console.log(formData)
+          console.log("res.data")
+          console.log(res.data)
           this.imageUrl = res.data.message
         })
       } catch (err) {
@@ -171,14 +175,14 @@ export default {
         this.imageName = "https://res.cloudinary.com/hghzq1rcq/image/upload/v1645784132/noimage_rxm5ck.jpg"
       }
 
-      var data = {
+     /* var data = {
         title: this.article.title,
         content: this.article.content,
         image: this.imageName,
         createdAt: moment.now()
       };
-      const accessToken = await this.$auth.getTokenSilently()
-      DataService.create(data, accessToken)
+      const accessToken = await this.$auth.getTokenSilently()*/
+    /*  DataService.create(data, accessToken)
           .then(response => {
             this.article.id = response.data.id;
             this.submitted = true;
@@ -188,7 +192,7 @@ export default {
 
           }).catch(e => {
         console.log(e);
-      });
+      });*/
 
     },
 
