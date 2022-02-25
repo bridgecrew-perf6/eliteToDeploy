@@ -55,7 +55,7 @@
           <v-card>
             <v-img
                 alt="coaching developpement personnel roanne"
-                :src="myUrl + article.image"
+                :src="article.image"
                 class="white--text align-end"
                 gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
                 height="300px"
@@ -85,9 +85,9 @@
               <v-btn icon @click="openArticleView(article, index)">
                 <v-icon>mdi-magnify-plus</v-icon>
               </v-btn>
-              <v-btn icon @click="updateLike(article, index)">
+<!--              <v-btn icon @click="updateLike(article, index)">
                 <v-icon>mdi-heart</v-icon>
-              </v-btn>
+              </v-btn>-->
               <span>{{ article.likeNumber }}</span>
             </v-card-actions>
             <v-expand-transition>
@@ -134,7 +134,6 @@ export default {
       showArticleForm: false,
       showUpdateForm: false,
       articleToUpdate : {},
-      myUrl: "https://afternoon-castle-40052.herokuapp.com/file/",
       showArticleView: false
     };
   },
@@ -156,20 +155,21 @@ export default {
       this.showArticleForm = true;
     },
     openUpdateForm(article) {
-      // this.articleToUpdate = article
       this.$refs.updateArticleForm.setForm(article)
       this.showUpdateForm = true
     },
     closeArticleForm() {
       this.showArticleForm = false;
       this.$refs.addArticleForm.formErrors = []
+      this.retrieveArticles()
     },
     closeUpdateForm() {
       this.showUpdateForm = false
       this.$refs.updateArticleForm.formErrors = []
+      this.retrieveArticles()
     },
-    retrieveArticles() {
-      DataService.getAll()
+    async retrieveArticles() {
+      await DataService.getAll()
           .then(response => {
             this.articles = response.data;
             this.addShow()
@@ -179,7 +179,7 @@ export default {
           });
     },
 
-    async updateLike(article, index) {
+    /*async updateLike(article, index) {
       this.currentArticle = article;
       this.currentIndex = index;
       const data = {
@@ -197,7 +197,7 @@ export default {
       .catch(e => {
         console.log(e)
       })
-    }
+    },*/
   },
   mounted() {
     this.retrieveArticles();

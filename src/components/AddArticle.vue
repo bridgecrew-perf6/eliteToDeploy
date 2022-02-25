@@ -97,6 +97,7 @@ export default {
         title: "",
         content: "",
       },
+      imageUrl: '',
       formErrors: [],
       submitted: false,
       show: false,
@@ -139,9 +140,9 @@ export default {
       const formData = new FormData();
       formData.append('file', this.file);
       try {
-        await axios.post('/upload', formData )
-        this.file="";
-        this.error = false
+        await axios.post('/upload', formData ).then(res => {
+          this.imageUrl = res.data.message
+        })
       } catch (err) {
         this.error = true
       }
@@ -154,12 +155,22 @@ export default {
       this.file=""
       this.$refs.file.value = null
     },
+    resetAddForm() {
+      this.article.title = ''
+      this.article.content = ''
+    },
+
     async saveArticle() {
-      if(this.file) {
-        this.imageName = this.file.name
-      } else {
-        this.imageName = "noimage.jpg"
+      if (this.$refs.file.files[0]) {
+        await this.sendFile()
       }
+
+      if(this.file) {
+        this.imageName = this.imageUrl
+      } else {
+        this.imageName = "https://res.cloudinary.com/doodbvrla/image/upload/v1645777753/noimage_kb7n4m.jpg"
+      }
+
       var data = {
         title: this.article.title,
         content: this.article.content,
@@ -170,14 +181,11 @@ export default {
       DataService.create(data, accessToken)
           .then(response => {
             this.article.id = response.data.id;
-            console.log(response.data);
             this.submitted = true;
-            if (this.$refs.file.files[0]) {
-              this.sendFile()
-            }
-            this.formErrors = []
+            this.formErrors = [];
+            this.resetAddForm();
             this.$emit('close', this.show)
-            location.reload()
+
           }).catch(e => {
         console.log(e);
       });

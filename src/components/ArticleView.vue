@@ -23,7 +23,7 @@
     <v-card style="background-color: #d9d9d9">
       <v-img
           alt="coaching developpement personnel roanne"
-          :src="myImage + currentArticle.image"
+          :src="currentArticle.image"
           class="align-end"
           max-height="300"
           contain
@@ -84,7 +84,6 @@ export default {
       show: false,
       message: '',
       createdDate: '',
-      myImage: "https://afternoon-castle-40052.herokuapp.com/file/",
       showUpdateForm: false,
       articleToUpdate: {}
     };

@@ -88,6 +88,7 @@ export default {
       file: '',
       form: {},
       show: false,
+      imageUrl: '',
       editorOption: {
         theme: 'snow',
         placeholder: "Taper l'article ici ...",
@@ -136,9 +137,9 @@ export default {
       const formData = new FormData();
       formData.append('file', this.file);
       try {
-        await axios.post('/upload', formData )
-        this.file="";
-        this.error = false
+        await axios.post('/upload', formData ).then(response => {
+          this.form.image = response.data.message
+        })
       } catch (err) {
         this.error = true
       }
@@ -161,13 +162,11 @@ export default {
     async updateArticle() {
       const accessToken = await this.$auth.getTokenSilently()
       if (this.$refs.file.files[0]) {
-        this.form.image = this.file.name
+        await this.sendFile()
       }
       DataService.update(this.form.id, this.form, accessToken).then(response => {
         console.log(response.data);
-        if (this.$refs.file.files[0]) {
-          this.sendFile()
-        }
+
         this.$emit('close', this.show)
         this.formErrors = []
         location.reload()
