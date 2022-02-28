@@ -44,5 +44,9 @@ class DataService {
     findByTitle(title) {
         return http.get(`/articles?title=${title}`);
     }
+
+    async uploadImage(data) {
+        return await http.post(`/upload`, data)
+    }
 }
 export default new DataService();

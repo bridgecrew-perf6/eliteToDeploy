@@ -71,7 +71,7 @@ import 'quill/dist/quill.snow.css'
 import 'quill/dist/quill.bubble.css'
 
 import { quillEditor } from 'vue-quill-editor'
-import axios from "axios";
+// import axios from "axios";
 import moment from "moment";
 import {mapGetters} from "vuex";
 
@@ -140,7 +140,8 @@ export default {
       const formData = new FormData();
       formData.append('file', this.file);
       try {
-        await axios.post('/upload', formData ).then(res => {
+        DataService.uploadImage(formData).then(res => {
+        // await axios.post('/upload', formData ).then(res => {
           this.imageUrl = res.data.message
         })
       } catch (err) {
