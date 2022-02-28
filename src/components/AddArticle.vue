@@ -14,51 +14,55 @@
       </v-toolbar>
       <v-card-text>
         <v-form fill-width ref="addArticleForm" lazy-validation >
-      <v-container>
-        <v-row>
-          <v-col cols="12" md="6">
-            <v-text-field
-              v-model="article.title"
-              label="Titre"
-              :rules="[rules.required]"
-            />
-          </v-col>
-          <v-col cols="12" md="6">
-            <div class="large-12 medium-12 small-12 cell">
-              <label>Image
-                <input type="file" id="file" ref="file" @change="selectFile()"/>
-              </label>
-            </div>
-          </v-col>
-          <v-col>
-            <div>
-              <quill-editor
-                  v-model="article.content"
-                  :options="editorOption"
-                  style="min-height:300px;"
+          <div id="axiosForm">
+            <div class="loader" v-if="loading">
+          <v-container>
+            <v-row>
+              <v-col cols="12" md="6">
+                <v-text-field
+                  v-model="article.title"
+                  label="Titre"
                   :rules="[rules.required]"
-              ></quill-editor>
-            </div>
-          </v-col>
-        </v-row>
-        <v-card-title v-if="this.formErrors.length > 0" style="">
-          <v-icon color="red" style='padding-right: 20px' class="material-icons">mdi-alert</v-icon>
-          <span  style="font-family: Copperplate,serif; color: #003f5f">Tous les champs sont requis !</span>
-        </v-card-title>
-        <v-card-actions style="font-family: Copperplate,serif;">
-          <v-spacer></v-spacer>
-          <v-btn color="#003f5f" text @click=toggleDialog()>Annuler</v-btn>
-          <v-btn
-              color="#003f5f"
-              @click="checkForm"
-              text
+                />
+              </v-col>
+              <v-col cols="12" md="6">
+                <div class="large-12 medium-12 small-12 cell">
+                  <label>Image
+                    <input type="file" id="file" ref="file" @change="selectFile()"/>
+                  </label>
+                </div>
+              </v-col>
+              <v-col>
+                <div>
+                  <quill-editor
+                      v-model="article.content"
+                      :options="editorOption"
+                      style="min-height:300px;"
+                      :rules="[rules.required]"
+                  ></quill-editor>
+                </div>
+              </v-col>
+            </v-row>
+            <v-card-title v-if="this.formErrors.length > 0" style="">
+              <v-icon color="red" style='padding-right: 20px' class="material-icons">mdi-alert</v-icon>
+              <span  style="font-family: Copperplate,serif; color: #003f5f">Tous les champs sont requis !</span>
+            </v-card-title>
+            <v-card-actions style="font-family: Copperplate,serif;">
+              <v-spacer></v-spacer>
+              <v-btn color="#003f5f" text @click=toggleDialog()>Annuler</v-btn>
+              <v-btn
+                  color="#003f5f"
+                  @click="checkForm"
+                  text
 
-          >
-            Valider
-          </v-btn>
-        </v-card-actions>
-      </v-container>
-    </v-form>
+              >
+                Valider
+              </v-btn>
+            </v-card-actions>
+          </v-container>
+            </div>
+          </div>
+        </v-form>
       </v-card-text>
     </v-card>
   </v-dialog>
@@ -120,7 +124,8 @@ export default {
         }
       },
       file: '',
-      error: false
+      error: false,
+      loading: false
     };
   },
   methods: {
@@ -136,6 +141,7 @@ export default {
       else this.formErrors.push("error")
     },
     async sendFile() {
+      this.loading = true
       const formData = new FormData();
       formData.append('file', this.file);
       try {
@@ -184,6 +190,7 @@ export default {
             this.formErrors = [];
             this.resetAddForm();
             this.$emit('close', this.show)
+            this.loading = false
 
           }).catch(e => {
             console.log(e);
@@ -202,6 +209,23 @@ export default {
 .submit-form {
   max-width: 300px;
   margin: auto;
+}
+ #axiosForm{
+   position: relative;
+ }
+.loader{
+  position: absolute;
+  top:0px;
+  right:0px;
+  width:100%;
+  height:100%;
+  background-color:#eceaea;
+  background-size: 50px;
+  background-repeat:no-repeat;
+  background-position:center;
+  z-index:10000000;
+  opacity: 0.4;
+  filter: alpha(opacity=40);
 }
 
 </style>
