@@ -71,7 +71,6 @@ import 'quill/dist/quill.snow.css'
 import 'quill/dist/quill.bubble.css'
 
 import { quillEditor } from 'vue-quill-editor'
-// import axios from "axios";
 import moment from "moment";
 import {mapGetters} from "vuex";
 
@@ -141,9 +140,8 @@ export default {
       formData.append('file', this.file);
       try {
         DataService.uploadImage(formData).then(res => {
-        // await axios.post('/upload', formData ).then(res => {
           this.imageUrl = res.data.path
-          console.log(res.data)
+          this.createArticle(this.imageUrl)
         })
       } catch (err) {
         this.error = true
@@ -165,22 +163,21 @@ export default {
     async saveArticle() {
       if (this.$refs.file.files[0]) {
         await this.sendFile()
-      }
-
-      if(this.file) {
-        this.imageName = this.imageUrl
       } else {
-        this.imageName = "https://res.cloudinary.com/hghzq1rcq/image/upload/v1645784132/noimage_rxm5ck.jpg"
+        this.imageUrl = "https://res.cloudinary.com/hghzq1rcq/image/upload/v1645784132/noimage_rxm5ck.jpg"
+        await this.createArticle(this.imageUrl)
       }
+    },
 
+    async createArticle(image) {
       var data = {
         title: this.article.title,
         content: this.article.content,
-        image: this.imageName,
+        image: image,
         createdAt: moment.now()
       };
       const accessToken = await this.$auth.getTokenSilently()
-     await DataService.create(data, accessToken)
+      await DataService.create(data, accessToken)
           .then(response => {
             this.article.id = response.data.id;
             this.submitted = true;
@@ -189,9 +186,8 @@ export default {
             this.$emit('close', this.show)
 
           }).catch(e => {
-        console.log(e);
-      });
-
+            console.log(e);
+          });
     },
 
     newArticle() {

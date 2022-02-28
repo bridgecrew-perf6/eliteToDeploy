@@ -72,7 +72,6 @@ import 'quill/dist/quill.snow.css'
 import 'quill/dist/quill.bubble.css'
 
 import { quillEditor } from 'vue-quill-editor'
-import axios from "axios";
 import {mapGetters} from "vuex";
 
 export default {
@@ -137,8 +136,9 @@ export default {
       const formData = new FormData();
       formData.append('file', this.file);
       try {
-        await axios.post('/upload', formData ).then(response => {
-          this.form.image = response.data.message
+        DataService.uploadImage(formData).then(response => {
+          this.form.image = response.data.path
+          this.sendArticleUpdated(this.form.image)
         })
       } catch (err) {
         this.error = true
@@ -160,13 +160,19 @@ export default {
     },
 
     async updateArticle() {
-      const accessToken = await this.$auth.getTokenSilently()
       if (this.$refs.file.files[0]) {
         await this.sendFile()
+      } else {
+        await this.sendArticleUpdated(this.form.image)
       }
+
+    },
+
+    async sendArticleUpdated(image) {
+      const accessToken = await this.$auth.getTokenSilently()
+      this.form.image = image
       DataService.update(this.form.id, this.form, accessToken).then(response => {
         console.log(response.data);
-
         this.$emit('close', this.show)
         this.formErrors = []
         location.reload()
