@@ -142,7 +142,8 @@ export default {
       try {
         DataService.uploadImage(formData).then(res => {
         // await axios.post('/upload', formData ).then(res => {
-          this.imageUrl = res.data.message
+          this.imageUrl = res.data.path
+          console.log(res.data)
         })
       } catch (err) {
         this.error = true
