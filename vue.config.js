@@ -1,6 +1,7 @@
 module.exports = {
   devServer: {
-    proxy: process.env.VUE_APP_PROXY,
+    // proxy: 'https://afternoon-castle-40052.herokuapp.com',
+    proxy: 'http://localhost:5000',
     port: 8081
   },
   transpileDependencies: [
