@@ -1,6 +1,5 @@
 import axios from "axios";
 export default axios.create({
-    // baseURL: "https://afternoon-castle-40052.herokuapp.com/api",
     baseURL: process.env.VUE_APP_API_URL,
     headers: {
         "Content-type": "application/json"
