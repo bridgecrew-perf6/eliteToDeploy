@@ -37,7 +37,10 @@
       </v-card-title>
 
       <v-card-text class="py-2 white--text text-center">
-        {{ new Date().getFullYear() }} — <strong>Name</strong>
+        <router-link to="/disclaimer" style="text-decoration: none; color: inherit">
+          <p> Mentions Légales</p>
+        </router-link>
+        {{ new Date().getFullYear() }} — <strong>Elite Coaching 42</strong>
         <div v-if="!$auth.loading">
           <!-- show login when not authenticated -->
           <a v-if="!$auth.isAuthenticated" @click="login" class="button is-dark"

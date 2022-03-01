@@ -4,6 +4,7 @@ import ArticlesList from "./components/ArticlesList";
 import HomePage from "./components/HomePage";
 import Partners from "./components/Partners"
 import Submit from "./components/Submit";
+import LegalNotice from "@/components/LegalNotice";
 // import Articles from "./components/Articles";
 // import { authGuard } from "./auth/authGuard";
 //
@@ -30,6 +31,11 @@ Vue.use(VueRouter);
             name: "submit",
             component: Submit
         },
+       {
+           path: "/disclaimer",
+           name: "legal_notice",
+           component: LegalNotice
+       },
     ]
 
 const router = new VueRouter( {
