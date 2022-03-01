@@ -40,6 +40,9 @@
                 </div>
               </v-col>
             </v-row>
+            <div class="text-center">
+              <v-progress-circular v-if="isLoading" :size="70" :width="7" indeterminate color="#003f5f"></v-progress-circular>
+            </div>
             <v-card-title v-if="this.formErrors.length > 0" style="">
               <v-icon color="red" style='padding-right: 20px' class="material-icons">mdi-alert</v-icon>
               <span  style="font-family: Copperplate,serif; color: #003f5f">Tous les champs sont requis !</span>
@@ -86,6 +89,7 @@ export default {
       formErrors: [],
       file: '',
       form: {},
+      isLoading: false,
       show: false,
       imageUrl: '',
       editorOption: {
@@ -169,12 +173,14 @@ export default {
     },
 
     async sendArticleUpdated(image) {
+      this.isLoading = true
       const accessToken = await this.$auth.getTokenSilently()
       this.form.image = image
       DataService.update(this.form.id, this.form, accessToken).then(response => {
         console.log(response.data);
         this.$emit('close', this.show)
         this.formErrors = []
+        this.isLoading = false
         location.reload()
       })
           .catch(e => {

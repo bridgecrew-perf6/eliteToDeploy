@@ -135,6 +135,9 @@
                   </v-container>
                 </template>
             </v-row>
+            <div class="text-center">
+              <v-progress-circular v-if="isLoading" indeterminate color="#003f5f"></v-progress-circular>
+            </div>
             <v-card-title v-if="this.formErrors.length > 0" style="">
               <v-icon color="red" style='padding-right: 20px' class="material-icons">mdi-alert</v-icon>
               <span  style="font-family: Copperplate,serif; color: #003f5f">Tous les champs sont requis !</span>
@@ -204,6 +207,7 @@ export default {
       startDate: '',
       startTime: '',
       formErrors: [],
+      isLoading: false
     }
   },
   methods: {
@@ -259,6 +263,7 @@ export default {
     },
 
     async updateEvent() {
+      this.isLoading = true
       const accessToken = await this.$auth.getTokenSilently()
       const dateToStart = moment(this.startDate + ' ' + this.timeStart).format('YYYY-MM-DD HH:mm')
       const dateToEnd = moment(this.startDate + ' ' + this.timeStart).add('1', 'hour').format('YYYY-MM-DD HH:mm')
@@ -277,6 +282,7 @@ export default {
           .then(response => {
             console.log(response.data)
             this.formErrors = []
+            this.isLoading = false
             this.$emit('close', this.show)
           })
           .catch(e => {

@@ -72,6 +72,9 @@
                 </v-container>
               </template>
             </v-row>
+            <div class="text-center">
+              <v-progress-circular v-if="isLoading" indeterminate color="#003f5f"></v-progress-circular>
+            </div>
             <v-card-title v-if="this.formErrors.length > 0" style="">
               <v-icon color="red" style='padding-right: 20px' class="material-icons">mdi-alert</v-icon>
               <span  style="font-family: Copperplate,serif; color: #003f5f">Tous les champs sont requis !</span>
@@ -148,6 +151,7 @@ export default {
       },
       checkboxText: "À confirmer",
       formErrors: [],
+      isLoading: false
     }
   },
   methods: {
@@ -198,6 +202,7 @@ export default {
     },
 
     async addEvent() {
+      this.isLoading = true
       var data = {
         firstname: this.form.firstname,
         lastname: this.form.lastname,
@@ -213,6 +218,7 @@ export default {
             this.form.id = response.data.id
             if (!this.isAdmin) this.sendMail()
             this.resetAddForm()
+            this.isLoading = false
             this.$emit('close', this.show)
           })
     }
