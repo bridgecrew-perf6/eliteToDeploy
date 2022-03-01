@@ -5,6 +5,7 @@ import HomePage from "./components/HomePage";
 import Partners from "./components/Partners"
 import Submit from "./components/Submit";
 import LegalNotice from "@/components/LegalNotice";
+import Prestations from "@/components/Prestations";
 // import Articles from "./components/Articles";
 // import { authGuard } from "./auth/authGuard";
 //
@@ -35,6 +36,11 @@ Vue.use(VueRouter);
            path: "/disclaimer",
            name: "legal_notice",
            component: LegalNotice
+       },
+       {
+           path: "/prestations",
+           name: "prestations",
+           component: Prestations
        },
     ]
 

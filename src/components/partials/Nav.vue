@@ -14,6 +14,13 @@
               </v-list-item-title>
             </v-list-item>
           </router-link>
+          <router-link id="prestations" class="linkBtn" to="/prestations" style="text-decoration: none; color: inherit;">
+            <v-list-item>
+              <v-list-item-title>
+                <span class="navTitle">Prestations</span>
+              </v-list-item-title>
+            </v-list-item>
+          </router-link>
           <router-link id="articles" class="linkBtn" to="/articles" style="text-decoration: none; color: inherit;">
             <v-list-item>
               <v-list-item-title>
@@ -52,13 +59,20 @@
         >
           <v-list-item-group
           >
-              <router-link class="linkBtn" to="/" style="text-decoration: none; color: inherit;">
-                <v-list-item>
-                  <v-list-item-title>
-                    <span class="navTitleMobile">Accueil</span>
-                  </v-list-item-title>
-                </v-list-item>
-              </router-link>
+            <router-link class="linkBtn" to="/" style="text-decoration: none; color: inherit;">
+              <v-list-item>
+                <v-list-item-title>
+                  <span class="navTitleMobile">Accueil</span>
+                </v-list-item-title>
+              </v-list-item>
+            </router-link>
+            <router-link class="linkBtn" to="/prestations" style="text-decoration: none; color: inherit;">
+              <v-list-item>
+                <v-list-item-title>
+                  <span class="navTitleMobile">Prestations</span>
+                </v-list-item-title>
+              </v-list-item>
+            </router-link>
             <router-link class="linkBtn" to="/articles" style="text-decoration: none; color: inherit;">
               <v-list-item>
                 <v-list-item-title>

@@ -1,6 +1,7 @@
 <template>
   <section style="color: #003f5f; background-color: #d9d9d9">
     <v-row>
+<!--      TODO A compléter et modifier-->
       <v-col class="text-center">
         <h1 title="mentions légales obligatoires disclaimer elite coaching roanne" style="font-family: Copperplate,serif; padding-left: 1%">
           MENTIONS LEGALES<br>
