@@ -3,7 +3,7 @@
    <section>
    <v-img
        alt="coaching developpement personnel roanne"
-       :src="require('../assets/images/logo_elite42.png')"
+       src="https://res.cloudinary.com/hghzq1rcq/image/upload/v1646227391/sgijyu23fx0p5zf9l9jr.png"
        class="my-3"
    /></section>
    <section>
