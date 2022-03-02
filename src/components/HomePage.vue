@@ -75,7 +75,7 @@
          <v-col xs="12" md="6">
            <v-img
                alt="coaching developpement personnel roanne"
-               :src="require('../assets/images/latifapix .jpg')"
+               :src="require('../assets/images/latifa.jpeg')"
                class="my-3"
                contain
                height="400"
@@ -111,7 +111,7 @@
                      style="font-family: Copperplate,serif; color: #003f5f"
                  >
                    Faire en sorte de susciter chez vous
-                 <span class="font-italic font-weight-bold">la réflexion , la créativité </span> , pour que vous puissiez évoluer ,
+                 <span class="font-italic font-weight-bold">la réflexion, la créativité</span>, pour que vous puissiez évoluer,
                  <span class="font-italic">atteindre <span class="text-decoration-underline font-weight-bold">vos objectifs</span></span> personnels ou professionnels.
                </H3>
              </div>
