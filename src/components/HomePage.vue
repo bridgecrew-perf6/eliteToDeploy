@@ -2,7 +2,7 @@
  <v-main>
    <v-img
        alt="coaching developpement personnel roanne"
-       src="https://res.cloudinary.com/hghzq1rcq/image/upload/v1646228469/bo021r1lw6qt1dybtw5l.png"
+       src="https://res.cloudinary.com/hghzq1rcq/image/upload/v1646230837/rzpmnbqyfxhtc5qvecaa.jpg"
        class="my-3"
    />
    <section>
