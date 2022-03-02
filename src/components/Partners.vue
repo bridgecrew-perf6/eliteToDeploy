@@ -9,7 +9,7 @@
         <v-flex class="text-xs-center" style="margin-top: 3%">
           <v-img
               alt="coaching developpement personnel roanne"
-              :src="require('../assets/images/annabelle.jpeg')"
+              src="https://res.cloudinary.com/hghzq1rcq/image/upload/v1646230190/cocdil8zgg3rvmfsq8qt.jpg"
               class="my-3"
               contain
               height="300"

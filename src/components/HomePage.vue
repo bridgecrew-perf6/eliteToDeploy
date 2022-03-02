@@ -1,14 +1,13 @@
 <template>
  <v-main>
-   <section>
    <v-img
        alt="coaching developpement personnel roanne"
        src="https://res.cloudinary.com/hghzq1rcq/image/upload/v1646228469/bo021r1lw6qt1dybtw5l.png"
        class="my-3"
-   /></section>
+   />
    <section>
      <v-parallax
-         :src="require('../assets/images/water_drops.jpg')"
+         src="https://res.cloudinary.com/hghzq1rcq/image/upload/v1646230061/jnlz5vhhgfx8phfj1hnp.jpg"
      >
        <v-row
          align="center"
@@ -75,7 +74,7 @@
          <v-col xs="12" md="6">
            <v-img
                alt="coaching developpement personnel roanne"
-               :src="require('../assets/images/latifa.jpeg')"
+               src="https://res.cloudinary.com/hghzq1rcq/image/upload/v1646229618/axqaq6wtcgjvuiuipu8y.jpg"
                class="my-3"
                contain
                height="400"
@@ -133,7 +132,7 @@
          <v-col xs="12" md="6">
            <v-img
                alt="coaching developpement personnel roanne"
-               :src="require('../assets/images/ponton.jpg')"
+               src="https://res.cloudinary.com/hghzq1rcq/image/upload/v1646229707/tcnbu5tim4zauiaofdsm.jpg"
                class="my-3"
                contain
                height="300"
@@ -148,7 +147,7 @@
      <v-container>
        <v-img
            alt="coaching developpement personnel roanne"
-           :src="require('../assets/images/Chaussures de mode.jpeg')"
+           src="https://res.cloudinary.com/hghzq1rcq/image/upload/v1646229764/o0lanv8r58zyih3o7rn9.jpg"
            class="my-3"
            contain
            height="300"
@@ -182,22 +181,18 @@
      <v-container fill-height >
        <v-layout column align-center style="font-family: Copperplate,serif;">
          <v-row>
-           <v-col cols="12" md="8">
-             <h3 title="elite coaching 42 rue etienne dolet roanne">Adresse : </h3>
-             <p>Elite Coaching 42<br>28 rue Etienne Dolet <br> 42300 ROANNE</p>
-           </v-col>
-           <v-col cols="4">
+           <v-col cols="7" class="text-center">
              <h3 title="elitecoaching42@gmail.com">E-mail : </h3>
              <p style="font-size: 20px">elitecoaching42@gmail.com</p>
            </v-col>
-         </v-row>
-         <v-row style="font-size: 20px">
-           <v-icon>mdi-phone</v-icon>
-           07 71 07 65 32
+           <v-col cols="5" style="font-size: 20px" class="text-center">
+             <v-icon>mdi-phone</v-icon>
+             07 71 07 65 32
+           </v-col>
          </v-row>
        </v-layout>
      </v-container>
-     <v-container>
+<!--     <v-container>
        <template>
          <div id="mapContainer" style="margin: auto">
            <l-map
@@ -215,7 +210,7 @@
            </l-map>
          </div>
        </template>
-     </v-container>
+     </v-container>-->
    </section>
 
  </v-main>
@@ -223,15 +218,15 @@
 </template>
 
 <script>
-import { LMap, LTileLayer, LMarker } from 'vue2-leaflet';
+// import { LMap, LTileLayer, LMarker } from 'vue2-leaflet';
 import 'leaflet/dist/leaflet.css';
 import {mapGetters} from "vuex";
 export default {
   name: "homepage",
   components: {
-    LMap,
+ /*   LMap,
     LTileLayer,
-    LMarker
+    LMarker*/
   },
   computed: {...mapGetters(['isMobile'])},
   created() {

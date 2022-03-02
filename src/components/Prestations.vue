@@ -1,5 +1,6 @@
 <template>
   <section style="color: #003f5f; background-color: #d9d9d9">
+
     <h1 title="mentions légales obligatoires disclaimer elite coaching roanne" style="font-family: Copperplate,serif; padding-left: 1%">
       PRESTATIONS<br>
     </h1>
@@ -12,7 +13,7 @@
                 title="coaching développement personnel partenaire roanne">
               À VENIR
             </h1>
-            <v-img :src="require('../assets/images/attente.jpg')"
+            <v-img src="https://res.cloudinary.com/hghzq1rcq/image/upload/v1646230151/yyzzoihwssucuw3youby.jpg"
                    contain
                    height="400"
                    />

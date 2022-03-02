@@ -17,7 +17,7 @@
 
         <v-img
             alt="coaching developpement personnel roanne"
-            :src="require('../assets/images/pexels-pixabay-262508.jpg')"
+            src="https://res.cloudinary.com/hghzq1rcq/image/upload/v1646230255/j9hgmv2u191f4g1yobua.jpg"
             class="my-3"
             contain
             height="300"

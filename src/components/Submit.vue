@@ -15,7 +15,7 @@
             <v-col xs="12" md="12">
               <v-img
                   alt="coaching developpement personnel roanne"
-                  :src="require('../assets/images/agenda.jpg')"
+                  src="https://res.cloudinary.com/hghzq1rcq/image/upload/v1646230273/jeozj3t2puign2econ0u.jpg"
                   class="my-3"
                   contain
                   height="300"
