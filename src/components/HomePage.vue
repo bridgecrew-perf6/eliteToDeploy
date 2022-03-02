@@ -132,7 +132,7 @@
          <v-col xs="12" md="6">
            <v-img
                alt="coaching developpement personnel roanne"
-               src="https://res.cloudinary.com/hghzq1rcq/image/upload/v1646229707/tcnbu5tim4zauiaofdsm.jpg"
+               src="https://res.cloudinary.com/hghzq1rcq/image/upload/v1646231175/cfmguwj1kvvbka5hchzv.jpg"
                class="my-3"
                contain
                height="300"

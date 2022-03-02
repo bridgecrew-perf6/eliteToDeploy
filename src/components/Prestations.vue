@@ -13,7 +13,7 @@
                 title="coaching développement personnel partenaire roanne">
               À VENIR
             </h1>
-            <v-img src="https://res.cloudinary.com/hghzq1rcq/image/upload/v1646230151/yyzzoihwssucuw3youby.jpg"
+            <v-img src="https://res.cloudinary.com/hghzq1rcq/image/upload/v1646231357/bggrgi7sbiegzbvduppu.jpg"
                    contain
                    height="400"
                    />
